@@ -15,29 +15,14 @@ class UserController extends Controller
     return UserResource::collection(User::get());
   }
  
-  public function show($user_id)
+  public function show(User $user)
   {
-    try {
-      $user = User::findOrFail($user_id);
-      return response()->json(['data' => $user], 200);
-    } catch (\Throwable) {
-      return response()->json([
-        'message' => "The requested resource could not be found.", 
-      ], 404);
-    }
+    return response()->json($user);
   }
 
   public function update(UpdateUserRequest $request)
   {
-    try {
-      auth()->user()->update($request->validated());
-      return response()->json([
-        "message" => "Updated successfully!"
-      ], 201);
-    } catch (\Throwable) {
-      return response()->json([
-        'message' => "There was an error on the server and the request could not be completed.",
-      ], 500);
-    }
+    auth()->user()->updateOrFail($request->validated());
+    return response()->json(auth()->user);
   }
 }
