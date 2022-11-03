@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */ 
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -6,9 +6,10 @@ import { Eye, EyeOff } from "react-feather";
 
 import Button from "components/atoms/Button";
 import NextHead from "components/atoms/NextHead";
+import { useAuthMethods } from "hooks/authMethods";
 import { SignUpFormSchema } from "shared/validation";
 
-const SignUp = () => {  
+const SignUp = () => {
   const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
 
   // Styles
@@ -17,7 +18,7 @@ const SignUp = () => {
   const borderError = "!border-barclerk-10";
   const labelStyle = "block text-md font-medium text-white";
   const inputStyle = "block w-full h-[36px] rounded-sm border-[2px] border-barclerk-light py-0.5 text-slate-900 outline-none focus:ring-1 focus:border-barclerk-30";
-  
+
   // Handle form values
   const { values, errors, touched, handleChange, handleSubmit, isSubmitting, handleBlur } = useFormik({
     initialValues: {
@@ -28,7 +29,7 @@ const SignUp = () => {
       password_confirmation: ""
     },
     validationSchema: SignUpFormSchema,
-    onSubmit: () => {console.log("Integrate Sign up here"); }
+    onSubmit: () => { }
   })
 
   // Destructure the error 
@@ -59,11 +60,11 @@ const SignUp = () => {
   };
 
   // Form values
-  const { first_name, last_name, email, password, password_confirmation } = values || {}; 
-  
+  const { first_name, last_name, email, password, password_confirmation } = values || {};
+
   return (
     <>
-      <NextHead title="BarClerk | Sign Up"/>
+      <NextHead title="BarClerk | Sign Up" />
       <main className="bg-barclerk-30 min-h-screen h-full mobile:pb-20 mobile:pt-10 py-10 flex justify-center items-center px-10">
         <div className="flex flex-col gap-10 w-[360px]">
           <header className="flex flex-col items-center h-full justify-center">
@@ -113,7 +114,7 @@ const SignUp = () => {
                 name="email"
                 value={email}
                 onChange={handleChange}
-                  onBlur={handleBlur}
+                onBlur={handleBlur}
                 className={`${inputStyle} ${emailHasError && borderError}`}
               />
               {emailHasError && <span className={textError}>{emailError}</span>}
