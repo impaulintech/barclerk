@@ -6,17 +6,13 @@ import {
 } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
+import {
+  User,
+  InitialState,
+  SignInUpFormValues, 
+} from 'shared/types';
 import authService from './authService';
 import { catchError } from 'utils/handleAxiosError';
-import { SignInUpFormValues, User, AxiosResponseError } from 'shared/types';
-
-type InitialState = {
-  user: any;
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  error: AxiosResponseError;
-};
 
 const initialState: InitialState = {
   user: null,

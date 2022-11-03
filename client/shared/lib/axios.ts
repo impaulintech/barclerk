@@ -3,7 +3,7 @@ import { getCookie } from 'cookies-next';
 
 const token = getCookie('token');
 
-export const axios: any = Axios.create({
+export const axios = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     Accept: 'application/json',
