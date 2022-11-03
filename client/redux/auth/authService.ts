@@ -37,10 +37,7 @@ const signOut = async (): Promise<any> => {
 
 const hydrateUserState = async (): Promise<any> => {
   const response = await axios.get('/auth');
-  if (response.status === 200) {
-    return response.data;
-  }
-  return 'Something went wrong';
+  return response.data;
 };
 
 const authService = {
