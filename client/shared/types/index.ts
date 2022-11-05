@@ -42,3 +42,6 @@ export type InitialState = {
 export type Store = {
   auth: InitialState;
 };
+
+// Consumes a lot of time for me, for now I added type any. Need help on this.
+export type Cookie = string | boolean | any; 
