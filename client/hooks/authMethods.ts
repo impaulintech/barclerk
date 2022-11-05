@@ -8,7 +8,7 @@ import { reset, signIn, signOut, signUp } from 'redux/auth/authSlice';
 export const useAuthMethods = () => {
   const { error } = useAppSelector((state: Store) => state.auth);
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const router = useRouter(); 
 
   const handleAuthSignOut = async () => {
     dispatch(reset());
@@ -24,14 +24,15 @@ export const useAuthMethods = () => {
     );
   };
 
-  const handleSignInSubmit = async (
-    data: SignInUpFormValues
-  ): Promise<void> => {
-    toast.promise(dispatch(signIn(data)), {
-      loading: 'Signing in...',
-      success: 'Welcome to dashboard!',
-      error: error.content,
-    });
+  const handleSignInSubmit = async ( data: SignInUpFormValues ): Promise<void> => { 
+    dispatch(signIn(data))
+    .then(({ payload })=>{
+      const { content, status }= payload || {};
+
+      if(status) return toast.error(content?.email);
+      toast.success("Welcome to dashboard!");
+      router.push('/');
+    })  
   };
 
   const handleSignUpSubmit = async (

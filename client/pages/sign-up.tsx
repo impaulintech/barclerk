@@ -76,6 +76,7 @@ const SignUp = () => {
                         placeholder="●●●●●●●●"
                       />
                     </div>
+                    
                     <Button isSubmitting={isSubmitting} value="Register" className="mt-10" />
                   </Form>
                 )
@@ -86,7 +87,7 @@ const SignUp = () => {
               <span className="block text-md font-medium text-slate-300">
                 Already have an account?
                 <span className="text-barclerk-10 cursor-pointer hover:text-barclerk-10/70 ml-1" >
-                  <Link href="./login">Login</Link>
+                  <Link href="./sign-in">Login</Link>
                 </span>
               </span>
             </div>
