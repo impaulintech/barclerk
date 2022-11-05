@@ -1,28 +1,42 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { Formik, Form } from "formik";
-import { setCookie } from 'cookies-next';
+import { setCookie, deleteCookie, getCookie } from 'cookies-next';
 import React, { useState } from "react";
 
+import { Cookie } from "shared/types";
 import Button from "components/atoms/Button";
 import NextHead from "components/atoms/NextHead";
+import { useAuthMethods } from "hooks/authMethods";
 import { SignInFormSchema } from "shared/validation";
 import CustomForm from "components/molecules/CustomForm";
 
 const SignIn = () => {
+  const { handleSignInSubmit } = useAuthMethods();
   const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
+  const [rememberMe, setRememberMe] = useState<string>("");
+  const isRemembered: Cookie = getCookie('isRemembered') || false;
+  const rememberedEmail: Cookie = getCookie('email') || "";
 
   const formikInitialValues = {
     email: "",
     password: ""
   };
 
-  const onClickRemember = (e: any) => {
-    setCookie('isRemembered', e.target.checked);
+  const onChangeRemember = (e: { target: any }) => {
+    const { value, name } = e.target;
+    if (name === "password") return;
 
-    if (e.target.checked) {
-      setCookie('email', formikInitialValues.email);
-    }
+    setRememberMe(value);
+    if (isRemembered) return setCookie('email', value);
+  }
+
+  const onClickRemember = (e: { target: any }) => {
+    const { checked } = e.target;
+
+    setCookie('isRemembered', checked);
+    if (!checked) return deleteCookie('email');
+    setCookie('email', rememberMe)
   }
 
   return (
@@ -39,16 +53,17 @@ const SignIn = () => {
             <Formik
               initialValues={formikInitialValues}
               validationSchema={SignInFormSchema}
-              onSubmit={()=>{}}
+              onSubmit={handleSignInSubmit}
             >
               {({ isSubmitting }): any => {
                 return (
                   <Form>
-                    <div className="flex flex-col gap-4 ">
+                    <div className="flex flex-col gap-4" onChange={onChangeRemember}>
                       <CustomForm
                         label="Email address"
                         name="email"
                         type="email"
+                        defaultValue={rememberedEmail}
                         placeholder="john.doe@email.com"
                       />
                       <CustomForm
@@ -66,7 +81,7 @@ const SignIn = () => {
                         <input
                           id="remember"
                           type="checkbox"
-                          value=""
+                          defaultChecked={isRemembered}
                           onClick={onClickRemember}
                           className="h-3 w-3 rounded-sm border border-gray-300 bg-transparent"
                         />
