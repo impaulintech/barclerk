@@ -8,13 +8,13 @@ import { reset, signIn, signOut, signUp } from 'redux/auth/authSlice';
 export const useAuthMethods = () => {
   const { error } = useAppSelector((state: Store) => state.auth);
   const dispatch = useAppDispatch();
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleAuthSignOut = async () => {
     dispatch(reset());
     toast.promise(
       dispatch(signOut()).then(() => {
-        router.push('/');
+        router.push('/sign-in');
       }),
       {
         loading: 'Signing out...',
@@ -24,35 +24,53 @@ export const useAuthMethods = () => {
     );
   };
 
-  const handleSignInSubmit = async ( data: SignInUpFormValues ): Promise<void> => { 
-    dispatch(signIn(data))
-    .then(({ payload })=>{
-      const { content, status }= payload || {};
+  const handleSignInSubmit = async (
+    data: SignInUpFormValues
+  ): Promise<void> => {
+    dispatch(signIn(data)).then(({ payload }) => {
+      const { content, status } = payload || {};
 
-      if(status) return toast.error(content?.email);
-      toast.success("Welcome to dashboard!");
+      if (status) return toast.error(content?.email);
+      toast.success('Welcome to dashboard!');
       router.push('/');
-    })  
+    });
   };
 
   const handleSignUpSubmit = async (
     data: SignInUpFormValues
   ): Promise<void> => {
-    toast.promise(
-      dispatch(signUp(data)).then(() => {
-        router.push('/');
-      }),
-      {
-        loading: 'Creating your account please wait...',
-        success: 'Account created successfully!',
-        error: error.content,
+    const creatingAccount = toast.loading('Creating your account...');
+
+    dispatch(signUp(data)).then(({ payload }) => {
+      const { status } = payload || {};
+      toast.dismiss(creatingAccount);
+
+      if (status) {
+        return toast.error('Something went wrong.\nPlease try again later.');
       }
-    );
+
+      toast.success('Account created successfully!');
+      router.push('/');
+    });
+  };
+
+  const ResetLinkSubmit = async (
+    data: SignInUpFormValues
+  ): Promise<void> => {
+     
+  };
+
+  const ForgotPasswordSubmit = async (
+    data: SignInUpFormValues
+  ): Promise<void> => {
+     
   };
 
   return {
+    ResetLinkSubmit,
     handleAuthSignOut,
     handleSignInSubmit,
     handleSignUpSubmit,
+    ForgotPasswordSubmit,
   };
 };

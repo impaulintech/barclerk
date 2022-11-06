@@ -16,11 +16,10 @@ const NotFound: NextPage = (): JSX.Element => {
             <span className='font-extrabold text-9xl'>4</span>
             <div className='flex-shrink-0 z-50'>
               <img
-                src="/images/404.png"
-                alt="Cry Emoji Image"
+                src="/images/lawgo.png"
+                alt="lawgo"
                 width={192}
-                height={192}
-                placeholder="blur"
+                height={192} 
               />
             </div>
             <span className='font-extrabold text-9xl'>4</span>
@@ -28,12 +27,12 @@ const NotFound: NextPage = (): JSX.Element => {
           <section className='flex flex-col items-center gap-3 pb-5'>
             <h2 className='text-xl uppercase font-bold'>Oops! Page not be found</h2>
             <p className='text-slate-300 text-sm text-center'>
-              Sorry but the page you are looking for does not exist, have been removed. name changed
+              Sorry but the page that you are looking for does not exist, have been removed, name changed,
               or is temporarily unavailable
             </p>
           </section>
           <Link href="/">
-            <span className='px-6 py-3 rounded-full bg-barclerk-10 hover:bg-barclerk-10/70 text-white font-semibold hover:shadow-xl transition ease-in-out duration-150 focus:outline-none cursor-pointer'>Back to Homepage</span>
+            <span className='px-6 py-3 rounded-xl bg-barclerk-10 hover:bg-barclerk-10/70 text-white font-semibold hover:shadow-xl transition ease-in-out duration-150 focus:outline-none cursor-pointer'>Back to Homepage</span>
           </Link>
         </div>
       </main>
