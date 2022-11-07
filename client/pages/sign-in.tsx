@@ -1,52 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
+import Link from "next/link"; 
 import { Formik, Form } from "formik";
-import { setCookie, deleteCookie, getCookie } from 'cookies-next';
 import React, { useState } from "react";
-
-import { Cookie } from "shared/types";
+ 
 import Button from "components/atoms/Button";
+import useRememberMe from "hooks/useRememberMe";
 import NextHead from "components/atoms/NextHead";
 import { useAuthMethods } from "hooks/authMethods";
 import { SignInFormSchema } from "shared/validation";
 import CustomForm from "components/molecules/CustomForm";
+import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
 
 const SignIn = () => {
+  const {
+    isRemembered,
+    rememberedEmail,
+    onClickRemember,
+    onChangeRemember,
+  } = useRememberMe();
   const { handleSignInSubmit } = useAuthMethods();
-  const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
-  const [rememberMe, setRememberMe] = useState<string>("");
-  const isRemembered: Cookie = getCookie('isRemembered') || false;
-  const rememberedEmail: Cookie = getCookie('email') || "";
+  const [isPassHidden, setIsPassHidden] = useState<boolean>(true);  
 
   const formikInitialValues = {
     email: "",
     password: ""
-  };
-
-  const onChangeRemember = (e: { target: any }) => {
-    const { value, name } = e.target;
-    if (name === "password") return;
-
-    setRememberMe(value);
-    if (isRemembered) return setCookie('email', value);
-  }
-
-  const onClickRemember = (e: { target: any }) => {
-    const { checked } = e.target;
-
-    setCookie('isRemembered', checked);
-    if (!checked) return deleteCookie('email');
-    setCookie('email', rememberMe)
-  }
+  }; 
 
   return (
     <>
-      <NextHead title="BarClerk | Sign Up" />
-      <main className="bg-barclerk-30 min-h-screen h-full mobile:pb-20 mobile:pt-10 py-10 flex justify-center items-center px-10">
+      <NextHead title="BarClerk | Sign In" />
+      <AdminAuthTemplate>
         <div className="flex flex-col gap-10 w-[360px]">
           <header className="flex flex-col items-center h-full justify-center">
-            <img src="/images/logo-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
-            <h1 className="text-[36px] font-semibold text-white mobile:text-[30px]">Account Login</h1>
+            <img src="/images/logo-dark-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
+            <h1 className="text-[36px] font-semibold text-dark mobile:text-[30px]">Account Login</h1>
           </header>
 
           <div className=" flex flex-col gap-4">
@@ -85,30 +72,30 @@ const SignIn = () => {
                           onClick={onClickRemember}
                           className="h-3 w-3 rounded-sm border border-gray-300 bg-transparent"
                         />
-                        <label htmlFor="remember" className="ml-2 text-xs text-gray-200">
+                        <label htmlFor="remember" className="ml-2 font-semibold text-xs text-dark">
                           Remember me
                         </label>
                       </div>
-                      <Link href="./forgot-password"><h1 className="ml-2 text-xs text-gray-200">Forgot Password?</h1></Link>
+                      <Link href="./forgot-password"><h1 className="ml-2 text-xs font-semibold text-dark">Forgot Password?</h1></Link>
                     </div>
 
                     <Button isSubmitting={isSubmitting} value="Login" className="mt-10" />
                   </Form>
-                )
+                );
               }}
             </Formik>
 
             <div className="flex flex-col gap-5 justify-center items-center">
-              <span className="block text-md font-medium text-slate-300">
+              <span className="block text-md font-medium text-dark">
                 Doesn’t have an account yet?
-                <span className="text-barclerk-10 cursor-pointer hover:text-barclerk-10/70 ml-1" >
+                <span className="text-failed cursor-pointer hover:text-failed/70 ml-1" >
                   <Link href="./sign-up">Register</Link>
                 </span>
               </span>
             </div>
           </div>
         </div>
-      </main>
+      </AdminAuthTemplate>
     </>
   );
 };
