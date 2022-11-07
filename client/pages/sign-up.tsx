@@ -8,13 +8,14 @@ import NextHead from "components/atoms/NextHead";
 import { useAuthMethods } from "hooks/authMethods";
 import { SignUpFormSchema } from "shared/validation";
 import CustomForm from "components/molecules/CustomForm";
-import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
+import { SignUpFormikInitialValues } from "shared/types";
+import AdminAuthTemplate from "components/templates/AdminAuthTemplate"; 
 
 const SignUp = () => {
   const { handleSignUpSubmit: handleAuthSubmit } = useAuthMethods();
   const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
 
-  const formikInitialValues = {
+  const formikInitialValues: SignUpFormikInitialValues = {
     first_name: "",
     last_name: "",
     email: "",
@@ -26,7 +27,7 @@ const SignUp = () => {
     <>
       <NextHead title="BarClerk | Sign Up" />
       <AdminAuthTemplate>
-        <div className="flex flex-col gap-10 w-[360px]">
+        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
           <header className="flex flex-col items-center h-full justify-center">
             <img src="/images/logo-dark-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
             <h1 className="text-[36px] font-semibold text-dark mobile:text-[30px]">Register Account</h1>
@@ -38,7 +39,7 @@ const SignUp = () => {
               validationSchema={SignUpFormSchema}
               onSubmit={handleAuthSubmit}
             >
-              {({ isSubmitting }): any => {
+              {({ isSubmitting }: { isSubmitting: boolean }) => {
                 return (
                   <Form>
                     <div className="flex flex-col gap-4 ">

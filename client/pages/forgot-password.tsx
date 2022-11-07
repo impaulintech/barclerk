@@ -14,10 +14,17 @@ import { useAuthMethods } from "hooks/authMethods";
 import CustomForm from "components/molecules/CustomForm";
 import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
 
+type SetupNewPasswordInitialValue = {
+  token: string,
+  email: string,
+  password: string,
+  password_confirmation: string,
+};
+
 const ForgotPassword = () => {
   const { state }: any = Router?.router || {};
   const { token, email } = state?.query || {};
-  const { handleSignInSubmit, ResetLinkSubmit } = useAuthMethods();
+  const { ResetLinkSubmit, ForgotPasswordSubmit } = useAuthMethods();
   const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
   const [isLinkClicked, setIsLinkClicked] = useState<boolean>(false);
 
@@ -25,7 +32,7 @@ const ForgotPassword = () => {
     setIsLinkClicked((token && email) ? true : false);
   }, [token, email, isLinkClicked]);
 
-  const setRequestResetLinkInitialValue = {
+  const setRequestResetLinkInitialValue: { email: string; } = {
     email: "",
   };
   const RequestResetLink = () => {
@@ -33,11 +40,11 @@ const ForgotPassword = () => {
       <Formik
         initialValues={setRequestResetLinkInitialValue}
         validationSchema={ResetLinkSubmitFormSchema}
-        onSubmit={async ({ email }: { email: any; }) => {
+        onSubmit={async ({ email }: { email: string }) => {
           await ResetLinkSubmit(email);
         }}
       >
-        {({ isSubmitting }): any => {
+        {({ isSubmitting }: { isSubmitting: boolean }) => {
           return (
             <Form >
               <div className="flex flex-col gap-4">
@@ -67,6 +74,8 @@ const ForgotPassword = () => {
   };
 
   const setupNewPasswordInitialValue = {
+    token,
+    email,
     password: "",
     password_confirmation: "",
   };
@@ -75,7 +84,9 @@ const ForgotPassword = () => {
       <Formik
         initialValues={setupNewPasswordInitialValue}
         validationSchema={ForgotPasswordFormSchema}
-        onSubmit={handleSignInSubmit}
+        onSubmit={async (data: SetupNewPasswordInitialValue) => {
+          await ForgotPasswordSubmit(data);
+        }}
       >
         {({ isSubmitting }): any => {
           return (
@@ -118,9 +129,9 @@ const ForgotPassword = () => {
     <>
       <NextHead title="BarClerk | Sign In" />
       <AdminAuthTemplate hasBorder={true}>
-        <div className="flex flex-col gap-10 w-[360px]">
+        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
           <header className="flex flex-col items-center h-full justify-center">
-            <h1 className="text-[27px] font-semibold text-dark">{isLinkClicked ? "Setup your new password" : "Request password reset link"}</h1>
+            <h1 className="mobile:!text-center text-[27px] font-semibold text-dark">{isLinkClicked ? "Setup your new password" : "Request password reset link"}</h1>
           </header>
           {isLinkClicked ? SetupNewPassword : <RequestResetLink />}
         </div>

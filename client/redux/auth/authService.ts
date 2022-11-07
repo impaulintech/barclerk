@@ -35,6 +35,16 @@ const signOut = async (): Promise<any> => {
   return response.data;
 };
 
+const requestPasswordResetLink = async (email: any): Promise<any> => {
+  const response = await axios.post('/forgot-password', { email });
+  return response.data;
+};
+
+const resetPassword = async (data: any): Promise<any> => {
+  const response = await axios.post('/reset-password', data);
+  return response.data;
+};
+
 const hydrateUserState = async (): Promise<any> => {
   const response = await axios.get('/auth');
   return response.data;
@@ -44,7 +54,9 @@ const authService = {
   signUp,
   signIn,
   signOut,
+  resetPassword,
   hydrateUserState,
+  requestPasswordResetLink,
 };
 
 export default authService;

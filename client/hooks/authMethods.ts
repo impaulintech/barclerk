@@ -1,11 +1,23 @@
+import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import withReactContent from 'sweetalert2-react-content';
 
+import {
+  reset,
+  signIn,
+  signOut,
+  signUp,
+  requestPasswordResetLink,
+  resetPassword,
+} from 'redux/auth/authSlice';
+import redirect from 'utils/redirect';
+import { swalDark } from 'utils/customSwal';
 import { SignInUpFormValues, Store } from 'shared/types';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxSelector';
-import { reset, signIn, signOut, signUp } from 'redux/auth/authSlice';
 
 export const useAuthMethods = () => {
+  const MySwal = withReactContent(Swal);
   const { error } = useAppSelector((state: Store) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -54,16 +66,61 @@ export const useAuthMethods = () => {
     });
   };
 
-  const ResetLinkSubmit = async (
-    data: SignInUpFormValues
-  ): Promise<void> => {
-     
+  const ResetLinkSubmit = async (email: string): Promise<void> => {
+    const checkingAccount = toast.loading('Checking your account...');
+
+    dispatch(requestPasswordResetLink(email)).then((action) => {
+      const { status, message } = action.payload || {};
+      const duration = { duration: 6000 };
+      toast.dismiss(checkingAccount);
+
+      if (status >= 400)
+        return toast.error('We cannot find your email addres.', duration);
+      if (message === 'Please wait before retrying.') {
+      } else {
+        toast.success(message, duration);
+      }
+    });
   };
 
   const ForgotPasswordSubmit = async (
-    data: SignInUpFormValues
+    email: SignInUpFormValues
   ): Promise<void> => {
-     
+    const accountSetup = toast.loading('Setting up your new password...');
+    
+    dispatch(resetPassword(email)).then((res) => {
+      const { status } = res.payload;
+      const duration = { duration: 9000 };
+      toast.dismiss(accountSetup);
+
+      if (status >= 400) {
+        return toast.error(
+          'Token is invalid or expired.\nPlease request a new reset link.',
+          duration
+        );
+      }
+
+      MySwal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'You can now log in using your new password that you created!',
+        confirmButtonText: 'Go to Dashboard',
+        footer: `<span style="color:#F6F6F6">This page will be automatically redirected to login in <b>3</b>s.</span>`,
+        timer: 3000,
+        didOpen: () => {
+          const b: any = MySwal.getContainer()?.querySelector('b');
+          setInterval(() => {
+            b.textContent = (
+              (MySwal.getTimerLeft() || 3000 % 60000) / 1000
+            ).toFixed(0);
+          }, 1000);
+        },
+        ...swalDark,
+      }).then((result: { isConfirmed: boolean }) => {
+        if (result.isConfirmed) redirect('/');
+        redirect('/');
+      });
+    });
   };
 
   return {

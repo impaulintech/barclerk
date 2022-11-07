@@ -58,6 +58,28 @@ export const signOut = createAsyncThunk(
   }
 );
 
+export const requestPasswordResetLink = createAsyncThunk(
+  'auth/requestPasswordResetLink',
+  async (email: string, thunkAPI) => {
+    try {
+      return await authService.requestPasswordResetLink(email);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(catchError(error));
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (data: any, thunkAPI) => {
+    try {
+      return await authService.resetPassword(data);
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(catchError(error));
+    }
+  }
+);
+
 export const hydrateUserState = createAsyncThunk(
   'auth/hydrateUserState',
   async (_, thunkAPI) => {
