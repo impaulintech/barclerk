@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link"; 
+import Link from "next/link";
 import { Formik, Form } from "formik";
 import React, { useState } from "react";
- 
+
+import { getCookie } from "cookies-next";
 import Button from "components/atoms/Button";
 import useRememberMe from "hooks/useRememberMe";
 import NextHead from "components/atoms/NextHead";
 import { useAuthMethods } from "hooks/authMethods";
 import { SignInFormSchema } from "shared/validation";
 import CustomForm from "components/molecules/CustomForm";
+import { SignInFormikInitialValues } from "shared/types";
 import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
 
 const SignIn = () => {
@@ -19,30 +21,30 @@ const SignIn = () => {
     onChangeRemember,
   } = useRememberMe();
   const { handleSignInSubmit } = useAuthMethods();
-  const [isPassHidden, setIsPassHidden] = useState<boolean>(true);  
+  const initialEmailValue = getCookie("email") || "";
+  const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
 
-  const formikInitialValues = {
-    email: "",
+  const formikInitialValues:SignInFormikInitialValues = {
+    email: initialEmailValue.toString(),
     password: ""
-  }; 
+  };
 
   return (
     <>
       <NextHead title="BarClerk | Sign In" />
       <AdminAuthTemplate>
-        <div className="flex flex-col gap-10 w-[360px]">
+        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
           <header className="flex flex-col items-center h-full justify-center">
             <img src="/images/logo-dark-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
             <h1 className="text-[36px] font-semibold text-dark mobile:text-[30px]">Account Login</h1>
-          </header>
-
+          </header> 
           <div className=" flex flex-col gap-4">
             <Formik
               initialValues={formikInitialValues}
               validationSchema={SignInFormSchema}
               onSubmit={handleSignInSubmit}
             >
-              {({ isSubmitting }): any => {
+              {({ isSubmitting } : { isSubmitting: boolean }) => {
                 return (
                   <Form>
                     <div className="flex flex-col gap-4" onChange={onChangeRemember}>
