@@ -42,7 +42,7 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
 
         const forgotPasswordPage = req.url?.includes('forgot-password');
         const linkClicked =
-          req.url?.includes('user') && req.url?.includes('verified');
+          req.url?.includes('token') && req.url?.includes('email');
 
         if (forgotPasswordPage) {
           if (!token) return { props: {} };

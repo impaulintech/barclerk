@@ -16,14 +16,14 @@ import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
 
 const ForgotPassword = () => {
   const { state }: any = Router?.router || {};
-  const { user, verified } = state?.query || {};
+  const { token, email } = state?.query || {};
   const { handleSignInSubmit, ResetLinkSubmit } = useAuthMethods();
   const [isPassHidden, setIsPassHidden] = useState<boolean>(true);
   const [isLinkClicked, setIsLinkClicked] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLinkClicked((user && verified) ? true : false);
-  }, [user, verified, isLinkClicked]);
+    setIsLinkClicked((token && email) ? true : false);
+  }, [token, email, isLinkClicked]);
 
   const setRequestResetLinkInitialValue = {
     email: "",

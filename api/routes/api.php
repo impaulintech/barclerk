@@ -30,11 +30,6 @@ Route::group(['prefix' => '/'], function () {
     });
 });
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/v1'], function () {
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/{user}', [UserController::class, 'show']);
-    });
-});
 
-require __DIR__ . '/auth.php';
+require __DIR__ . '/user/auth.php';
+require __DIR__ . '/user/user.php';
