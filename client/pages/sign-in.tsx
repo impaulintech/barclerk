@@ -100,4 +100,5 @@ const SignIn = () => {
   );
 };
 
+export { SignInUpAuthChecker as getServerSideProps } from 'utils/getServerSideProps';
 export default SignIn;
