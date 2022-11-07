@@ -12,3 +12,4 @@ export default function Home() {
   )
 }
 
+export { authCheck as getServerSideProps } from 'utils/getServerSideProps';
