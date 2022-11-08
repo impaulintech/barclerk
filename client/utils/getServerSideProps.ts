@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 
-import { setAuth } from 'redux/auth/authSlice';
 import { wrapper } from 'redux/store';
 import { axios } from 'shared/lib/axios';
+import { setAuth } from 'redux/auth/authSlice';
+import { serverSideErrorMessage } from './serverSideErrorMessage';
 
 export const SignInUpAuthChecker: GetServerSideProps =
   wrapper.getServerSideProps((store) => async ({ req }) => {
@@ -23,7 +24,9 @@ export const SignInUpAuthChecker: GetServerSideProps =
           props: req,
         };
       }
-    } catch (error: any) {}
+    } catch (error: any) {
+      if (error.code === 'ECONNREFUSED') serverSideErrorMessage(error);
+    }
 
     return {
       props: {},
@@ -59,12 +62,12 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
         const forgotPasswordPage = req.url?.includes('forgot-password');
 
         if (forgotPasswordPage) return { props: {} };
-        if (error.response.status === 404) {
+        if (error.response?.status === 404) {
           return {
             notFound: true,
           };
         }
-        if (error.response.status === 500) {
+        if (error.response?.status === 500) {
           throw new Error('Internal Server Error');
         }
         return {
