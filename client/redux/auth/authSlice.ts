@@ -6,15 +6,11 @@ import {
 } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import {
-  User,
-  InitialState,
-  SignInUpFormValues, 
-} from 'shared/types';
 import authService from './authService';
 import { catchError } from 'utils/handleAxiosError';
+import { User, InitialState, SignInUpFormValues } from 'shared/types';
 
-const initialState: InitialState = {
+const initialState: any = {
   user: null,
   isError: false,
   isSuccess: false,
@@ -106,7 +102,7 @@ export const authSlice = createSlice({
     },
     setAuth: (state, action) => {
       state.user = action.payload;
-    },
+    }
   },
   extraReducers: (builder: ActionReducerMapBuilder<InitialState>) => {
     builder
@@ -114,20 +110,20 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(signUp.fulfilled, (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
         state.isSuccess = true;
         state.isLoading = false;
-        state.user = action.payload;
         state.error = {
           status: 0,
           content: null,
         };
       })
       .addCase(signUp.rejected, (state, action: PayloadAction<any>) => {
+        state.user = null;
         state.isError = true;
         state.isSuccess = false;
         state.isLoading = false;
         state.error = action.payload;
-        state.user = null;
       })
       .addCase(HYDRATE, (state, action: any) => {
         if (action.payload?.auth?.user) {

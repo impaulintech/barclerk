@@ -33,12 +33,12 @@ const SignIn = () => {
     <>
       <NextHead title="BarClerk | Sign In" />
       <AdminAuthTemplate>
-        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
+        <div className="flex flex-col gap-5 !max-w-[300px] min-w-[300px] w-full">
           <header className="flex flex-col items-center h-full justify-center">
-            <img src="/images/logo-dark-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
-            <h1 className="text-[36px] font-semibold text-dark mobile:text-[30px]">Account Login</h1>
+            <img src="/images/logo-dark-transparent.png" className="h-[90px] w-[99px] -mb-3" alt="logo" />
+            <h1 className="text-[21px] font-semibold text-dark mobile:text-[15px]">Account login</h1>
           </header> 
-          <div className=" flex flex-col gap-4">
+          <div className=" flex flex-col gap-3">
             <Formik
               initialValues={formikInitialValues}
               validationSchema={SignInFormSchema}
@@ -47,9 +47,9 @@ const SignIn = () => {
               {({ isSubmitting } : { isSubmitting: boolean }) => {
                 return (
                   <Form>
-                    <div className="flex flex-col gap-4" onChange={onChangeRemember}>
+                    <div className="flex flex-col gap-1" onChange={onChangeRemember}>
                       <CustomForm
-                        label="Email address"
+                        label="Email"
                         name="email"
                         type="email"
                         defaultValue={rememberedEmail}
@@ -81,14 +81,14 @@ const SignIn = () => {
                       <Link href="./forgot-password"><h1 className="ml-2 text-xs font-semibold text-dark">Forgot Password?</h1></Link>
                     </div>
 
-                    <Button isSubmitting={isSubmitting} value="Login" className="mt-10" />
+                    <Button isSubmitting={isSubmitting} value="Login" className="mt-[39px]" />
                   </Form>
                 );
               }}
             </Formik>
 
             <div className="flex flex-col gap-5 justify-center items-center">
-              <span className="block text-md font-medium text-dark">
+              <span className="block text-[12px] font-medium text-dark">
                 Doesn’t have an account yet?
                 <span className="text-failed cursor-pointer hover:text-failed/70 ml-1" >
                   <Link href="./sign-up">Register</Link>

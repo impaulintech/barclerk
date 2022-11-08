@@ -8,8 +8,8 @@ import NextHead from "components/atoms/NextHead";
 import { useAuthMethods } from "hooks/authMethods";
 import { SignUpFormSchema } from "shared/validation";
 import CustomForm from "components/molecules/CustomForm";
-import { SignUpFormikInitialValues } from "shared/types";
-import AdminAuthTemplate from "components/templates/AdminAuthTemplate"; 
+import { SignUpFormikInitialValues } from "shared/types"; 
+import AdminAuthTemplate from "components/templates/AdminAuthTemplate";
 
 const SignUp = () => {
   const { handleSignUpSubmit: handleAuthSubmit } = useAuthMethods();
@@ -21,72 +21,74 @@ const SignUp = () => {
     email: "",
     password: "",
     password_confirmation: "",
-  };
+  }; 
 
   return (
     <>
       <NextHead title="BarClerk | Sign Up" />
       <AdminAuthTemplate>
-        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
+        <div className="flex flex-col gap-5 max-w-[300px] min-w-[300px] w-full">
           <header className="flex flex-col items-center h-full justify-center">
-            <img src="/images/logo-dark-transparent.png" className="h-[180px] w-[201px]" alt="logo" />
-            <h1 className="text-[36px] font-semibold text-dark mobile:text-[30px]">Register Account</h1>
+            <img src="/images/logo-dark-transparent.png" className="h-[90px] w-[99px] -mb-3" alt="logo" />
+            <h1 className="text-[21px] font-semibold text-dark mobile:text-[15px]">Account register</h1>
           </header>
-
-          <div className=" flex flex-col gap-4">
+          <div className=" flex flex-col gap-3">
             <Formik
               initialValues={formikInitialValues}
               validationSchema={SignUpFormSchema}
               onSubmit={handleAuthSubmit}
             >
-              {({ isSubmitting }: { isSubmitting: boolean }) => {
+              {({ isSubmitting }: { isSubmitting: boolean; }) => { 
+                
                 return (
                   <Form>
-                    <div className="flex flex-col gap-4 ">
-                      <div className="flex flex-row gap-4 mobile:flex-col">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-row gap-3 mobile:flex-col">
                         <CustomForm
-                          label="First Name"
+                          label="First name"
                           name="first_name"
                           type="text"
                           placeholder="John"
                         />
                         <CustomForm
-                          label="Last Name"
+                          label="Last name"
                           name="last_name"
                           type="text"
                           placeholder="Doe"
                         />
                       </div>
                       <CustomForm
-                        label="Email address"
+                        label="Email"
                         name="email"
                         type="email"
                         placeholder="john.doe@email.com"
                       />
-                      <CustomForm
-                        label="Password"
-                        name="password"
-                        type={isPassHidden ? "password" : "text"}
-                        placeholder="●●●●●●●"
-                        isPassHidden={isPassHidden}
-                        setIsPassHidden={setIsPassHidden}
-                      />
-                      <CustomForm
-                        label="Confirm Password"
-                        name="password_confirmation"
-                        type={isPassHidden ? "password" : "text"}
-                        placeholder="●●●●●●●●"
-                      />
+                      <div className="flex flex-row gap-3 mobile:flex-col">
+                        <CustomForm
+                          label="Password"
+                          name="password"
+                          type={isPassHidden ? "password" : "text"}
+                          placeholder="●●●●●●●"
+                          isPassHidden={isPassHidden}
+                          setIsPassHidden={setIsPassHidden}
+                        />
+                        <CustomForm
+                          label="Confirm password"
+                          name="password_confirmation"
+                          type={isPassHidden ? "password" : "text"}
+                          placeholder="●●●●●●●●"
+                        />
+                      </div>
                     </div>
 
-                    <Button isSubmitting={isSubmitting} value="Register" className="mt-10" />
+                    <Button isSubmitting={isSubmitting} value="Register" className="mt-[39px]" />
                   </Form>
                 );
               }}
             </Formik>
 
             <div className="flex flex-col gap-5 justify-center items-center">
-              <span className="block text-md font-medium text-barclerk-10">
+              <span className="block text-[12px] text-md font-medium text-barclerk-10">
                 Already have an account?
                 <span className="text-failed cursor-pointer hover:text-failed/70 ml-1" >
                   <Link href="./sign-in">Login</Link>

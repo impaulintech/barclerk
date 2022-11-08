@@ -26,7 +26,7 @@ const CustomForm = ({
 
   return (
     <div className="w-full">
-      <label htmlFor="last_name" className="block text-md font-medium text-dark">
+      <label htmlFor="last_name" className="block text-md font-medium text-dark text-sm">
         <small className="text-failed">*</small> {label}
       </label>
       <div>
@@ -39,7 +39,7 @@ const CustomForm = ({
               px-2 pb-1
               placeholder-text-failed   
               outline-none focus:ring-1 focus:border-failed
-              block w-full h-[36px] rounded-sm border-[2px] border-blue-400 py-0.5 
+              block w-full h-[33px] rounded-sm border-[2px] border-blue-400 py-0.5 
               ${touched && error && "text-failed !border-failed"}
               ${className}
             `}
@@ -57,7 +57,7 @@ const CustomForm = ({
           )}
         </div>
       </div>
-      {touched && error && <span className="text-failed font-medium">{error}</span>}
+      {touched && error && <span className="text-failed font-medium text-sm">{error}</span>}
     </div>
   );
 };

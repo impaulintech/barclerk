@@ -63,7 +63,7 @@ module.exports = {
       },
       colors: {
         dark: "#161616",
-        light: "#F5FAFD",
+        light: "#FFFFFF",
         success: "#0EDE6E",
         failed: "#DC2626",
         barclerk: {

@@ -15,18 +15,18 @@ import redirect from 'utils/redirect';
 import { swalDark } from 'utils/customSwal';
 import { SignInUpFormValues, Store } from 'shared/types';
 import { useAppDispatch, useAppSelector } from 'hooks/reduxSelector';
+import { store } from 'redux/store';
 
 export const useAuthMethods = () => {
   const MySwal = withReactContent(Swal);
   const { error } = useAppSelector((state: Store) => state.auth);
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const handleAuthSignOut = async () => {
     dispatch(reset());
     toast.promise(
       dispatch(signOut()).then(() => {
-        router.push('/sign-in');
+        redirect('/sign-in');
       }),
       {
         loading: 'Signing out...',
@@ -43,8 +43,9 @@ export const useAuthMethods = () => {
       const { content, status } = payload || {};
 
       if (status) return toast.error(content?.email);
+      console.log(store.getState().auth?.isError);
       toast.success('Welcome to dashboard!');
-      router.push('/');
+      redirect('/');
     });
   };
 
@@ -53,16 +54,16 @@ export const useAuthMethods = () => {
   ): Promise<void> => {
     const creatingAccount = toast.loading('Creating your account...');
 
-    dispatch(signUp(data)).then(({ payload }) => {
-      const { status } = payload || {};
+    dispatch(signUp(data)).then((action) => {
+      const { status } = action.payload || {};
       toast.dismiss(creatingAccount);
-
+      
       if (status) {
         return toast.error('Something went wrong.\nPlease try again later.');
       }
-
+ 
       toast.success('Account created successfully!');
-      router.push('/');
+      redirect('/');
     });
   };
 
@@ -76,10 +77,10 @@ export const useAuthMethods = () => {
 
       if (status >= 400)
         return toast.error('We cannot find your email addres.', duration);
-      if (message === 'Please wait before retrying.') {
-      } else {
+
+      if (message === 'Please wait before retrying.')
         toast.success(message, duration);
-      }
+      toast.success(message, duration);
     });
   };
 
@@ -87,7 +88,7 @@ export const useAuthMethods = () => {
     email: SignInUpFormValues
   ): Promise<void> => {
     const accountSetup = toast.loading('Setting up your new password...');
-    
+
     dispatch(resetPassword(email)).then((res) => {
       const { status } = res.payload;
       const duration = { duration: 9000 };
