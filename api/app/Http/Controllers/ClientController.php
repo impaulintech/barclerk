@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Http\Requests\Client\StoreClientRequest;
 use App\Http\Resources\ClientResource;
 use App\Utils\ChargeUtils;

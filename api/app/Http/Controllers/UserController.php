@@ -23,6 +23,6 @@ class UserController extends Controller
   public function update(UpdateUserRequest $request)
   {
     auth()->user()->updateOrFail($request->validated());
-    return response()->json(auth()->user);
+    return response()->json(auth()->user());
   }
 }
