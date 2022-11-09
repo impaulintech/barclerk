@@ -17,6 +17,10 @@ class ClientController extends Controller
   {
     $clients = auth()->user()->clients()->with(['charges']);
 
+    if (request('search_query')) {
+      $clients->searchByName(request('search_query'));
+    }
+
     return ClientResource::collection($clients->get());
   }
 

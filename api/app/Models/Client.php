@@ -20,4 +20,10 @@ class Client extends Model
   {
     return $this->hasMany(Charge::class);
   }
+
+  public function scopeSearchByName($query, $name)
+  {
+    $searchType = env('DB_CONNECTION') === 'pgsql' ? 'ilike' : 'like';
+    return $query->where('name', $searchType, '%' . $name . '%');
+  }
 }
