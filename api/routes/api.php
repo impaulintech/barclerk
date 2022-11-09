@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/'], function () {
     ]);
   });
 
-  Route::apiResource('client', ClientController::class)->only(['store']);
+  Route::apiResource('client', ClientController::class)->only(['index', 'store']);
 });
 
 
