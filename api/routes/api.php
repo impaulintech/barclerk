@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -15,19 +16,21 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['prefix' => '/'], function () {
-    Route::get('/', function () {
-        return response()->json([
-            "message" => "You are at the root of this api",
-            "version" => "/v1"
-        ]);
-    });
-    Route::get('/v1', function () {
-        return response()->json([
-            "message" => "You are at the version 1 of this api",
-            "more" => "api documentation"
-        ]);
-    });
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/'], function () {
+  Route::get('/', function () {
+    return response()->json([
+      "message" => "You are at the root of this api",
+      "version" => "/v1"
+    ]);
+  });
+  Route::get('/v1', function () {
+    return response()->json([
+      "message" => "You are at the version 1 of this api",
+      "more" => "api documentation"
+    ]);
+  });
+
+  Route::apiResource('client', ClientController::class)->only(['store']);
 });
 
 
