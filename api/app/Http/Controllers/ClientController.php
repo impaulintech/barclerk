@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Http\Requests\Client\StoreClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Utils\ChargeUtils;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
 {
+
+  public function index()
+  {
+    $clients = auth()->user()->clients()->with(['charges']);
+
+    return ClientResource::collection($clients->get());
+  }
+
   public function store(StoreClientRequest $request)
   {
     DB::beginTransaction();
