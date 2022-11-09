@@ -6,10 +6,23 @@ export type SignInUpFormValues = {
   password_confirmation?: string;
 };
 
+export type SignInFormikInitialValues = { 
+  email: string;
+  password: string; 
+};
+
+export type SignUpFormikInitialValues = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+};
+
 export type AxiosResponseError = {
-  status: number | undefined
-  content: any
-}
+  status: number | undefined;
+  content: any;
+};
 
 export type SignInUpFormFields =
   | 'first_name'
@@ -17,7 +30,6 @@ export type SignInUpFormFields =
   | 'email'
   | 'password'
   | 'password_confirmation';
-
 
 export type User = {
   user: {
@@ -44,4 +56,4 @@ export type Store = {
 };
 
 // Consumes a lot of time for me, for now I added type any. Need help on this.
-export type Cookie = string | boolean | any; 
+export type Cookie = string | boolean | any;

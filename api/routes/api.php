@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,26 +14,23 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['prefix' => '/'], function () {
-    Route::get('/', function () {
-        return response()->json([
-            "message" => "You are at the root of this api",
-            "version" => "/v1"
-        ]);
-    });
-    Route::get('/v1', function () {
-        return response()->json([
-            "message" => "You are at the version 1 of this api",
-            "more" => "api documentation"
-        ]);
-    });
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/'], function () {
+  Route::get('/', function () {
+    return response()->json([
+      "message" => "You are at the root of this api",
+      "version" => "/v1"
+    ]);
+  });
+  Route::get('/v1', function () {
+    return response()->json([
+      "message" => "You are at the version 1 of this api",
+      "more" => "api documentation"
+    ]);
+  });
+
+  Route::apiResource('client', ClientController::class)->only(['index', 'store']);
 });
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/v1'], function () {
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::get('/{user}', [UserController::class, 'show']);
-    });
-});
 
-require __DIR__ . '/auth.php';
+require __DIR__ . '/user/auth.php';
+require __DIR__ . '/user/user.php';

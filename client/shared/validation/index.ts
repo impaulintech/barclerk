@@ -12,7 +12,7 @@ export const ResetLinkSubmitFormSchema = Yup.object().shape({
 export const ForgotPasswordFormSchema = Yup.object().shape({
   password: Yup.string()
     .required('Password is required')
-    .min(8, 'Password length should be at least 8 characters')
+    .min(9, 'Password length should be at least 9 characters')
     .max(15, 'Password cannot exceed more than 15 characters'),
   password_confirmation: Yup.string()
     .required('Confirm Password is required')
@@ -32,7 +32,7 @@ export const SignUpFormSchema = Yup.object().shape({
   email: Yup.string().email().required().label('Email'),
   password: Yup.string()
     .required('Password is required')
-    .min(8, 'Password length should be at least 8 characters')
+    .min(9, 'Password length should be at least 9 characters')
     .max(15, 'Password cannot exceed more than 15 characters'),
   password_confirmation: Yup.string()
     .required('Confirm Password is required')
