@@ -30,6 +30,7 @@
     "next-redux-wrapper": "^8.0.0",
     "nextjs-progressbar": "^0.0.16",
     "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
     "react-feather": "^2.0.10",
     "react-hot-toast": "^2.4.0",
     "react-redux": "^8.0.4",
