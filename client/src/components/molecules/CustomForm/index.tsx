@@ -26,7 +26,7 @@ const CustomForm: FC<Props> = ({
 
   return (
     <div className="w-full space-y-1">
-      <label htmlFor="last_name" className="block text-md font-medium text-slate-700 text-sm">
+      <label htmlFor="last_name" className="text-md block text-sm font-medium text-slate-700">
         {label} <small className="text-failed">*</small>
       </label>
       <div>
@@ -36,17 +36,17 @@ const CustomForm: FC<Props> = ({
             {...props}
             value={field?.value || defaultValue || ''}
             className={`
-              placeholder-text-failed   
-              outline-none focus:ring-1 focus:border-failed
-              block w-full h-[33px] rounded-md border-[2px] border-slate-400 
-              ${touched && error && 'text-failed !border-failed'}
+              placeholder-text-failed block
+              h-[33px] w-full rounded-md border-[2px]
+              border-slate-400 pr-8 outline-none focus:border-failed focus:ring-0
+              ${touched && error && '!border-failed text-failed'}
               ${className}
             `}
           />
           {props.name === 'password' && (
             <button
               type="button"
-              className="group absolute inset-y-0 right-0 block overflow-hidden rounded-r px-4 outline-none transition duration-75 ease-in-out"
+              className="group absolute inset-y-0 right-0 block overflow-hidden rounded-r px-3 outline-none transition duration-75 ease-in-out"
               onClick={() => setIsPassHidden(!isPassHidden)}
             >
               {isPassHidden ? (
@@ -58,7 +58,7 @@ const CustomForm: FC<Props> = ({
           )}
         </div>
       </div>
-      {touched && error && <span className="text-failed font-medium text-xs pl-1">{error}</span>}
+      {touched && error && <span className="pl-1 text-xs font-medium text-failed">{error}</span>}
     </div>
   )
 }

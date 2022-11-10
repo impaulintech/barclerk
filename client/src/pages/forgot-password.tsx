@@ -52,14 +52,14 @@ const ForgotPassword: NextPage = (): JSX.Element => {
                   placeholder="john.doe@email.com"
                 />
               </div>
-              <div className="flex flex-row gap-3 mt-10 mb-5">
+              <div className="mt-10 mb-5 flex flex-row gap-3">
                 <Button
                   value="Go Back"
                   onClick={(e) => {
                     e.preventDefault()
                     Router.push('/sign-in')
                   }}
-                  className="!bg-transparent !text-light !border-2 !border-barclerk-10 hover:!border-transparent hover:!bg-barclerk-10/70"
+                  className="!border-2 !border-barclerk-10 !bg-transparent !text-barclerk-10 hover:!border-transparent hover:!bg-barclerk-10/70 hover:!text-white"
                 />
                 <Button isSubmitting={isSubmitting} value="Continue" />
               </div>
@@ -94,7 +94,7 @@ const ForgotPassword: NextPage = (): JSX.Element => {
                   label="Password"
                   name="password"
                   type={isPassHidden ? 'password' : 'text'}
-                  placeholder="●●●●●●●"
+                  placeholder="•••••••••••"
                   isPassHidden={isPassHidden}
                   setIsPassHidden={setIsPassHidden}
                 />
@@ -102,17 +102,17 @@ const ForgotPassword: NextPage = (): JSX.Element => {
                   label="Confirm Password"
                   name="password_confirmation"
                   type={isPassHidden ? 'password' : 'text'}
-                  placeholder="●●●●●●●●"
+                  placeholder="•••••••••••"
                 />
               </div>
-              <div className="flex flex-row gap-3 mt-10 mb-5">
+              <div className="mt-10 mb-5 flex flex-row gap-3">
                 <Button
                   value="Go Back"
                   onClick={(e) => {
                     e.preventDefault()
                     Router.push('/forgot-password')
                   }}
-                  className="!bg-transparent !text-light !border-2 !border-barclerk-10 hover:!border-transparent hover:!bg-barclerk-10/70"
+                  className="!border-2 !border-barclerk-10 !bg-transparent !text-barclerk-10 hover:!border-transparent hover:!bg-barclerk-10/70 hover:!text-white"
                 />
                 <Button isSubmitting={isSubmitting} value="Continue" />
               </div>
@@ -127,9 +127,9 @@ const ForgotPassword: NextPage = (): JSX.Element => {
     <>
       <NextHead key="forgot" title="BarClerk | Sign In" />
       <AdminAuthTemplate hasBorder={true}>
-        <div className="flex flex-col gap-10 max-w-[360px] min-w-[315px] w-full">
-          <header className="flex flex-col items-center h-full justify-center">
-            <h1 className="mobile:!text-center text-[27px] font-semibold text-dark">
+        <div className="flex w-full min-w-[315px] max-w-[360px] flex-col gap-10">
+          <header className="flex h-full flex-col items-center justify-center">
+            <h1 className="text-[23px] font-semibold text-dark mobile:!text-center">
               {isLinkClicked ? 'Setup your new password' : 'Request password reset link'}
             </h1>
           </header>
