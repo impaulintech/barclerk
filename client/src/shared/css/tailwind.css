@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .error {
+    @apply mt-1 ml-0.5 block text-left text-xs text-red-500;
+  }
+  .default-scrollbar {
+    @apply scrollbar-thin scrollbar-thumb-slate-500 scrollbar-thumb-rounded-md;
+  }
+  .scroll-show-on-hover {
+    @apply overflow-x-hidden overflow-y-hidden hover:overflow-y-auto;
+  }
+  /* Pagination */
+  .paginate-section {
+    @apply flex select-none items-center justify-center py-5 px-4;
+  }
+  .paginate-link {
+    @apply border border-slate-300 py-2 px-3 text-sm leading-tight;
+  }
+  .paginate-link-active {
+    @apply bg-blue-50 text-barclerk-10 hover:bg-blue-100 hover:text-barclerk-10/90;
+  }
+}

@@ -27,13 +27,13 @@ const SignIn: NextPage = (): JSX.Element => {
 
   return (
     <>
-      <NextHead key="sign-in" title="BarClerk | Sign In" />
+      <NextHead key="" title="BarClerk | Sign In" />
       <AdminAuthTemplate>
-        <div className="flex flex-col gap-5 !max-w-[300px] min-w-[300px] w-full">
-          <header className="flex flex-col items-center h-full justify-center">
+        <div className="flex w-full min-w-[300px] !max-w-[300px] flex-col gap-5">
+          <header className="flex h-full flex-col items-center justify-center">
             <img
               src="/images/logo-dark-transparent.png"
-              className="h-[90px] w-[99px] -mb-3"
+              className="-mb-3 h-[90px] w-[99px]"
               alt="logo"
             />
             <h1 className="pt-3 text-[21px] font-semibold text-dark mobile:text-[15px]">
@@ -49,7 +49,7 @@ const SignIn: NextPage = (): JSX.Element => {
               {({ isSubmitting }: { isSubmitting: boolean }) => {
                 return (
                   <Form>
-                    <div className="flex flex-col space-y-3 gap-1" onChange={onChangeRemember}>
+                    <div className="flex flex-col gap-1 space-y-3" onChange={onChangeRemember}>
                       <CustomForm
                         label="Email"
                         name="email"
@@ -61,22 +61,22 @@ const SignIn: NextPage = (): JSX.Element => {
                         label="Password"
                         name="password"
                         type={isPassHidden ? 'password' : 'text'}
-                        placeholder="●●●●●●●"
+                        placeholder="•••••••••••"
                         isPassHidden={isPassHidden}
                         setIsPassHidden={setIsPassHidden}
                       />
                     </div>
 
-                    <div className="flex justify-between mt-5">
+                    <div className="mt-5 flex justify-between">
                       <div className="flex items-center">
                         <input
                           id="remember"
                           type="checkbox"
                           defaultChecked={isRemembered}
                           onClick={onClickRemember}
-                          className="h-3 w-3 rounded-sm border border-gray-300 bg-transparent checked:bg-barcleark-30"
+                          className="checked:bg-barcleark-30 h-3 w-3 rounded-sm border border-gray-300 bg-transparent"
                         />
-                        <label htmlFor="remember" className="ml-2 font-semibold text-xs text-dark">
+                        <label htmlFor="remember" className="ml-2 text-xs font-semibold text-dark">
                           Remember me
                         </label>
                       </div>
@@ -85,21 +85,16 @@ const SignIn: NextPage = (): JSX.Element => {
                       </Link>
                     </div>
 
-                    <Button
-                      isAuth
-                      isSubmitting={isSubmitting}
-                      value="Continue"
-                      className="mt-[25px]"
-                    />
+                    <Button isSubmitting={isSubmitting} value="Continue" className="mt-[25px]" />
                   </Form>
                 )
               }}
             </Formik>
 
-            <div className="flex flex-col gap-5 justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-5">
               <span className="block text-[12px] font-medium text-dark">
-                You don't have an account?
-                <span className="text-barclerk-30 cursor-pointer hover:text-barclerk-30/70 ml-1">
+                Don't have an account?
+                <span className="ml-1 cursor-pointer text-barclerk-30 hover:text-barclerk-30/70">
                   <Link href="./sign-up">Register</Link>
                 </span>
               </span>

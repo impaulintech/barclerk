@@ -54,7 +54,8 @@ export const useAuthMethods = () => {
       toast.dismiss(creatingAccount)
 
       if (status) {
-        return toast.error('Something went wrong.\nPlease try again later.')
+        toast.error('Something went wrong.\nPlease try again later.')
+        return
       }
 
       toast.success('Account created successfully!')
@@ -86,10 +87,8 @@ export const useAuthMethods = () => {
       toast.dismiss(accountSetup)
 
       if (status >= 400) {
-        return toast.error(
-          'Token is invalid or expired.\nPlease request a new reset link.',
-          duration
-        )
+        toast.error('Token is invalid or expired.\nPlease request a new reset link.', duration)
+        return
       }
 
       MySwal.fire({

@@ -68,17 +68,7 @@ module.exports = {
           30: '#60B3D1',
           60: '#F5FAFD'
         },
-        primary: '#1164a3',
-        'dark-purple': '#350d36',
-        'light-purple': '#3f0e40',
-        'purple-hover': '#350d36',
-        'purple-border': '#522653',
-        'purple-primary': '#726ab9',
-        'light-purple-border': '#dcdcdc',
-        'purple-primary-hover': '#575089'
-      },
-      boxShadow: {
-        primary: '0px 18px 36px rgba(0, 0, 0, 0.05)'
+        success: '#0ede6e'
       }
     }
   },
@@ -86,6 +76,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('tailwind-scrollbar')({ nocompatible: true }),
-    require('tailwindcss-labeled-groups')(['board', 'task', 'tooltip', 'dropdown-action'])
+    require('tailwindcss-labeled-groups')()
   ]
 }
