@@ -57,3 +57,16 @@ export type Store = {
 
 // Consumes a lot of time for me, for now I added type any. Need help on this.
 export type Cookie = string | boolean | any
+
+export type MatterFormValues = {
+  matter_name: string
+  email: string
+  phone: number
+  postal_address: string
+  contribution: number | undefined | null
+  court: string
+  charges: string
+  pre_trial_restrictions: string
+  on_bail_postal_address: string
+  in_custody_location: string
+}
