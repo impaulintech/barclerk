@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./public/**/*.html', './src/**/*.{js,jsx,ts,tsx,vue}'],
   theme: {
     extend: {
       screens: {
@@ -62,14 +59,14 @@ module.exports = {
         'px-750': '750px'
       },
       colors: {
-        dark: "#161616",
-        light: "#FFFFFF",
-        success: "#0EDE6E",
-        failed: "#DC2626",
+        dark: '#161616',
+        light: '#FFFFFF',
+        success: '#0EDE6E',
+        failed: '#DC2626',
         barclerk: {
-          10: "#012641",
-          30: "#60B3D1",
-          60: "#F5FAFD",
+          10: '#012641',
+          30: '#60B3D1',
+          60: '#F5FAFD'
         },
         primary: '#1164a3',
         'dark-purple': '#350d36',
