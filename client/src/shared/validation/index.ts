@@ -39,3 +39,16 @@ export const SignUpFormSchema = Yup.object().shape({
     .max(15, 'Password cannot exceed more than 15 characters')
     .oneOf([Yup.ref('password')], 'Passwords do not match')
 })
+
+export const MatterFormSchema = Yup.object().shape({
+  matter_name: Yup.string().required('Matter name is required'),
+  email: Yup.string().email().required().label('Email'),
+  phone: Yup.number().required('Phone number is required'),
+  postal_address: Yup.string().required('Postal Address is required'),
+  contribution: Yup.string().label('Contribution'),
+  court: Yup.string().required('Court is required'),
+  charges: Yup.string().required('Charges is required'),
+  pre_trial_restrictions: Yup.string(),
+  on_bail_postal_address: Yup.string(),
+  in_custody_location: Yup.string()
+})
