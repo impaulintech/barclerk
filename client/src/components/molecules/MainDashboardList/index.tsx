@@ -16,7 +16,9 @@ const MainDashboardList: FC<Props> = ({ matters, searchedVal }): JSX.Element => 
   return (
     <table className="w-full divide-y divide-slate-300 text-left text-sm leading-normal">
       <TableHead />
-      <tbody className="divide-y divide-slate-300 text-sm text-slate-600">
+      <tbody className="relative divide-y divide-slate-300 text-sm text-slate-600">
+        {/* <TableErrorMessage message="No Available Data" /> */}
+        {/* <TableErrorMessage message="Ooops.. Something went wrong" /> */}
         {!matters ? (
           <TableSkeleton length={length} />
         ) : (
@@ -25,7 +27,7 @@ const MainDashboardList: FC<Props> = ({ matters, searchedVal }): JSX.Element => 
               ?.filter(
                 (row: Matter) =>
                   !searchedVal?.length ||
-                  row?.matter_name
+                  row?.client_name
                     .toString()
                     .toLowerCase()
                     .includes(searchedVal.toString().toLowerCase())
@@ -37,6 +39,16 @@ const MainDashboardList: FC<Props> = ({ matters, searchedVal }): JSX.Element => 
         )}
       </tbody>
     </table>
+  )
+}
+
+const TableErrorMessage = ({ message }: { message: string }) => {
+  return (
+    <tr className="absolute inset-x-0 left-0 right-0 w-full flex-1">
+      <td className="bg-rose-50 py-2"></td>
+      <td className="w-full bg-rose-50 py-2 text-center font-medium text-rose-900">{message}</td>
+      <td className="bg-rose-50 py-2"></td>
+    </tr>
   )
 }
 

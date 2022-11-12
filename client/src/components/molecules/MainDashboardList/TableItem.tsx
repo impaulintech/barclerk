@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router'
 import React, { FC } from 'react'
+import Tippy from '@tippyjs/react'
+import { useRouter } from 'next/router'
 
 import { Matter } from '~/shared/interfaces'
 
@@ -13,7 +14,7 @@ const TableItem: FC<Props> = (props): JSX.Element => {
   const {
     matter: {
       id,
-      matter_name,
+      client_name,
       contribution,
       restrictions,
       extension,
@@ -46,30 +47,36 @@ const TableItem: FC<Props> = (props): JSX.Element => {
             }
           `}
         ></span>
-        <span className="font-semibold text-barclerk-10 line-clamp-1" title={matter_name}>
-          {matter_name}
+        <Tippy content={client_name}>
+          <span className="font-semibold text-barclerk-10 line-clamp-1">{client_name}</span>
+        </Tippy>
+      </td>
+      <td className="py-2 px-6">
+        {contribution === 'No' ? (
+          'No'
+        ) : (
+          <Tippy content={contribution}>
+            <span>Yes</span>
+          </Tippy>
+        )}
+      </td>
+      <td className="py-2 px-6">
+        <span className="line-clamp-1" title={restrictions}>
+          {restrictions}
         </span>
       </td>
       <td className="py-2 px-6">
-        <span className="line-clamp-1" title={contribution}>
-          {contribution}
-        </span>
-      </td>
-      <td className="py-2 px-6">
-        <span className="line-clamp-1" title={restrictions ? 'Yes' : 'No'}>
-          {restrictions ? 'Yes' : 'No'}
-        </span>
-      </td>
-      <td className="py-2 px-6">
-        <span className="line-clamp-1" title={extension}>
-          {extension}
-        </span>
+        <Tippy content={extension}>
+          <span className="line-clamp-1" title={extension}>
+            {extension}
+          </span>
+        </Tippy>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={extension}
-        >{`$${total_prep_used}`}</span>
+        >{`${total_prep_used}%`}</span>
       </td>
       <td className="py-2 px-6">
         <span
@@ -81,12 +88,12 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={`${remaining_fund}`}
-        >{`${remaining_fund}%`}</span>
+        >{`$${remaining_fund}`}</span>
       </td>
       <td className="py-2 px-6">
-        <span className="font-extrabold text-[#4B91AA] line-clamp-1" title={`${next_court_date}`}>
-          {next_court_date}
-        </span>
+        <Tippy content={next_court_date}>
+          <span className="font-extrabold text-[#4B91AA] line-clamp-1">{next_court_date}</span>
+        </Tippy>
       </td>
     </tr>
   )

@@ -58,11 +58,10 @@ const Index: NextPage = (): JSX.Element => {
           <MainTableHeader setSearchedVal={setSearchedVal} />
           <article
             className={`
-              h-full rounded-b-md border-x border-b border-slate-300 bg-white 
+              h-full rounded-b-md border-x border-b border-slate-300 bg-white
               shadow scrollbar-thin scrollbar-thumb-slate-400 scrollbar-thumb-rounded-md
             `}
           >
-            {/* <pre>{JSON.stringify(matterData, null, 2)}</pre> */}
             <MainDashboardList matters={displayMatters} searchedVal={searchedVal} />
           </article>
           <footer className="mt-3 flex items-center justify-center ">
