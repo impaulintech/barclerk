@@ -42,7 +42,7 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
       const config = { headers: { Authorization: `Bearer ${token}` } }
 
       try {
-        const res = await axios.get('/auth', config)
+        const res = await axios.get('auth', config)
         store.dispatch(setAuth(res.data))
 
         const forgotPasswordPage = req.url?.includes('forgot-password')
@@ -68,6 +68,7 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
             notFound: true
           }
         }
+        
         if (error.response?.status === 500) {
           throw new Error('Internal Server Error')
         }

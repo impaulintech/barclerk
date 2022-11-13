@@ -1,15 +1,21 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Menu } from '@headlessui/react'
 import { Settings, LogOut, MoreVertical } from 'react-feather'
 
-import { useAppSelector } from '~/hooks/reduxSelector'
-import { handleImageError } from '~/helpers/handleImageError'
+import { signOut } from '~/redux/auth/authSlice'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import MenuTransition from '~/components/atoms/MenuTransition'
 
 const UserMenuDropDown: FC = (): JSX.Element => {
   const { user } = useAppSelector((state) => state.auth)
+  const dispatch = useAppDispatch()
 
-  const fullname = `${user.first_name} ${user.last_name}`
+  const fullname = `${user?.first_name} ${user?.last_name}`
+
+  const handleSignOut = async () => {
+    await dispatch(signOut())
+    window.location.href = '/sign-in'
+  }
 
   return (
     <Menu as="div" className="relative z-30 inline-block text-left">
@@ -44,6 +50,7 @@ const UserMenuDropDown: FC = (): JSX.Element => {
                   group flex w-full items-center overflow-hidden px-3 py-2 text-sm font-medium text-slate-600 
                   transition duration-75 ease-in-out hover:bg-slate-100 
                 `}
+                onClick={handleSignOut}
               >
                 <LogOut className="mr-3 h-5 w-5" aria-hidden="true" />
                 Logout
