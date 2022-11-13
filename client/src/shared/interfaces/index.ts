@@ -1,8 +1,8 @@
 export interface Matter {
   id: number
-  matter_name: string
-  contribution: string
-  restrictions: boolean
+  client_name: string
+  contribution: string | number | undefined | null
+  restrictions: string
   extension: string
   total_prep_used: number
   total_fund_used: number

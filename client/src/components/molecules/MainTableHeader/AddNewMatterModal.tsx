@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form'
 import { Dialog } from '@headlessui/react'
-import React, { FC, useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Plus, X, User, Mail, Phone, Home, Lock, DollarSign } from 'react-feather'
+import React, { FC, useEffect, useState } from 'react'
+import { Plus, X, User, Mail, Phone, Home, Lock, DollarSign, Users } from 'react-feather'
 
 import { MatterFormValues } from '~/shared/types'
 import { MatterFormSchema } from '~/shared/validation'
@@ -50,9 +50,9 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
       reset({
         matter_name: '',
         email: '',
-        phone: 0,
+        phone: '',
         postal_address: '',
-        contribution: 0,
+        contribution: '',
         court: '',
         charges: '',
         pre_trial_restrictions: 'None',
@@ -67,7 +67,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
       setTimeout(() => {
         resolve()
         console.log(data)
-      }, 6000)
+      }, 3000)
     })
   }
 
@@ -92,7 +92,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
           {/* MODAL FORM CONTENT */}
           <main className="grid grid-cols-2 gap-x-3 gap-y-2 px-8 py-6 pb-10 md:gap-x-5 md:gap-y-4">
             {/* MATTER NAME FIELD */}
-            <section className="col-span-2 md:col-span-1">
+            <section className="col-span-2">
               <label htmlFor="matter_name" className="flex flex-col space-y-1">
                 <h2 className="text-sm text-slate-700">
                   Matter Name <span className="text-rose-500">*</span>
@@ -105,7 +105,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                       ${errors?.matter_name && 'border-rose-400 group-focus-within:border-rose-400'}
                     `}
                   >
-                    <User
+                    <Users
                       className={`
                       h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
                       ${errors?.matter_name && 'text-rose-400 group-focus-within:text-rose-400'}
@@ -130,6 +130,47 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
               </label>
               {errors?.matter_name && (
                 <span className="error">{`${errors.matter_name.message}`}</span>
+              )}
+            </section>
+            {/* CLIENT NAME FIELD */}
+            <section className="col-span-2 md:col-span-1">
+              <label htmlFor="client_name" className="flex flex-col space-y-1">
+                <h2 className="text-sm text-slate-700">
+                  Client Name <span className="text-rose-500">*</span>
+                </h2>
+                <div className="group relative">
+                  <span
+                    className={`
+                      absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
+                    group-focus-within:border-barclerk-30
+                      ${errors?.client_name && 'border-rose-400 group-focus-within:border-rose-400'}
+                    `}
+                  >
+                    <User
+                      className={`
+                      h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
+                      ${errors?.client_name && 'text-rose-400 group-focus-within:text-rose-400'}
+                    `}
+                    />
+                  </span>
+                  <input
+                    type="text"
+                    id="client_name"
+                    {...register('client_name')}
+                    disabled={isSubmitting}
+                    className={`
+                      w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
+                      disabled:cursor-not-allowed disabled:opacity-50
+                      ${
+                        errors?.client_name &&
+                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                      }
+                    `}
+                  />
+                </div>
+              </label>
+              {errors?.client_name && (
+                <span className="error">{`${errors.client_name.message}`}</span>
               )}
             </section>
             {/* EMAIL FIELD */}
@@ -260,7 +301,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                 </h2>
                 <div className="group relative">
                   <span className="absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 group-focus-within:border-barclerk-30">
-                    <DollarSign className="h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30" />
+                    <DollarSign className="h-5 w-5 text-slate-400 group-focus-within:text-barclerk-30" />
                   </span>
                   <input
                     type="text"
@@ -327,7 +368,15 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                       ${errors?.charges && 'border-rose-400 group-focus-within:border-rose-400'}
                     `}
                   >
-                    <CourtChargesIcon className="h-5 w-5 fill-current text-slate-400 group-focus-within:text-barclerk-30" />
+                    <CourtChargesIcon
+                      className={`
+                      h-5 w-5 fill-current text-slate-400 group-focus-within:text-barclerk-30
+                      ${
+                        errors?.charges &&
+                        'fill-current text-rose-400 group-focus-within:text-rose-400'
+                      }
+                    `}
+                    />
                   </span>
                   <TextareaAutosize
                     id="charges"

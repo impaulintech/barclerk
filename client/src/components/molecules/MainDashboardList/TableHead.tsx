@@ -11,7 +11,7 @@ const TableHead: FC<Props> = (): JSX.Element => {
         <th className="px-6 py-2 font-semibold">
           <button type="button" className="flex items-center outline-none active:scale-95">
             <span className="flex-shrink-0" title="Matter Name">
-              Matter Name
+              Client Name
             </span>
             <SortIcon className="ml-2 hidden h-3 w-3 flex-shrink-0 text-slate-500 md:block" />
           </button>

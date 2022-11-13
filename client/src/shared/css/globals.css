@@ -1,4 +1,5 @@
 @import './tailwind.css';
+@import 'tippy.js/dist/tippy.css';
 
 .paginate-link-active {
   color: #fff !important;

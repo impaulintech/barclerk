@@ -59,11 +59,12 @@ export type Store = {
 export type Cookie = string | boolean | any
 
 export type MatterFormValues = {
+  client_name: string
   matter_name: string
   email: string
-  phone: number
+  phone: string
   postal_address: string
-  contribution: number | undefined | null
+  contribution: string | undefined | null | number
   court: string
   charges: string
   pre_trial_restrictions: string
