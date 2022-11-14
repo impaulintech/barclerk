@@ -24,30 +24,37 @@ class StoreClientRequest extends FormRequest
   public function rules()
   {
     return [
-      "name" => ['required', 'max:255'],
+      "client_name" => ['required', 'max:255'],
+      "matter_name" => ['required', 'max:255'],
       "email" => ['nullable', 'max:255'],
       "phone_number" => ['nullable', 'max:255'],
       "postal_address" => ['nullable', 'max:65535'],
-      "is_contribution_required" => ['nullable'],
+      "contribution" => ['nullable'],
       "charges" => ['required', 'max:65535'],
       "court" => ['nullable', 'max:255'],
-      "is_on_bail" => ['nullable'],
-      "location" => ['nullable', 'max:65535']
+      "preTrialRestriction" => ['required'],
+      "value" => ['required']
     ];
   }
 
   public function attributes()
   {
     return [
-      "name" => "Name",
+      "client_name" => "Client Name",
+      "matter_name" => "Matter Name",
       "email" => "Email",
       "phone_number" => "Phone Number",
       "postal_address" => "Postal Address",
-      "is_contribution_required" => "Contribution",
+      "contribution" => "Contribution",
       "charges" => "Charges",
       "court" => "Court",
-      "is_on_bail" => "Bail",
-      "location" => "Location"
+      "preTrialRestriction" => "Pre Trial Restriction",
+      "value" => "Value" 
     ];
+  }
+
+  public function allowed()
+  {
+    return $this->except(['charges', 'preTrialRestriction', 'value']);
   }
 }

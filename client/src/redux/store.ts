@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
 import authReducer from '~/redux/auth/authSlice'
+import matterReducer from '~/redux/matter/matterSlice'
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    matter: matterReducer
   }
 })
 

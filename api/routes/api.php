@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/'], function () {
+Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/v1'], function () {
   Route::get('/', function () {
     return response()->json([
       "message" => "You are at the root of this api",

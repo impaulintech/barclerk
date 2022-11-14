@@ -13,12 +13,12 @@ import {
 import { store } from '~/redux/store'
 import redirect from '~/utils/redirect'
 import { swalDark } from '~/utils/customSwal'
-import { SignInUpFormValues, Store } from '~/shared/types'
+import { SignInUpFormValues } from '~/shared/types'
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 
 export const useAuthMethods = () => {
   const MySwal = withReactContent(Swal)
-  const { error } = useAppSelector((state: Store) => state.auth)
+  const { error } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
   const handleAuthSignOut = async () => {

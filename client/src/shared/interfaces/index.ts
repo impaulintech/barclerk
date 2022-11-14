@@ -1,12 +1,42 @@
-export interface Matter {
+export interface IMatter {
   id: number
-  client_name: string
-  contribution: string | number | undefined | null
-  restrictions: string
-  extension: string
-  total_prep_used: number
-  total_fund_used: number
-  remaining_fund: number
-  next_court_date: string
-  status: string
+  email?: string
+  clientName: string
+  matterName?: string
+  phoneNumber?: string
+  postalAddress?: string
+  contribution: number
+  court?: string
+  charges?: ICharges[]
+  extension?: string
+  totalPrepUsed?: number
+  totalFundUsed?: number
+  remainingFund?: number
+  nextCourtDate?: string
+  preTrialRestriction?: IPreTrialRestriction
+  status?: IStatus
+}
+
+export interface IUser {
+  id: number
+  first_name: string
+  last_name: string
+  email: string
+  created_at: string
+  updated_at: string
+}
+
+export interface IPreTrialRestriction {
+  id: number
+  name: string
+}
+
+export interface IStatus {
+  id: number
+  name: string
+}
+
+export interface ICharges {
+  id: number
+  name: string
 }

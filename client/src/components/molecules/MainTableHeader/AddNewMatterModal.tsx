@@ -37,7 +37,6 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
   const {
     reset,
     register,
-    formState,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<MatterFormValues>({
@@ -46,7 +45,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
   })
 
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
+    if (isOpen) {
       reset({
         matter_name: '',
         email: '',
@@ -60,14 +59,14 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
         in_custody_location: ''
       })
     }
-  }, [formState, reset])
+  }, [isOpen])
 
   const handleAddMatter = async (data: MatterFormValues): Promise<void> => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve()
         console.log(data)
-      }, 3000)
+      }, 1000)
     })
   }
 

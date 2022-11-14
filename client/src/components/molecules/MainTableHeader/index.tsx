@@ -1,52 +1,60 @@
-import { useRouter } from 'next/router'
 import { Menu } from '@headlessui/react'
 import { Filter, Plus, Search } from 'react-feather'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
-import MenuTransition from '~/components/atoms/MenuTransition'
+import { MatterStatus } from '~/utils/constants'
 import AddNewMatterModal from './AddNewMatterModal'
+import { useAppDispatch } from '~/hooks/reduxSelector'
+import { useDebounceSearch } from '~/hooks/searchDebounce'
+import MenuTransition from '~/components/atoms/MenuTransition'
+import { getMatters, reset } from '~/redux/matter/matterSlice'
 
-type Props = {
-  setSearchedVal: Dispatch<SetStateAction<string>>
-}
-
-const MainTableHeader: FC<Props> = ({ setSearchedVal }): JSX.Element => {
-  const router = useRouter()
+const MainTableHeader: FC = (): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [isOpenNewMatter, setIsOpenNewMatter] = useState<boolean>(false)
 
-  const toggle = (): void => setIsOpenNewMatter(!isOpenNewMatter)
+  const [search, setSearch] = useState<string>('')
+  const filterRef = useRef<HTMLSpanElement | null>(null)
+  const toggle = () => setIsOpenNewMatter(!isOpenNewMatter)
 
-  const { filter } = router.query
+  const debouncedSearch = useDebounceSearch(search, 500)
+
+  useEffect(() => {
+    dispatch(getMatters({ searchQuery: debouncedSearch }))
+  }, [debouncedSearch])
+
+  const handleFilterMatters = async (id: number, name: string) => {
+    if (filterRef.current) {
+      name === 'Remove Filter'
+        ? (filterRef.current.innerHTML = 'Filter Status')
+        : (filterRef.current.innerHTML = name)
+    }
+    await dispatch(getMatters({ status: id }))
+    reset()
+  }
 
   const filters = [
     {
+      id: 0,
+      name: 'Remove Filter',
+      color: 'bg-red-500'
+    },
+    {
       id: 1,
-      name: 'Active',
-      color: 'bg-success',
-      route: 'active'
+      name: MatterStatus.ACTIVE,
+      color: 'bg-success'
     },
     {
       id: 2,
-      name: 'Inactive',
-      color: 'bg-orange-500',
-      route: 'inactive'
+      name: MatterStatus.UN_ACTIVE,
+      color: 'bg-orange-500'
     },
     {
       id: 3,
-      name: 'Archived',
-      color: 'bg-slate-500',
-      route: 'archived'
+      name: MatterStatus.ARCHIVED,
+      color: 'bg-slate-500'
     }
   ]
-
-  const currentFilter = (): string =>
-    filter === 'active'
-      ? 'Active'
-      : filter === 'inactive'
-      ? 'Inactive'
-      : filter === 'archived'
-      ? 'Archived'
-      : 'Filter Status'
 
   return (
     <header
@@ -62,7 +70,7 @@ const MainTableHeader: FC<Props> = ({ setSearchedVal }): JSX.Element => {
           <input
             id="search"
             type="text"
-            onChange={(e) => setSearchedVal((e.target as HTMLInputElement).value)}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-36 rounded border border-slate-300 py-0.5 pl-7 text-slate-900 focus:border-barclerk-10 focus:shadow hover:shadow md:w-52"
           />
         </label>
@@ -78,7 +86,9 @@ const MainTableHeader: FC<Props> = ({ setSearchedVal }): JSX.Element => {
                 title="Filter Status"
               >
                 <Filter className="h-4 w-4" />
-                <span className="hidden md:block">{currentFilter()}</span>
+                <span className="hidden md:block" ref={filterRef}>
+                  Filter Status
+                </span>
               </Menu.Button>
               <MenuTransition>
                 <Menu.Items
@@ -87,7 +97,7 @@ const MainTableHeader: FC<Props> = ({ setSearchedVal }): JSX.Element => {
                   bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none
                   `}
                 >
-                  {filters.map(({ id, name, color, route }) => (
+                  {filters.map(({ id, name, color }) => (
                     <div key={id}>
                       <Menu.Item>
                         <button
@@ -95,7 +105,7 @@ const MainTableHeader: FC<Props> = ({ setSearchedVal }): JSX.Element => {
                           group flex w-full items-center overflow-hidden px-4 py-2 text-sm font-medium text-slate-600 
                           transition duration-150 ease-in-out hover:bg-slate-100
                         `}
-                          onClick={() => router.push(`?filter=${route}`)}
+                          onClick={() => handleFilterMatters(id, name)}
                         >
                           <span className={`mr-2 h-2.5 w-2.5 rounded-full ${color}`}></span>
                           {name}

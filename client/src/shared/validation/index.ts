@@ -48,7 +48,7 @@ export const MatterFormSchema = Yup.object().shape({
   postal_address: Yup.string().required('Postal Address is required'),
   contribution: Yup.string().label('Contribution'),
   court: Yup.string().required('Court is required'),
-  charges: Yup.string().required('Charges is required'),
+  charges: Yup.string().required('Charges is required').matches(/[^, ]+ /, 'Some'),
   pre_trial_restrictions: Yup.string(),
   on_bail_postal_address: Yup.string(),
   in_custody_location: Yup.string()

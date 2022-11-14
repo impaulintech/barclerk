@@ -7,10 +7,19 @@ import {
 import { HYDRATE } from 'next-redux-wrapper'
 
 import authService from './authService'
+import { IUser } from '~/shared/interfaces'
 import { catchError } from '~/utils/handleAxiosError'
-import { User, InitialState, SignInUpFormValues } from '~/shared/types'
+import { SignInUpFormValues, AxiosResponseError } from '~/shared/types'
 
-const initialState: any = {
+export type InitialState = {
+  user: IUser | null
+  isError: boolean
+  isSuccess: boolean
+  isLoading: boolean
+  error: AxiosResponseError
+}
+
+const initialState: InitialState = {
   user: null,
   isError: false,
   isSuccess: false,
@@ -100,7 +109,7 @@ export const authSlice = createSlice({
       .addCase(signUp.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(signUp.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(signUp.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.user = action.payload
         state.isSuccess = true
         state.isLoading = false
@@ -124,7 +133,7 @@ export const authSlice = createSlice({
       .addCase(signIn.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(signIn.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(signIn.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isSuccess = true
         state.isLoading = false
         state.user = action.payload
@@ -146,7 +155,6 @@ export const authSlice = createSlice({
       .addCase(signOut.fulfilled, (state) => {
         state.isSuccess = true
         state.isLoading = false
-        state.user = null
         state.error = {
           status: 0,
           content: null
@@ -162,7 +170,7 @@ export const authSlice = createSlice({
       .addCase(hydrateUserState.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(hydrateUserState.fulfilled, (state, action: PayloadAction<User>) => {
+      .addCase(hydrateUserState.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.isSuccess = true
         state.isLoading = false
         state.user = action.payload

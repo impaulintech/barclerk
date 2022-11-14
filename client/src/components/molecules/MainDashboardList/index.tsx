@@ -1,44 +1,56 @@
-import React, { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import TableHead from './TableHead'
 import TableItem from './TableItem'
 import TableSkeleton from './TableSkeleton'
-import { Matter } from '~/shared/interfaces'
+import { PER_PAGE } from '~/utils/constants'
+import { getMatters, reset } from '~/redux/matter/matterSlice'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 
-type Props = {
-  matters: Matter[]
-  searchedVal: string
-}
+const MainDashboardList: FC = (): JSX.Element => {
+  const dispatch = useAppDispatch()
 
-const MainDashboardList: FC<Props> = ({ matters, searchedVal }): JSX.Element => {
-  const { length } = matters
+  const handleFetchMatters = async () => {
+    await dispatch(getMatters({}))
+    reset()
+  }
+
+  useEffect(() => {
+    handleFetchMatters()
+  }, [])
 
   return (
     <table className="w-full divide-y divide-slate-300 text-left text-sm leading-normal">
       <TableHead />
       <tbody className="relative divide-y divide-slate-300 text-sm text-slate-600">
-        {/* <TableErrorMessage message="No Available Data" /> */}
-        {/* <TableErrorMessage message="Ooops.. Something went wrong" /> */}
-        {!matters ? (
-          <TableSkeleton length={length} />
-        ) : (
-          <>
-            {matters
-              ?.filter(
-                (row: Matter) =>
-                  !searchedVal?.length ||
-                  row?.client_name
-                    .toString()
-                    .toLowerCase()
-                    .includes(searchedVal.toString().toLowerCase())
-              )
-              ?.map((matter: Matter) => (
-                <TableItem key={matter.id} matter={matter} />
-              ))}
-          </>
-        )}
+        <TableContent />
       </tbody>
     </table>
+  )
+}
+
+const TableContent = () => {
+  const { matters, isLoading, isError } = useAppSelector((state) => state.matter)
+  const { data } = matters || {}
+
+  if (isLoading) {
+    return <TableSkeleton length={PER_PAGE} />
+  }
+
+  if (isError) {
+    return <TableErrorMessage message="Ooops.. Something went wrong" />
+  }
+
+  if (!data?.length) {
+    return <TableErrorMessage message="No Available Data" />
+  }
+
+  return (
+    <>
+      {data?.map((matter) => (
+        <TableItem key={matter.id} matter={matter} />
+      ))}
+    </>
   )
 }
 

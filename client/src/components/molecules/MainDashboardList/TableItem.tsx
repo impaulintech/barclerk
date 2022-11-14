@@ -1,11 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 
-import { Matter } from '~/shared/interfaces'
+import { IMatter } from '~/shared/interfaces'
+import { MatterStatus } from '~/utils/constants'
 
 type Props = {
-  matter: Matter
+  matter: IMatter
 }
 
 const TableItem: FC<Props> = (props): JSX.Element => {
@@ -14,14 +15,14 @@ const TableItem: FC<Props> = (props): JSX.Element => {
   const {
     matter: {
       id,
-      client_name,
+      clientName,
       contribution,
-      restrictions,
+      preTrialRestriction,
       extension,
-      total_prep_used,
-      total_fund_used,
-      remaining_fund,
-      next_court_date,
+      totalPrepUsed,
+      totalFundUsed,
+      remainingFund,
+      nextCourtDate,
       status
     }
   } = props
@@ -30,7 +31,7 @@ const TableItem: FC<Props> = (props): JSX.Element => {
     <tr
       className={`
         group cursor-pointer font-medium text-slate-700 transition duration-75 ease-in-out hover:bg-slate-100
-        ${status === 'archived' && 'opacity-50'}
+        ${status?.name === MatterStatus.ARCHIVED && 'opacity-50'}
       `}
       onClick={() => router.push(`/client/${id}`)}
     >
@@ -39,20 +40,20 @@ const TableItem: FC<Props> = (props): JSX.Element => {
           className={`
             h-2 w-2 flex-shrink-0 rounded-full
             ${
-              status === 'active'
+              status?.name === MatterStatus.ACTIVE
                 ? 'bg-success'
-                : status === 'inactive'
+                : status?.name === MatterStatus.UN_ACTIVE
                 ? 'bg-amber-500'
                 : 'bg-slate-500'
             }
           `}
         ></span>
-        <Tippy content={client_name}>
-          <span className="font-semibold text-barclerk-10 line-clamp-1">{client_name}</span>
+        <Tippy content={clientName}>
+          <span className="font-semibold text-barclerk-10 line-clamp-1">{clientName}</span>
         </Tippy>
       </td>
       <td className="py-2 px-6">
-        {contribution === 'No' ? (
+        {contribution === 0 ? (
           'No'
         ) : (
           <Tippy content={contribution}>
@@ -61,8 +62,8 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         )}
       </td>
       <td className="py-2 px-6">
-        <span className="line-clamp-1" title={restrictions}>
-          {restrictions}
+        <span className="line-clamp-1" title={preTrialRestriction?.name}>
+          {preTrialRestriction?.name}
         </span>
       </td>
       <td className="py-2 px-6">
@@ -76,23 +77,23 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={extension}
-        >{`${total_prep_used}%`}</span>
+        >{`${totalPrepUsed}%`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
-          title={`${total_fund_used}`}
-        >{`${total_fund_used}%`}</span>
+          title={`${totalFundUsed}`}
+        >{`${totalFundUsed}%`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
-          title={`${remaining_fund}`}
-        >{`$${remaining_fund}`}</span>
+          title={`${remainingFund}`}
+        >{`$${remainingFund}`}</span>
       </td>
       <td className="py-2 px-6">
-        <Tippy content={next_court_date}>
-          <span className="font-extrabold text-[#4B91AA] line-clamp-1">{next_court_date}</span>
+        <Tippy content={nextCourtDate}>
+          <span className="font-extrabold text-[#4B91AA] line-clamp-1">{nextCourtDate}</span>
         </Tippy>
       </td>
     </tr>
