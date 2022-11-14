@@ -48,8 +48,28 @@ export const MatterFormSchema = Yup.object().shape({
   postal_address: Yup.string().required('Postal Address is required'),
   contribution: Yup.string().label('Contribution'),
   court: Yup.string().required('Court is required'),
-  charges: Yup.string().required('Charges is required').matches(/[^, ]+ /, 'Some'),
+  charges: Yup.string()
+    .required('Charges is required')
+    .matches(/[^, ]+ /, 'Some'),
   pre_trial_restrictions: Yup.string(),
   on_bail_postal_address: Yup.string(),
   in_custody_location: Yup.string()
+})
+
+export const ProfileFormSchema = Yup.object().shape({
+  first_name: Yup.string().required('First name is required'),
+  last_name: Yup.string().required('Last name is required'),
+  email: Yup.string().email().required().label('Email')
+})
+
+export const SecurityFormSchema = Yup.object().shape({
+  current_password: Yup.string().required('Current password is required'),
+  new_password: Yup.string()
+    .required('Password is required')
+    .min(9, 'Password length should be at least 9 characters')
+    .max(15, 'Password cannot exceed more than 15 characters'),
+  confirm_password: Yup.string()
+    .required('Confirm Password is required')
+    .max(15, 'Password cannot exceed more than 15 characters')
+    .oneOf([Yup.ref('new_password')], 'Passwords do not match')
 })

@@ -47,3 +47,14 @@ export type MatterFormValues = {
   on_bail_postal_address: string
   in_custody_location: string
 }
+export type Profile = {
+  first_name: string
+  last_name: string
+  email: string
+}
+
+export type Security = {
+  current_password: string
+  new_password: string
+  confirm_password: string
+}

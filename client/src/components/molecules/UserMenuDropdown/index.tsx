@@ -6,7 +6,13 @@ import { signOut } from '~/redux/auth/authSlice'
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import MenuTransition from '~/components/atoms/MenuTransition'
 
-const UserMenuDropDown: FC = (): JSX.Element => {
+type Props = {
+  actions: {
+    closeModalToggle: () => void
+  }
+}
+
+const UserMenuDropDown: FC<Props> = ({ actions: { closeModalToggle } }): JSX.Element => {
   const { user } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
@@ -33,10 +39,12 @@ const UserMenuDropDown: FC = (): JSX.Element => {
           <div>
             <Menu.Item>
               <button
+                type="button"
                 className={`
                   group flex w-full items-center overflow-hidden px-3 py-2 text-sm font-medium text-slate-600 
                   transition duration-75 ease-in-out hover:bg-slate-100
                 `}
+                onClick={closeModalToggle}
               >
                 <Settings className="mr-3 h-5 w-5" aria-hidden="true" />
                 Settings
