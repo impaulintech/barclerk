@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { NextPage } from 'next'
+import { useState } from 'react'
 
 import Pagination from '~/components/atoms/Pagination'
 import { useAppSelector } from '~/hooks/reduxSelector'
@@ -8,9 +9,13 @@ import { BarClerkWhiteIcon } from '~/shared/icons/LogoIcon'
 import MainTableHeader from '~/components/molecules/MainTableHeader'
 import UserMenuDropDown from '~/components/molecules/UserMenuDropdown'
 import MainDashboardList from '~/components/molecules/MainDashboardList'
+import UserSettingsModal from '~/components/molecules/UserSettingsModal'
 
 const Index: NextPage = (): JSX.Element => {
   const { matters } = useAppSelector((state) => state.matter)
+  const [isOpenSettings, setIsOpenSettings] = useState<boolean>(false)
+
+  const closeModalToggle = (): void => setIsOpenSettings(!isOpenSettings)
 
   return (
     <>
@@ -27,7 +32,8 @@ const Index: NextPage = (): JSX.Element => {
               </section>
             </Link>
             <section>
-              <UserMenuDropDown />
+              <UserMenuDropDown actions={{ closeModalToggle }} />
+              <UserSettingsModal isOpen={isOpenSettings} closeModal={closeModalToggle} />
             </section>
           </nav>
         </header>
