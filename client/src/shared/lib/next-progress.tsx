@@ -4,7 +4,7 @@ import NextNprogress from 'nextjs-progressbar'
 const NextProgress: React.FC = () => {
   return (
     <NextNprogress
-      color="#2563eb"
+      color="#31a6c9"
       startPosition={0.3}
       stopDelayMs={200}
       height={3}
