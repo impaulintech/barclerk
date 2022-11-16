@@ -3,8 +3,8 @@ import { Menu } from '@headlessui/react'
 import { Settings, LogOut, MoreVertical } from 'react-feather'
 
 import { signOut } from '~/redux/auth/authSlice'
-import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import MenuTransition from '~/components/atoms/MenuTransition'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 
 type Props = {
   actions: {
@@ -16,7 +16,7 @@ const UserMenuDropDown: FC<Props> = ({ actions: { closeModalToggle } }): JSX.Ele
   const { user } = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
 
-  const fullname = `${user?.first_name} ${user?.last_name}`
+  const fullName = () => `${user?.first_name} ${user?.last_name}`
 
   const handleSignOut = async () => {
     await dispatch(signOut())
@@ -26,7 +26,7 @@ const UserMenuDropDown: FC<Props> = ({ actions: { closeModalToggle } }): JSX.Ele
   return (
     <Menu as="div" className="relative z-30 inline-block text-left">
       <Menu.Button className="flex w-full max-w-[140px] items-center space-x-1">
-        <span className="text-sm font-bold text-white line-clamp-1">{fullname}</span>
+        <span className="text-sm font-bold text-white line-clamp-1">{fullName()}</span>
         <MoreVertical className="h-4 w-4 shrink-0" />
       </Menu.Button>
       <MenuTransition>
