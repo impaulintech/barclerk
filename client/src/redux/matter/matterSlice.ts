@@ -5,9 +5,9 @@ import {
   ActionReducerMapBuilder
 } from '@reduxjs/toolkit'
 
-import { Payload } from './types'
+import { GetMattersPayload } from './types'
 import matterService from './matterService'
-import { AxiosResponseError } from '~/shared/types'
+import { AxiosResponseError, MatterFormValues } from '~/shared/types'
 import { catchError } from '~/utils/handleAxiosError'
 import { TMatterResponse } from '~/shared/types/pageTypes'
 
@@ -32,9 +32,20 @@ const initialState: InitialState = {
 
 export const getMatters = createAsyncThunk(
   'matter/getMatters',
-  async (payload: Payload, thunkAPI) => {
+  async (payload: GetMattersPayload, thunkAPI) => {
     try {
       return await matterService.getMatters(payload)
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(catchError(error))
+    }
+  }
+)
+
+export const addNewMatter = createAsyncThunk(
+  'matter/addNewMatter',
+  async (payload: MatterFormValues, thunkAPI) => {
+    try {
+      return await matterService.addNewMatter(payload)
     } catch (error: any) {
       return thunkAPI.rejectWithValue(catchError(error))
     }
@@ -75,6 +86,9 @@ export const matterSlice = createSlice({
         state.isSuccess = false
         state.isLoading = false
         state.error = action.payload
+      })
+      .addCase(addNewMatter.fulfilled, (state, action: PayloadAction<TMatterResponse>) => {
+        state.matters = action.payload
       })
   }
 })

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\PageEnum;
+use App\Http\Resources\ClientListResource;
 use Exception;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
@@ -58,11 +60,11 @@ class Client extends Model
             $client = auth()->user()->clients()->create($request->allowed());
             $client->charges()->createMany(ChargeUtils::splitCharges($request->charges));
             $client->clientPreTrialRestriction()->create([
-                'pre_trial_restriction_id' => $request->preTrialRestriction,
+                'pre_trial_restriction_id' => $request->pre_trial_restriction,
                 'value' => $request->value,
             ]);
             DB::commit();
-            return response()->json('Client added successfully!', Response::HTTP_OK);
+            return ClientListResource::collection(Client::displayClients()->latest()->paginate(PageEnum::PER_PAGE->value));
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -82,5 +84,10 @@ class Client extends Model
         }
 
         return $clients;
+    }
+
+    static public function displayClients()
+    {
+        return auth()->user()->clients()->with(['preTrialRestriction', 'matterStatus']);
     }
 }

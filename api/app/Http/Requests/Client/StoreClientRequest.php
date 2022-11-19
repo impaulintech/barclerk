@@ -26,13 +26,13 @@ class StoreClientRequest extends FormRequest
     return [
       "client_name" => ['required', 'max:255'],
       "matter_name" => ['required', 'max:255'],
-      "email" => ['nullable', 'max:255'],
+      "email" => ['nullable', 'max:255', 'email', 'unique:clients'],
       "phone_number" => ['nullable', 'max:255'],
       "postal_address" => ['nullable', 'max:65535'],
       "contribution" => ['nullable'],
       "charges" => ['required', 'max:65535'],
       "court" => ['nullable', 'max:255'],
-      "preTrialRestriction" => ['required'],
+      "pre_trial_restriction" => ['required'],
       "value" => ['required']
     ];
   }
@@ -48,13 +48,13 @@ class StoreClientRequest extends FormRequest
       "contribution" => "Contribution",
       "charges" => "Charges",
       "court" => "Court",
-      "preTrialRestriction" => "Pre Trial Restriction",
-      "value" => "Value" 
+      "pre_trial_restriction" => "Pre Trial Restriction",
+      "value" => "Value"
     ];
   }
 
   public function allowed()
   {
-    return $this->except(['charges', 'preTrialRestriction', 'value']);
+    return $this->except(['charges', 'pre_trial_restriction', 'value', 'on_bail_postal_address', 'in_custody_location']);
   }
 }

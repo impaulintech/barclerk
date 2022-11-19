@@ -2,15 +2,17 @@ import { useForm } from 'react-hook-form'
 import { Dialog } from '@headlessui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import TextareaAutosize from 'react-textarea-autosize'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState, ChangeEvent } from 'react'
 import { Plus, X, User, Mail, Phone, Home, Lock, DollarSign, Users } from 'react-feather'
 
+import { useMatter } from '~/hooks/useMatter'
 import { MatterFormValues } from '~/shared/types'
-import { MatterFormSchema } from '~/shared/validation'
-import CourtHouse from '~/shared/icons/CourtHouseIcon'
-import DialogBox from '~/components/templates/DialogBox'
-import CourtChargesIcon from '~/shared/icons/CourtChargeIcon'
 import { Spinner } from '~/shared/icons/SpinnerIcon'
+import CourtHouse from '~/shared/icons/CourtHouseIcon'
+import { MatterFormSchema } from '~/shared/validation'
+import DialogBox from '~/components/templates/DialogBox'
+import { PreTrialRestrictions } from '~/utils/constants'
+import CourtChargesIcon from '~/shared/icons/CourtChargeIcon'
 
 type Props = {
   isOpen: boolean
@@ -18,7 +20,7 @@ type Props = {
 }
 
 const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
-  const [preTrial, setPreTrial] = useState<number>(0)
+  const [preTrial, setPreTrial] = useState<string>('1')
   const restrictions = [
     {
       id: 1,
@@ -36,39 +38,37 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
 
   const {
     reset,
+    setError,
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors }
   } = useForm<MatterFormValues>({
     mode: 'onTouched',
     resolver: yupResolver(MatterFormSchema)
   })
+  const { isLoading, handleAddMatter } = useMatter(closeModal, setError)
+
+  const onChangePreTrialRestrictions = (e: ChangeEvent<HTMLSelectElement>) => {
+    setPreTrial(() => e.target.value)
+    reset({ in_custody_location: '', on_bail_postal_address: '', value: '' })
+  }
 
   useEffect(() => {
     if (isOpen) {
       reset({
         matter_name: '',
         email: '',
-        phone: '',
+        phone_number: '',
         postal_address: '',
-        contribution: '',
+        contribution: 0,
         court: '',
         charges: '',
-        pre_trial_restrictions: 'None',
+        pre_trial_restriction: '1',
         on_bail_postal_address: '',
         in_custody_location: ''
       })
     }
   }, [isOpen])
-
-  const handleAddMatter = async (data: MatterFormValues): Promise<void> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve()
-        console.log(data)
-      }, 1000)
-    })
-  }
 
   return (
     <DialogBox isOpen={isOpen} closeModal={closeModal}>
@@ -115,7 +115,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     type="text"
                     id="matter_name"
                     {...register('matter_name')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -156,7 +156,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     type="text"
                     id="client_name"
                     {...register('client_name')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -175,9 +175,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             {/* EMAIL FIELD */}
             <section className="col-span-2 md:col-span-1">
               <label htmlFor="email" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Email <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Email</h2>
                 <div className="group relative">
                   <span
                     className={`
@@ -197,7 +195,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     type="email"
                     id="email"
                     {...register('email')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -213,47 +211,48 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             {/* PHONE FIELD */}
             <section className="col-span-2 md:col-span-1">
               <label htmlFor="phone" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Phone <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Phone</h2>
                 <div className="group relative">
                   <span
                     className={`
                       absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                     group-focus-within:border-barclerk-30
-                      ${errors?.phone && 'border-rose-400 group-focus-within:border-rose-400'}
+                      ${
+                        errors?.phone_number && 'border-rose-400 group-focus-within:border-rose-400'
+                      }
                     `}
                   >
                     <Phone
                       className={`
                       h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                      ${errors?.phone && 'text-rose-400 group-focus-within:text-rose-400'}
+                      ${errors?.phone_number && 'text-rose-400 group-focus-within:text-rose-400'}
                     `}
                     />
                   </span>
                   <input
                     type="text"
                     id="phone"
-                    {...register('phone')}
-                    disabled={isSubmitting}
+                    {...register('phone_number')}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
                       ${
-                        errors?.phone && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                        errors?.phone_number &&
+                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
                       }
                     `}
                   />
                 </div>
               </label>
-              {errors?.phone && <span className="error">{`${errors.phone.message}`}</span>}
+              {errors?.phone_number && (
+                <span className="error">{`${errors.phone_number.message}`}</span>
+              )}
             </section>
             {/* POSTAL ADDRESS FIELD */}
             <section className="col-span-2 md:col-span-1">
               <label htmlFor="postal_address" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Postal Address <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Postal Address</h2>
                 <div className="group relative">
                   <span
                     className={`
@@ -276,7 +275,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     type="text"
                     id="postal_address"
                     {...register('postal_address')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -303,10 +302,10 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     <DollarSign className="h-5 w-5 text-slate-400 group-focus-within:text-barclerk-30" />
                   </span>
                   <input
-                    type="text"
+                    type="number"
                     id="contribution"
                     {...register('contribution')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
@@ -318,9 +317,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             {/* COURT FIELD */}
             <section className="col-span-2 md:col-span-1">
               <label htmlFor="court" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Court <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Court</h2>
                 <div className="group relative">
                   <span
                     className={`
@@ -340,7 +337,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     type="text"
                     id="court"
                     {...register('court')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -380,7 +377,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                   <TextareaAutosize
                     id="charges"
                     {...register('charges')}
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className={`
                       min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                       focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
@@ -406,9 +403,9 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                   </span>
                   <select
                     id="pre-trial-restrictions"
-                    disabled={isSubmitting}
-                    {...register('pre_trial_restrictions')}
-                    onChange={(e) => setPreTrial(parseInt((e.target as HTMLSelectElement).value))}
+                    disabled={isLoading}
+                    {...register('pre_trial_restriction')}
+                    onChange={onChangePreTrialRestrictions}
                     className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {restrictions.map(({ id, value }) => (
@@ -420,7 +417,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                 </div>
               </label>
             </section>
-            {preTrial === 2 && (
+            {preTrial === PreTrialRestrictions.ON_BAIL && (
               <section className="col-span-2 md:col-span-1">
                 <label htmlFor="on_bail_postal_address" className="flex flex-col space-y-1">
                   <h2 className="text-sm text-slate-700">
@@ -434,7 +431,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                       type="text"
                       required
                       {...register('on_bail_postal_address')}
-                      disabled={isSubmitting}
+                      disabled={isLoading}
                       id="on_bail_postal_address"
                       className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                     />
@@ -445,7 +442,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                 )}
               </section>
             )}
-            {preTrial === 3 && (
+            {preTrial === PreTrialRestrictions.IN_CUSTODY && (
               <section className="col-span-2 md:col-span-1">
                 <label htmlFor="location" className="flex flex-col space-y-1">
                   <h2 className="text-sm text-slate-700">
@@ -460,7 +457,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                       id="location"
                       required
                       {...register('in_custody_location')}
-                      disabled={isSubmitting}
+                      disabled={isLoading}
                       className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                     />
                   </div>
@@ -476,7 +473,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             <button
               type="button"
               onClick={closeModal}
-              disabled={isSubmitting}
+              disabled={isLoading}
               className={`
                 w-36 rounded border border-slate-300 bg-white 
               text-slate-600 outline-none transition duration-75 ease-in-out
@@ -488,14 +485,14 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isLoading}
               className={`
                 flex w-36 items-center justify-center rounded bg-barclerk-10 py-2 text-white 
                 outline-none transition duration-75 ease-in-out focus:bg-barclerk-10/90 disabled:cursor-not-allowed disabled:opacity-50
                 hover:bg-barclerk-10/90 disabled:hover:bg-barclerk-10 active:scale-95 disabled:active:scale-100
               `}
             >
-              {isSubmitting ? <Spinner className="h-6 w-6" /> : 'Save'}
+              {isLoading ? <Spinner className="h-6 w-6" /> : 'Save'}
             </button>
           </footer>
         </form>
