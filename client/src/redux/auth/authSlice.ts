@@ -60,6 +60,17 @@ export const signOut = createAsyncThunk('auth/sign-out', async (_, thunkAPI) => 
   }
 })
 
+export const getAuthUser = createAsyncThunk(
+  'auth/getAuthUser',
+  async (_, thunkAPI) => {
+    try {
+      return await authService.getAuthUser()
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(catchError(error))
+    }
+  }
+)
+
 export const requestPasswordResetLink = createAsyncThunk(
   'auth/requestPasswordResetLink',
   async (email: string, thunkAPI) => {
@@ -74,6 +85,22 @@ export const requestPasswordResetLink = createAsyncThunk(
 export const resetPassword = createAsyncThunk('auth/resetPassword', async (data: any, thunkAPI) => {
   try {
     return await authService.resetPassword(data)
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(catchError(error))
+  }
+})
+
+export const updateDetails = createAsyncThunk('auth/updateDetails', async (data: any, thunkAPI) => {
+  try {
+    return await authService.updateDetails(data)
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(catchError(error))
+  }
+})
+
+export const updatePassword = createAsyncThunk('auth/updatePassword', async (data: any, thunkAPI) => {
+  try {
+    return await authService.updatePassword(data)
   } catch (error: any) {
     return thunkAPI.rejectWithValue(catchError(error))
   }
@@ -166,6 +193,24 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
         state.user = null
+      })
+      .addCase(getAuthUser.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getAuthUser.fulfilled, (state, action: PayloadAction<any>) => {
+        state.isSuccess = true
+        state.isLoading = false
+        state.user = action.payload
+        state.error = {
+          status: 0,
+          content: null
+        }
+      })
+      .addCase(getAuthUser.rejected, (state, action: PayloadAction<any>) => {
+        state.isError = true
+        state.isSuccess = false
+        state.isLoading = false
+        state.error = action.payload 
       })
       .addCase(hydrateUserState.pending, (state) => {
         state.isLoading = true
