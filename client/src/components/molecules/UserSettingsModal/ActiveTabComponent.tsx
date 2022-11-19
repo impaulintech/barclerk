@@ -1,18 +1,25 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { Mail, User, Lock, Eye, EyeOff } from 'react-feather'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Mail, User, Lock, Eye, EyeOff } from 'react-feather';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Profile, Security } from '~/shared/types'
-import { Spinner } from '~/shared/icons/SpinnerIcon'
-import { ProfileFormSchema, SecurityFormSchema } from '~/shared/validation'
+import { Profile, Security } from '~/shared/types';
+import { Spinner } from '~/shared/icons/SpinnerIcon';
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector';
+import { ProfileFormSchema, SecurityFormSchema } from '~/shared/validation';
+import { getAuthUser, updateDetails, updatePassword } from '~/redux/auth/authSlice';
+import toast from 'react-hot-toast';
 
 export const activeComponent = (tab: string) => {
-  const [showCurrentPass, setShowCurrentPass] = useState<boolean>(false)
-  const [showNewPass, setShowNewPass] = useState<boolean>(false)
+  const [showCurrentPass, setShowCurrentPass] = useState<boolean>(false);
+  const [showNewPass, setShowNewPass] = useState<boolean>(false);
 
-  const currentPassToggle = (): void => setShowCurrentPass(!showCurrentPass)
-  const currentNewToggle = (): void => setShowNewPass(!showNewPass)
+  const currentPassToggle = (): void => setShowCurrentPass(!showCurrentPass);
+  const currentNewToggle = (): void => setShowNewPass(!showNewPass);
+
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { first_name, last_name, email } = user || {};
 
   switch (tab) {
     case 'Profile': {
@@ -23,22 +30,24 @@ export const activeComponent = (tab: string) => {
       } = useForm<Profile>({
         mode: 'onTouched',
         resolver: yupResolver(ProfileFormSchema)
-      })
+      });
 
       // This will handle the Update Profile Functionality
       const handleUpdateProfile = async (data: Profile): Promise<void> => {
         const payload = {
-          firstName: data.first_name,
-          lastName: data.last_name,
+          first_name: data.first_name,
+          last_name: data.last_name,
           email: data.email
-        }
+        };
         return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve()
-            alert(JSON.stringify(payload, null, 2))
-          }, 1000)
-        })
-      }
+          dispatch(updateDetails(payload)).then(() => {
+            dispatch(getAuthUser()).then(() => {
+              toast.success('Details updated successfully!');
+              resolve();
+            });
+          });
+        });
+      };
 
       return (
         <form onSubmit={handleSubmit(handleUpdateProfile)}>
@@ -69,14 +78,14 @@ export const activeComponent = (tab: string) => {
                   <input
                     type="text"
                     id="first_name"
+                    placeholder={first_name}
                     {...register('first_name')}
                     disabled={isSubmitting}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.first_name &&
-                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                      ${errors?.first_name &&
+                      'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
                       }
                     `}
                   />
@@ -109,14 +118,14 @@ export const activeComponent = (tab: string) => {
                   <input
                     type="text"
                     id="last_name"
+                    placeholder={last_name}
                     {...register('last_name')}
                     disabled={isSubmitting}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.last_name &&
-                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                      ${errors?.last_name &&
+                      'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
                       }
                     `}
                   />
@@ -147,13 +156,13 @@ export const activeComponent = (tab: string) => {
                   <input
                     type="text"
                     id="email"
+                    placeholder={email}
                     {...register('email')}
                     disabled={isSubmitting}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.email && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                      ${errors?.email && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
                       }
                     `}
                   />
@@ -177,7 +186,7 @@ export const activeComponent = (tab: string) => {
             </button>
           </footer>
         </form>
-      )
+      );
     }
 
     case 'Security': {
@@ -189,28 +198,34 @@ export const activeComponent = (tab: string) => {
       } = useForm<Security>({
         mode: 'onTouched',
         resolver: yupResolver(SecurityFormSchema)
-      })
+      });
 
       // This will handle the Update Password Security Functionality
       const handleUpdatePassword = async (data: Security): Promise<void> => {
         const payload = {
           currentPassword: data.current_password,
           newPassword: data.new_password,
-          confirmPassword: data.confirm_password
-        }
+          newConfirmedPassword: data.confirm_password
+        };
 
         return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve()
-            reset({
-              current_password: '',
-              new_password: '',
-              confirm_password: ''
-            })
-            alert(JSON.stringify(payload, null, 2))
-          }, 1000)
-        })
-      }
+          dispatch(updatePassword(payload)).then((res) => {
+            const { payload } = res || {};
+            const { content, status } = payload || {}; 
+
+            if (status >= 422) {
+              const error1 = content?.currentPassword[0];
+              const error2 = content?.currentPassword[1];
+
+              error1 && toast.error(error1); 
+              error2 && toast.error(error2); 
+            } else { 
+              toast.success('Password updated successfully!');
+            }
+            resolve();
+          });
+        });
+      };
 
       return (
         <form className="pt-8" onSubmit={handleSubmit(handleUpdatePassword)}>
@@ -225,18 +240,16 @@ export const activeComponent = (tab: string) => {
                     className={`
                       absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                     group-focus-within:border-barclerk-30
-                      ${
-                        errors?.current_password &&
-                        'border-rose-400 group-focus-within:border-rose-400'
+                      ${errors?.current_password &&
+                      'border-rose-400 group-focus-within:border-rose-400'
                       }
                     `}
                   >
                     <Lock
                       className={`
                         h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                        ${
-                          errors?.current_password &&
-                          'text-rose-400 group-focus-within:text-rose-400'
+                        ${errors?.current_password &&
+                        'text-rose-400 group-focus-within:text-rose-400'
                         }
                       `}
                     />
@@ -250,10 +263,9 @@ export const activeComponent = (tab: string) => {
                       className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 pr-12 focus:border-barclerk-30
                       focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.current_password &&
+                      ${errors?.current_password &&
                         'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                      }
+                        }
                     `}
                     />
                     <button
@@ -265,9 +277,8 @@ export const activeComponent = (tab: string) => {
                         <EyeOff
                           className={`
                             h-4 w-4
-                            ${
-                              errors?.current_password &&
-                              'text-rose-400 group-focus-within:text-rose-400'
+                            ${errors?.current_password &&
+                            'text-rose-400 group-focus-within:text-rose-400'
                             }
                           `}
                         />
@@ -275,9 +286,8 @@ export const activeComponent = (tab: string) => {
                         <Eye
                           className={`
                             h-4 w-4
-                            ${
-                              errors?.current_password &&
-                              'text-rose-400 group-focus-within:text-rose-400'
+                            ${errors?.current_password &&
+                            'text-rose-400 group-focus-within:text-rose-400'
                             }
                           `}
                         />
@@ -319,10 +329,9 @@ export const activeComponent = (tab: string) => {
                       className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 pr-12 focus:border-barclerk-30
                       focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.new_password &&
+                      ${errors?.new_password &&
                         'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                      }
+                        }
                     `}
                     />
                     <button
@@ -334,9 +343,8 @@ export const activeComponent = (tab: string) => {
                         <EyeOff
                           className={`
                             h-4 w-4
-                            ${
-                              errors?.new_password &&
-                              'text-rose-400 group-focus-within:text-rose-400'
+                            ${errors?.new_password &&
+                            'text-rose-400 group-focus-within:text-rose-400'
                             }
                           `}
                         />
@@ -344,9 +352,8 @@ export const activeComponent = (tab: string) => {
                         <Eye
                           className={`
                             h-4 w-4
-                            ${
-                              errors?.new_password &&
-                              'text-rose-400 group-focus-within:text-rose-400'
+                            ${errors?.new_password &&
+                            'text-rose-400 group-focus-within:text-rose-400'
                             }
                           `}
                         />
@@ -369,18 +376,16 @@ export const activeComponent = (tab: string) => {
                     className={`
                       absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                     group-focus-within:border-barclerk-30
-                      ${
-                        errors?.confirm_password &&
-                        'border-rose-400 group-focus-within:border-rose-400'
+                      ${errors?.confirm_password &&
+                      'border-rose-400 group-focus-within:border-rose-400'
                       }
                     `}
                   >
                     <Lock
                       className={`
                         h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                        ${
-                          errors?.confirm_password &&
-                          'text-rose-400 group-focus-within:text-rose-400'
+                        ${errors?.confirm_password &&
+                        'text-rose-400 group-focus-within:text-rose-400'
                         }
                       `}
                     />
@@ -393,9 +398,8 @@ export const activeComponent = (tab: string) => {
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 pr-12 focus:border-barclerk-30
                       focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.confirm_password &&
-                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
+                      ${errors?.confirm_password &&
+                      'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
                       }
                     `}
                   />
@@ -420,10 +424,10 @@ export const activeComponent = (tab: string) => {
             </button>
           </footer>
         </form>
-      )
+      );
     }
     default: {
-      return <h1 className="text-lg text-rose-400">404 Error!</h1>
+      return <h1 className="text-lg text-rose-400">404 Error!</h1>;
     }
   }
-}
+};

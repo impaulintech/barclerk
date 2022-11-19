@@ -40,8 +40,23 @@ const requestPasswordResetLink = async (email: any): Promise<any> => {
   return response.data
 }
 
+const getAuthUser = async (): Promise<any> => {
+  const response = await axios.get('/auth')
+  return response.data
+}
+
 const resetPassword = async (data: any): Promise<any> => {
   const response = await axios.post('/reset-password', data)
+  return response.data
+}
+
+const updateDetails = async (data: any): Promise<any> => {
+  const response = await axios.post('/user/update-details', data)
+  return response.data
+}
+
+const updatePassword = async (data: any): Promise<any> => {
+  const response = await axios.post('/user/change-password', data)
   return response.data
 }
 
@@ -54,7 +69,10 @@ const authService = {
   signUp,
   signIn,
   signOut,
+  getAuthUser,
+  updateDetails,
   resetPassword,
+  updatePassword,
   hydrateUserState,
   requestPasswordResetLink
 }
