@@ -38,14 +38,15 @@ export type MatterFormValues = {
   client_name: string
   matter_name: string
   email: string
-  phone: string
+  phone_number: string
   postal_address: string
   contribution: string | undefined | null | number
   court: string
   charges: string
-  pre_trial_restrictions: string
+  pre_trial_restriction: string
   on_bail_postal_address: string
   in_custody_location: string
+  value?: string
 }
 export type Profile = {
   first_name: string

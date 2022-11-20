@@ -41,19 +41,17 @@ export const SignUpFormSchema = Yup.object().shape({
 })
 
 export const MatterFormSchema = Yup.object().shape({
-  client_name: Yup.string().required('Client name is required'),
-  matter_name: Yup.string().required('Matter name is required'),
-  email: Yup.string().email().required().label('Email'),
-  phone: Yup.string().required('Phone number is required'),
-  postal_address: Yup.string().required('Postal Address is required'),
-  contribution: Yup.string().label('Contribution'),
-  court: Yup.string().required('Court is required'),
-  charges: Yup.string()
-    .required('Charges is required')
-    .matches(/[^, ]+ /, 'Some'),
-  pre_trial_restrictions: Yup.string(),
-  on_bail_postal_address: Yup.string(),
-  in_custody_location: Yup.string()
+  client_name: Yup.string().required('Client name is required').max(255),
+  matter_name: Yup.string().required('Matter name is required').max(255),
+  email: Yup.string().email().label('Email').max(255),
+  phone_number: Yup.string().max(255),
+  postal_address: Yup.string().max(255),
+  contribution: Yup.number().label('Contribution').typeError('Contribution must be a valid number'),
+  court: Yup.string().max(255),
+  charges: Yup.string().required('Charges is required').matches(/^(([a-zA-Z0-9 ](,)?)*)+$/, 'The List must be separated by a comma and a space. Sample: Word1, Word2'),
+  pre_trial_restrictions: Yup.string().max(255),
+  on_bail_postal_address: Yup.string().max(255),
+  in_custody_location: Yup.string().max(255)
 })
 
 export const ProfileFormSchema = Yup.object().shape({
