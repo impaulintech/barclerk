@@ -33,7 +33,7 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         group cursor-pointer font-medium text-slate-700 transition duration-75 ease-in-out hover:bg-slate-100
         ${status?.name === MatterStatus.ARCHIVED && 'opacity-50'}
       `}
-      onClick={() => router.push(`/client/${id}`)}
+      onClick={() => router.push(`/matter/${id}/client-profile`)}
     >
       <td className="flex items-center space-x-2 py-2 px-6">
         <span

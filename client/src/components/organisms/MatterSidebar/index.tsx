@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { FC } from 'react'
+import { HiUser } from 'react-icons/hi'
+import { useRouter } from 'next/router'
 
 import { BarClerkWhiteIcon } from '~/shared/icons/LogoIcon'
 import { DashboardIcon } from '~/shared/icons/DashboardIcon'
@@ -17,6 +18,18 @@ const MatterSidebar: FC<Props> = ({ isOpenSidebar }): JSX.Element => {
   const { id } = router.query
 
   const navs = [
+    {
+      name: 'Main Dashboard',
+      href: `/`,
+      Icon: DashboardIcon,
+      slug: 'main-dashboard'
+    },
+    {
+      name: 'Client Profile',
+      href: `/matter/${id}/client-profile`,
+      Icon: HiUser,
+      slug: 'client-profile'
+    },
     {
       name: 'Grant of Aid',
       href: `/matter/${id}/grant-of-aid`,
@@ -51,23 +64,6 @@ const MatterSidebar: FC<Props> = ({ isOpenSidebar }): JSX.Element => {
           <h1 className="text-lg font-bold uppercase text-white md:text-xl">Barclerk</h1>
         </header>
         <ul>
-          <li
-            className={`
-              ${
-                router.asPath === `/matter/${id}`
-                  ? 'bg-[#31A6C9] hover:bg-[#31A6C9]/90 active:bg-[#31A6C9]'
-                  : 'hover:bg-[#31A6C9]/10 active:bg-[#31A6C9]/20'
-              }
-            `}
-          >
-            <Link
-              href={`/matter/${id}`}
-              className="flex items-center space-x-4 px-9 py-3 active:scale-95"
-            >
-              <DashboardIcon className="h-5 w-5 shrink-0 fill-current text-white" />
-              <span className="text-base font-medium line-clamp-1">Dashboard</span>
-            </Link>
-          </li>
           {navs.map(({ name, href, Icon, slug }, i) => (
             <li
               key={i}
