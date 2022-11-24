@@ -40,3 +40,16 @@ export interface ICharges {
   id: number
   name: string
 }
+
+export interface IGrantOfAid {
+  id: number
+  extension: string
+  date_effective: string
+  status: boolean
+  codes: ICode[]
+}
+
+export interface ICode {
+  id: number
+  code: string
+}

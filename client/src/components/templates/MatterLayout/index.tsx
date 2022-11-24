@@ -34,7 +34,9 @@ const MatterLayout: FC<Props> = ({ metaTitle, children }): JSX.Element => {
           <div className="block md:hidden">
             <MatterDrawer isOpenDrawer={isOpenDrawer} handleToggleDrawer={handleToggleDrawer} />
           </div>
-          <article className="w-full flex-1 flex-shrink-0 overflow-hidden">{children}</article>
+          <article className="default-scrollbar w-full flex-1 flex-shrink-0 overflow-y-auto">
+            {children}
+          </article>
         </section>
       </main>
     </>
