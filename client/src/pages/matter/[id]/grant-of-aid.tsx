@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
 import { Plus } from 'react-feather'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
 
 import Breedcrumb from '~/components/atoms/Breedcrumb'
 import MatterLayout from '~/components/templates/MatterLayout'
 import GrantOfAidList from '~/components/molecules/GrantOfAidList'
+import AddNewGrantOfAidModal from '~/components/molecules/GrantOfAidList/AddNewGrantOfAidModal'
 
 const GrantOfAid: NextPage = (): JSX.Element => {
   return (
@@ -23,6 +24,10 @@ const GrantOfAidLayout = ({ children }: { children: ReactNode }): JSX.Element =>
 )
 
 const GrantOfAidHeader = (): JSX.Element => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
+  const closeModal = (): void => setIsOpen(!isOpen)
+
   return (
     <div className="flex items-center justify-between py-4 md:py-6">
       <h1 className="text-xl font-semibold text-barclerk-10 lg:text-2xl">Grant of Aid</h1>
@@ -33,11 +38,18 @@ const GrantOfAidHeader = (): JSX.Element => {
         text-white shadow outline-none transition duration-150 ease-in-out focus:bg-barclerk-10 hover:bg-barclerk-10 hover:bg-barclerk-10/90
           active:scale-95 active:bg-barclerk-10
         `}
+        onClick={closeModal}
         title="Add New Matter"
       >
         <Plus className="h-4 w-4" />
         <span className="hidden md:block">Add New Grant</span>
       </button>
+      <AddNewGrantOfAidModal
+        {...{
+          isOpen,
+          closeModal
+        }}
+      />
     </div>
   )
 }

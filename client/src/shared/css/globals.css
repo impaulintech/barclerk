@@ -1,5 +1,6 @@
 @import './tailwind.css';
 @import 'tippy.js/dist/tippy.css';
+@import 'react-confirm-alert/src/react-confirm-alert.css';
 
 .paginate-link-active {
   color: #fff !important;

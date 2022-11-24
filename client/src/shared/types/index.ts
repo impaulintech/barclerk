@@ -81,3 +81,13 @@ export type Security = {
   new_password: string
   confirm_password: string
 }
+
+export type GrantOfAidFormValues = {
+  extension: string
+  date_effective: string
+  codes: [
+    {
+      code: string
+    }
+  ]
+}

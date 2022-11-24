@@ -8,20 +8,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: true,
     codes: [
       {
-        id: 1,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '1',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 2,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '2',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 3,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '3',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 4,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '4',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -32,20 +32,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 5,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '5',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 6,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '6',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 7,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '7',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 8,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '8',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -56,20 +56,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 9,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '9',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 10,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '10',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 11,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '11',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 12,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '12',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -80,20 +80,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 13,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '13',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 14,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '14',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 15,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '15',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 16,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '16',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -104,20 +104,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 17,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '17',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 18,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '18',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 19,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '19',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 20,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '20',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -128,20 +128,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 21,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '21',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 22,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '22',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 23,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '23',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 24,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '24',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -152,20 +152,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 25,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '25',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -176,20 +176,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -200,20 +200,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -224,20 +224,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -248,20 +248,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -272,20 +272,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -296,20 +296,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   },
@@ -320,20 +320,20 @@ export const grantOfAidData: IGrantOfAid[] = [
     status: false,
     codes: [
       {
-        id: 26,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '26',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 27,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '27',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 28,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '28',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       },
       {
-        id: 29,
-        code: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
+        value: '29',
+        label: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsam'
       }
     ]
   }
