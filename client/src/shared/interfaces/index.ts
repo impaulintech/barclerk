@@ -17,6 +17,27 @@ export interface IMatter {
   status?: IStatus
 }
 
+export interface IClientProfile {
+  id: number
+  clientName: string
+  location?: string
+  charges?: ICharges[]
+  contribution?: boolean
+  onBail?: boolean
+  court?: string
+  totalFundUpTo?: number
+  totalFundUsed?: number
+  remainingFund?: number
+  nextCourtDate?: string
+  lastCourtDates?: ILastCourtDates[]
+}
+
+export interface ILastCourtDates {
+  id: number
+  date: string
+  orders: string
+}
+
 export interface IUser {
   id: number
   first_name: string
