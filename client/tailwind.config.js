@@ -14,6 +14,7 @@ module.exports = {
         inter: 'Inter, sans-serif'
       },
       height: {
+        'px-18' : '18px',
         'px-28': '28px',
         'px-30': '30px',
         'px-48': '48px',
@@ -64,9 +65,10 @@ module.exports = {
         success: '#0EDE6E',
         failed: '#DC2626',
         barclerk: {
-          10: '#012641',
-          30: '#60B3D1',
-          60: '#F5FAFD'
+          10: '#012641', // dark
+          20: '#18527D', // dark-blue
+          30: '#60B3D1', // mid-blue
+          60: '#F5FAFD', // very-light
         },
         success: '#0ede6e'
       }
