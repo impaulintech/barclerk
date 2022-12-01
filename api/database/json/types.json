@@ -1,0 +1,1143 @@
+[
+    {
+        "code": "C1",
+        "type": "SG Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "C1",
+        "type": "SC Court Attendance",
+        "rate": 120,
+        "time": 2,
+        "total_allowance": 240
+    },
+    {
+        "code": "C1",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 5,
+        "total_allowance": 735
+    },
+    {
+        "code": "C1",
+        "type": "Court Attendance (mitigation/sentencing)",
+        "rate": 515,
+        "time": 1,
+        "total_allowance": 515
+    },
+    {
+        "code": "C1",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "C2",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "C2",
+        "type": "DC Court Attendance",
+        "rate": 120,
+        "time": 2,
+        "total_allowance": 240
+    },
+    {
+        "code": "C2",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 4.5,
+        "total_allowance": 662
+    },
+    {
+        "code": "C2",
+        "type": "CA (mitigation/sentencing)",
+        "rate": 441,
+        "time": 1,
+        "total_allowance": 441
+    },
+    {
+        "code": "C2",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "C3",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 3,
+        "total_allowance": 252
+    },
+    {
+        "code": "C3",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 3,
+        "total_allowance": 441
+    },
+    {
+        "code": "C3",
+        "type": "CA (mitigation/sentencing)",
+        "rate": 220,
+        "time": 1,
+        "total_allowance": 220
+    },
+    {
+        "code": "C3",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CH1",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 3,
+        "total_allowance": 252
+    },
+    {
+        "code": "CH1",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 3,
+        "total_allowance": 441
+    },
+    {
+        "code": "CH1",
+        "type": "CA (mitigation/sentencing)",
+        "rate": 220,
+        "time": 1,
+        "total_allowance": 220
+    },
+    {
+        "code": "CH1",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CH2",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 3,
+        "total_allowance": 252
+    },
+    {
+        "code": "CH2",
+        "type": "PC Court Attendance",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "CH2",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 4.5,
+        "total_allowance": 662
+    },
+    {
+        "code": "CH2",
+        "type": "CA (mitigation/sentencing)",
+        "rate": 441,
+        "time": 1,
+        "total_allowance": 441
+    },
+    {
+        "code": "CH2",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "C1P",
+        "type": "Preparation",
+        "rate": 515,
+        "time": 1,
+        "total_allowance": 515
+    },
+    {
+        "code": "C2P",
+        "type": "Preparation",
+        "rate": 441,
+        "time": 1,
+        "total_allowance": 441
+    },
+    {
+        "code": "C3P",
+        "type": "Preparation",
+        "rate": 220,
+        "time": 1,
+        "total_allowance": 220
+    },
+    {
+        "code": "CH4",
+        "type": "Preparation",
+        "rate": 441,
+        "time": 1,
+        "total_allowance": 441
+    },
+    {
+        "code": "CH3",
+        "type": "Preparation",
+        "rate": 220,
+        "time": 1,
+        "total_allowance": 220
+    },
+    {
+        "code": "C10",
+        "type": "SG Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "C10",
+        "type": "SC Court Attendance",
+        "rate": 120,
+        "time": 2,
+        "total_allowance": 240
+    },
+    {
+        "code": "C10",
+        "type": "SC Status Conference",
+        "rate": 147,
+        "time": 2,
+        "total_allowance": 294
+    },
+    {
+        "code": "C10",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 18.5,
+        "total_allowance": 2720
+    },
+    {
+        "code": "C10",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "C11",
+        "type": "Court Attendance",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C11B",
+        "type": "Representation by Counsel",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "C11C",
+        "type": "Representation by Counsel",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "C45T",
+        "type": "Court Attendance",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C45T",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 14,
+        "total_allowance": 2058
+    },
+    {
+        "code": "C45T",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "C12",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "C12",
+        "type": "DC Court Attendance",
+        "rate": 120,
+        "time": 2,
+        "total_allowance": 240
+    },
+    {
+        "code": "C12",
+        "type": "DC Status Conference",
+        "rate": 147,
+        "time": 2,
+        "total_allowance": 294
+    },
+    {
+        "code": "C12",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 13,
+        "total_allowance": 1911
+    },
+    {
+        "code": "C12",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "C13",
+        "type": "Court Attendance",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C44T",
+        "type": "Court Attendance",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C44T",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 9,
+        "total_allowance": 1323
+    },
+    {
+        "code": "C44T",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "C14",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "C14",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 6.5,
+        "total_allowance": 956
+    },
+    {
+        "code": "C14",
+        "type": "Trial Attendance",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "C14",
+        "type": "Disbursements",
+        "rate": 40,
+        "time": 1,
+        "total_allowance": 40
+    },
+    {
+        "code": "C15",
+        "type": "Court Attendance",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "C43T",
+        "type": "Court Attendance",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "C43T",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 3.5,
+        "total_allowance": 515
+    },
+    {
+        "code": "C43T",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "CH5",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "CH5",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 6.5,
+        "total_allowance": 956
+    },
+    {
+        "code": "CH5",
+        "type": "Trial Attendance",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "CH5",
+        "type": "Disbursements",
+        "rate": 40,
+        "time": 1,
+        "total_allowance": 40
+    },
+    {
+        "code": "CH6",
+        "type": "Court Attendance",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "CH7",
+        "type": "MC Court Attendance",
+        "rate": 84,
+        "time": 4,
+        "total_allowance": 336
+    },
+    {
+        "code": "CH7",
+        "type": "Court Attendance before President",
+        "rate": 120,
+        "time": 2,
+        "total_allowance": 240
+    },
+    {
+        "code": "CH7",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 13,
+        "total_allowance": 1911
+    },
+    {
+        "code": "CH7",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "CH8",
+        "type": "Court Attendance",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C30",
+        "type": "Preparation",
+        "rate": 441,
+        "time": 1,
+        "total_allowance": 441
+    },
+    {
+        "code": "C30",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "C29D",
+        "type": "DC Bail Application",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "C28M",
+        "type": "MC Bail Application",
+        "rate": 110,
+        "time": 1,
+        "total_allowance": 110
+    },
+    {
+        "code": "CH13",
+        "type": "PCC Bail Application",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "CH12",
+        "type": "CC Bail Application",
+        "rate": 110,
+        "time": 1,
+        "total_allowance": 110
+    },
+    {
+        "code": "C43",
+        "type": "Sentencing",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "C43M",
+        "type": "Sentencing",
+        "rate": 110,
+        "time": 1,
+        "total_allowance": 110
+    },
+    {
+        "code": "CH15",
+        "type": "Sentencing",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "CH14",
+        "type": "Sentencing",
+        "rate": 110,
+        "time": 1,
+        "total_allowance": 110
+    },
+    {
+        "code": "C8",
+        "type": "Mention SC",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "C7",
+        "type": "Mention DC",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "C6",
+        "type": "Mention MC",
+        "rate": 84,
+        "time": 1,
+        "total_allowance": 84
+    },
+    {
+        "code": "CH11",
+        "type": "Mention PCC",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "CH10",
+        "type": "Mention CC",
+        "rate": 84,
+        "time": 1,
+        "total_allowance": 84
+    },
+    {
+        "code": "C44D",
+        "type": "Preparation",
+        "rate": 588,
+        "time": 1,
+        "total_allowance": 588
+    },
+    {
+        "code": "C44S",
+        "type": "Preparation",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "C45D",
+        "type": "Preparation",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C45S",
+        "type": "Preparation",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C46D",
+        "type": "Preparation",
+        "rate": 588,
+        "time": 1,
+        "total_allowance": 588
+    },
+    {
+        "code": "C46S",
+        "type": "Preparation",
+        "rate": 735,
+        "time": 1,
+        "total_allowance": 735
+    },
+    {
+        "code": "C47D",
+        "type": "Preparation",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C47S",
+        "type": "Preparation",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C48D",
+        "type": "Preparation",
+        "rate": 1176,
+        "time": 1,
+        "total_allowance": 1176
+    },
+    {
+        "code": "C48S",
+        "type": "Preparation",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C99",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 3,
+        "total_allowance": 441
+    },
+    {
+        "code": "C99S",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 2,
+        "total_allowance": 294
+    },
+    {
+        "code": "C99D",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 2,
+        "total_allowance": 294
+    },
+    {
+        "code": "C99M",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 1,
+        "total_allowance": 147
+    },
+    {
+        "code": "CA1",
+        "type": "Preparation",
+        "rate": 882,
+        "time": 1,
+        "total_allowance": 882
+    },
+    {
+        "code": "CA1",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA2",
+        "type": "Preparation",
+        "rate": 1323,
+        "time": 1,
+        "total_allowance": 1323
+    },
+    {
+        "code": "CA2",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA5",
+        "type": "Preparation",
+        "rate": 1617,
+        "time": 1,
+        "total_allowance": 1617
+    },
+    {
+        "code": "CA5",
+        "type": "Attending reserved decision",
+        "rate": 120,
+        "time": 1,
+        "total_allowance": 120
+    },
+    {
+        "code": "CA5",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CA6",
+        "type": "Preparation",
+        "rate": 1323,
+        "time": 1,
+        "total_allowance": 1323
+    },
+    {
+        "code": "CA6",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CA7",
+        "type": "Preparation",
+        "rate": 296,
+        "time": 1,
+        "total_allowance": 296
+    },
+    {
+        "code": "CA7",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA8",
+        "type": "Preparation",
+        "rate": 1323,
+        "time": 1,
+        "total_allowance": 1323
+    },
+    {
+        "code": "CA8",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CA9",
+        "type": "Preparation",
+        "rate": 2205,
+        "time": 1,
+        "total_allowance": 2205
+    },
+    {
+        "code": "CA9",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CA10",
+        "type": "Preparation",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "CA10",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA11",
+        "type": "Preparation",
+        "rate": 2499,
+        "time": 1,
+        "total_allowance": 2499
+    },
+    {
+        "code": "CA11",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA12",
+        "type": "Court Attendance",
+        "rate": 882,
+        "time": 1,
+        "total_allowance": 882
+    },
+    {
+        "code": "CA13",
+        "type": "Preparation",
+        "rate": 1029,
+        "time": 1,
+        "total_allowance": 1029
+    },
+    {
+        "code": "CA13",
+        "type": "Disbursements",
+        "rate": 20,
+        "time": 1,
+        "total_allowance": 20
+    },
+    {
+        "code": "CA25",
+        "type": "Preparation",
+        "rate": 882,
+        "time": 1,
+        "total_allowance": 882
+    },
+    {
+        "code": "CA25",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA26",
+        "type": "Preparation",
+        "rate": 1323,
+        "time": 1,
+        "total_allowance": 1323
+    },
+    {
+        "code": "CA26",
+        "type": "Disbursements",
+        "rate": 10,
+        "time": 1,
+        "total_allowance": 10
+    },
+    {
+        "code": "CA27",
+        "type": "Preparation",
+        "rate": 3160,
+        "time": 1,
+        "total_allowance": 3160
+    },
+    {
+        "code": "CA27",
+        "type": "Disbursements",
+        "rate": 30,
+        "time": 1,
+        "total_allowance": 30
+    },
+    {
+        "code": "CA28",
+        "type": "Preparation",
+        "rate": 4704,
+        "time": 1,
+        "total_allowance": 4704
+    },
+    {
+        "code": "CA28",
+        "type": "Disbursements",
+        "rate": 30,
+        "time": 1,
+        "total_allowance": 30
+    },
+    {
+        "code": "CA14",
+        "type": "Preparation by Solicitor",
+        "rate": 147,
+        "time": 7,
+        "total_allowance": 1029
+    },
+    {
+        "code": "CA14",
+        "type": "Preparation by Counsel",
+        "rate": 184,
+        "time": 20,
+        "total_allowance": 3680
+    },
+    {
+        "code": "CA14",
+        "type": "Disbursements",
+        "rate": 25,
+        "time": 1,
+        "total_allowance": 25
+    },
+    {
+        "code": "CA15",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 5,
+        "total_allowance": 735
+    },
+    {
+        "code": "CA15",
+        "type": "Preparation by Counsel",
+        "rate": 2576,
+        "time": 1,
+        "total_allowance": 2576
+    },
+    {
+        "code": "CA15",
+        "type": "Court Attendance",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "CA15",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "CA16",
+        "type": "Court Attendance",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "C31",
+        "type": "Disbursements (mileage)",
+        "rate": 88,
+        "time": 3,
+        "total_allowance": 264
+    },
+    {
+        "code": "C31",
+        "type": "Travel Time",
+        "rate": 133,
+        "time": 1,
+        "total_allowance": 133
+    },
+    {
+        "code": "C32",
+        "type": "Travel Time",
+        "rate": 88,
+        "time": 5,
+        "total_allowance": 440
+    },
+    {
+        "code": "C32",
+        "type": "Disbursements (mileage)",
+        "rate": 220,
+        "time": 1,
+        "total_allowance": 220
+    },
+    {
+        "code": "C35",
+        "type": "Travel Time",
+        "rate": 88,
+        "time": 5,
+        "total_allowance": 440
+    },
+    {
+        "code": "C35",
+        "type": "Disbursements (mileage)",
+        "rate": 44,
+        "time": 1,
+        "total_allowance": 44
+    },
+    {
+        "code": "C36",
+        "type": "Video Viewing",
+        "rate": 115,
+        "time": 1,
+        "total_allowance": 115
+    },
+    {
+        "code": "C70A",
+        "type": "Counsel fees",
+        "rate": 184,
+        "time": 1,
+        "total_allowance": 184
+    },
+    {
+        "code": "C81",
+        "type": "Additional Fees",
+        "rate": 147,
+        "time": 2,
+        "total_allowance": 294
+    },
+    {
+        "code": "C81A",
+        "type": "Solicitor fees as disbursement",
+        "rate": 147,
+        "time": 1,
+        "total_allowance": 147
+    },
+    {
+        "code": "C89",
+        "type": "Travel Time",
+        "rate": 88,
+        "time": 1,
+        "total_allowance": 88
+    },
+    {
+        "code": "C89A",
+        "type": "Disbursements (Mileage)",
+        "rate": 1,
+        "time": 1,
+        "total_allowance": 1
+    },
+    {
+        "code": "C90",
+        "type": "Intrepreter fees (disbursements)",
+        "rate": 300,
+        "time": 1,
+        "total_allowance": 300
+    },
+    {
+        "code": "C91",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 10,
+        "total_allowance": 1470
+    },
+    {
+        "code": "C91",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "C94",
+        "type": "Jury waiting time",
+        "rate": 88,
+        "time": 1,
+        "total_allowance": 88
+    },
+    {
+        "code": "C95",
+        "type": "Paralegal fees",
+        "rate": 45,
+        "time": 1,
+        "total_allowance": 45
+    },
+    {
+        "code": "CVA1",
+        "type": "SC Court Attendance",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "CVA1",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 16,
+        "total_allowance": 2352
+    },
+    {
+        "code": "CVA1",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "CVR1",
+        "type": "SC Court Attendance",
+        "rate": 1840,
+        "time": 1,
+        "total_allowance": 1840
+    },
+    {
+        "code": "CVR1",
+        "type": "Preparation",
+        "rate": 147,
+        "time": 10,
+        "total_allowance": 1470
+    },
+    {
+        "code": "CVR1",
+        "type": "Disbursements",
+        "rate": 50,
+        "time": 1,
+        "total_allowance": 50
+    },
+    {
+        "code": "CV11",
+        "type": "SC Court Attendance",
+        "rate": 1470,
+        "time": 1,
+        "total_allowance": 1470
+    },
+    {
+        "code": "CC01",
+        "type": "Advice",
+        "rate": 150,
+        "time": 3,
+        "total_allowance": 450
+    },
+    {
+        "code": "CC02",
+        "type": "Advice",
+        "rate": 150,
+        "time": 3,
+        "total_allowance": 450
+    },
+    {
+        "code": "CC03",
+        "type": "Advice",
+        "rate": 150,
+        "time": 3,
+        "total_allowance": 450
+    },
+    {
+        "code": "CC04",
+        "type": "Advice",
+        "rate": 150,
+        "time": 3,
+        "total_allowance": 450
+    },
+    {
+        "code": "CC05",
+        "type": "Representation",
+        "rate": 150,
+        "time": 6.13,
+        "total_allowance": 920
+    },
+    {
+        "code": "CC06",
+        "type": "Representation",
+        "rate": 150,
+        "time": 6.13,
+        "total_allowance": 920
+    }
+]

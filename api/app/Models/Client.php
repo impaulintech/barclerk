@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\PageEnum;
 use App\Http\Resources\ClientListResource;
+use App\Http\Resources\GrantResource;
 use Exception;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +41,11 @@ class Client extends Model
     public function matterStatus()
     {
         return $this->belongsTo(MatterStatus::class);
+    }
+
+    public function grants()
+    {
+        return $this->hasMany(Grant::class);
     }
 
     public function scopeSearchByName($query, $name)
@@ -89,5 +95,26 @@ class Client extends Model
     static public function displayClients()
     {
         return auth()->user()->clients()->with(['preTrialRestriction', 'matterStatus']);
+    }
+
+    public function addGrant($request)
+    {
+        DB::beginTransaction();
+        try {
+            $grant = $this->grants()->create($request->only(['extension', 'date_effective']));
+            $grant->codes()->sync($request->codes);
+            DB::commit();
+            return $this->displayGrants();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function displayGrants()
+    {
+        return GrantResource::collection($this->grants);
     }
 }
