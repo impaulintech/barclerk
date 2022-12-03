@@ -55,6 +55,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
 
   useEffect(() => {
     if (isOpen) {
+      setPreTrial(() => '1')
       reset({
         matter_name: '',
         email: '',
