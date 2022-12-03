@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PageEnum;
 use App\Http\Resources\ClientListResource;
 use App\Http\Resources\GrantResource;
+use App\Http\Resources\TimeEntryResource;
 use Exception;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +49,11 @@ class Client extends Model
         return $this->hasMany(Grant::class);
     }
 
+    public function timeEntries()
+    {
+        return $this->hasMany(TimeEntry::class);
+    }
+
     public function scopeSearchByName($query, $name)
     {
         $searchType = config('database.default') === 'pgsql' ? 'ilike' : 'like';
@@ -70,7 +76,7 @@ class Client extends Model
                 'value' => $request->value,
             ]);
             DB::commit();
-            return ClientListResource::collection(Client::displayClients()->latest()->paginate(PageEnum::PER_PAGE->value));
+            return ClientListResource::collection(Client::displayClients()->latest()->paginate(PageEnum::MATTERS_PER_PAGE->value));
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -81,7 +87,7 @@ class Client extends Model
 
     static public function search($searchQuery)
     {
-        $clients = auth()->user()->clients()->with(['preTrialRestriction', 'matterStatus']);
+        $clients = (new self)->displayClients();
         if (request('search_query')) {
             $clients->searchByName($searchQuery);
         }
@@ -115,6 +121,23 @@ class Client extends Model
 
     public function displayGrants()
     {
-        return GrantResource::collection($this->grants);
+        return GrantResource::collection($this->grants->latest()->paginate(PageEnum::GRANTS_PER_PAGE->value));
+    }
+
+    public function addTimeEntry($request)
+    {
+        $this->timeEntries()->create($request->validated());
+        return $this->getTimeEntries();
+    }
+
+    public function updateTimeEntry($request, $time_entry)
+    {
+        $time_entry->update($request->validated());
+        return $this->getTimeEntries();
+    }
+
+    public function getTimeEntries()
+    {
+        return TimeEntryResource::collection($this->timeEntries()->with(['grant', 'type'])->latest()->paginate(PageEnum::TIME_ENTRIES_PER_PAGE->value));
     }
 }

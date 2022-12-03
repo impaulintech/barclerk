@@ -4,5 +4,7 @@ namespace App\Enums;
 
 enum PageEnum: int
 {
-    case PER_PAGE = 13;
+    case MATTERS_PER_PAGE = 13;
+    case GRANTS_PER_PAGE = 12;
+    case TIME_ENTRIES_PER_PAGE = 9;
 }
