@@ -48,6 +48,17 @@ export type MatterFormValues = {
   in_custody_location: string
   value?: string
 }
+
+export type CourtAppearanceFormValues = {
+  date: string
+  next_court_date: string
+  time: string
+  court: string
+  judicial_officer: string
+  orders: string
+  other_notes?: string
+}
+
 export type Profile = {
   first_name: string
   last_name: string
