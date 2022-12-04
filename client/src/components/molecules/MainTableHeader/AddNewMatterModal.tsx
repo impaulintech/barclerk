@@ -470,7 +470,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
             )}
           </main>
           {/* MODAL FOOTER SUBMIT AND CANCEL BUTTON */}
-          <footer className="flex justify-end space-x-3 border-t border-slate-300 bg-slate-50 py-4 px-4">
+          <footer className="flex justify-end space-x-3 border-t border-slate-300 bg-slate-50 py-4 px-9">
             <button
               type="button"
               onClick={closeModal}

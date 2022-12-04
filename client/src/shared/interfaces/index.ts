@@ -82,6 +82,6 @@ export interface IGrantOfAid {
 }
 
 export interface ICode {
-  id: number
-  code: string
+  value: string
+  label: string
 }

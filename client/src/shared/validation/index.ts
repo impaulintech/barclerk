@@ -48,7 +48,12 @@ export const MatterFormSchema = Yup.object().shape({
   postal_address: Yup.string().max(255),
   contribution: Yup.number().label('Contribution').typeError('Contribution must be a valid number'),
   court: Yup.string().max(255),
-  charges: Yup.string().required('Charges is required').matches(/^(([a-zA-Z0-9 ](,)?)*)+$/, 'The List must be separated by a comma and a space. Sample: Word1, Word2'),
+  charges: Yup.string()
+    .required('Charges is required')
+    .matches(
+      /^(([a-zA-Z0-9 ](,)?)*)+$/,
+      'The List must be separated by a comma and a space. Sample: Word1, Word2'
+    ),
   pre_trial_restrictions: Yup.string().max(255),
   on_bail_postal_address: Yup.string().max(255),
   in_custody_location: Yup.string().max(255)
@@ -91,4 +96,14 @@ export const SecurityFormSchema = Yup.object().shape({
     .required('Confirm Password is required')
     .max(15, 'Password cannot exceed more than 15 characters')
     .oneOf([Yup.ref('new_password')], 'Passwords do not match')
+})
+
+export const GrantOfAidSchema = Yup.object().shape({
+  extension: Yup.string().required('Extension is required'),
+  date_effective: Yup.string().required('Extension is required'),
+  codes: Yup.array(
+    Yup.object({
+      code: Yup.string().required('Code is required')
+    })
+  )
 })
