@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\PageEnum;
 use App\Http\Resources\ClientListResource;
+use App\Http\Resources\CourtAppearanceResource;
 use App\Http\Resources\GrantResource;
 use App\Http\Resources\TimeEntryResource;
 use Exception;
@@ -52,6 +53,11 @@ class Client extends Model
     public function timeEntries()
     {
         return $this->hasMany(TimeEntry::class);
+    }
+
+    public function courtAppearances()
+    {
+        return $this->hasMany(CourtAppearance::class);
     }
 
     public function scopeSearchByName($query, $name)
@@ -139,5 +145,22 @@ class Client extends Model
     public function getTimeEntries()
     {
         return TimeEntryResource::collection($this->timeEntries()->with(['grant', 'type'])->latest()->paginate(PageEnum::TIME_ENTRIES_PER_PAGE->value));
+    }
+
+    public function addCourtAppearance($request)
+    {
+        $this->courtAppearances()->create($request->validated());
+        return $this->displayCourtAppearances();
+    }
+
+    public function displayCourtAppearances()
+    {
+        return CourtAppearanceResource::collection($this->courtAppearances()->latest()->paginate(PageEnum::COURT_APPEARANCE_PER_PAGE->value));
+    }
+
+    public function editCourtAppearance($request, $court_appearance)
+    {
+        $court_appearance->update($request->validated());
+        return $this->displayCourtAppearances();
     }
 }
