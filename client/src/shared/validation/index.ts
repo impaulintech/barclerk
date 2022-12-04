@@ -54,6 +54,16 @@ export const MatterFormSchema = Yup.object().shape({
   in_custody_location: Yup.string().max(255)
 })
 
+export const CourtAppearanceSchema = Yup.object().shape({
+    date: Yup.string().max(255).required('Must be a valid date'),
+    next_court_date: Yup.string().max(255).required('Must be a valid date'),
+    time: Yup.string().max(255).required('Must be a valid time'),
+    court: Yup.string().max(255).required('This field is required'),
+    judicial_officer: Yup.string().max(255).required('This field is required'),
+    orders: Yup.string().required('This field is required'),
+    other_notes: Yup.string(),
+})
+
 export const ProfileFormSchema = Yup.object().shape({
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),

@@ -32,6 +32,17 @@ export interface IClientProfile {
   lastCourtDates?: ILastCourtDates[]
 }
 
+export interface ICourtAppearance {
+  id: number
+  date?: string
+  time?: string
+  court?: string
+  judicialOfficer?: string
+  nextCourtDate?: string
+  orders?: string
+  otherNotes?: string
+}
+
 export interface ILastCourtDates {
   id: number
   date: string
