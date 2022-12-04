@@ -54,24 +54,24 @@ const AccordionHeader = ({
     >
       <div className="flex space-x-16 overflow-hidden whitespace-nowrap px-2 text-xs">
         <div className="flex flex-col space-y-1">
-          <div>Date</div>
-          <div className="font-extrabold text-barclerk-30">{moment(courtAppearance?.date).format("D MMMM YYYY")}</div>
+          <div className='text-sm font-semibold'>Date</div>
+          <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.date).format("D MMMM YYYY")}</div>
         </div>
         <div className="flex flex-col space-y-1">
-          <div className="text-slate-500">Time</div>
-          <div className=" text-barclerk-10">{moment(`${courtAppearance?.date} ${courtAppearance?.time}`).format('hh:mm A')}</div>
+          <div className="text-slate-500 text-sm font-medium">Time</div>
+          <div className=" text-barclerk-10 text-sm">{moment(`${courtAppearance?.date} ${courtAppearance?.time}`).format('hh:mm A')}</div>
         </div>
         <div className="flex flex-col space-y-1">
-          <div className="text-slate-500">Court</div>
-          <div className=" text-barclerk-10">{courtAppearance?.court}</div>
+          <div className="text-slate-500 text-sm font-medium">Court</div>
+          <div className=" text-barclerk-10 text-sm">{courtAppearance?.court}</div>
         </div>
         <div className="flex flex-col space-y-1">
-          <div className="text-slate-500">Judicial Officer</div>
-          <div className=" text-barclerk-10">{courtAppearance?.judicialOfficer}</div>
+          <div className="text-slate-500 text-sm font-medium">Judicial Officer</div>
+          <div className=" text-barclerk-10 text-sm">{courtAppearance?.judicialOfficer}</div>
         </div>
         <div className="flex flex-col space-y-1">
-          <div>Next Court Date</div>
-          <div className="font-extrabold text-barclerk-30">{moment(courtAppearance?.nextCourtDate).format("D MMMM YYYY")}</div>
+          <div className="text-sm font-semibold">Next Court Date</div>
+          <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.nextCourtDate).format("D MMMM YYYY")}</div>
         </div>
       </div>
       <div className="flex items-center pl-4">
@@ -100,8 +100,8 @@ const AccordionBody = ({ orders, notes }: { orders?: string; notes?: string }): 
   return (
     <div className="flex w-full justify-between space-x-10 rounded-b-sm bg-white py-3 pl-6 pr-14 pb-12 text-xs shadow transition duration-150 ease-in-out">
       <div className="flex w-1/2 flex-col space-y-2">
-        <div>Orders</div>
-        <div className="flex max-h-52 flex-1 overflow-y-auto rounded border border-slate-300 p-4">
+        <div className="text-sm font-medium text-slate-500">Orders</div>
+        <div className="flex max-h-52 flex-1 overflow-y-auto rounded border border-slate-300 p-4 text-sm">
           {orders ? (
             <>
               {orders}
@@ -114,8 +114,8 @@ const AccordionBody = ({ orders, notes }: { orders?: string; notes?: string }): 
         </div>
       </div>
       <div className="flex w-1/2 flex-col space-y-2">
-        <div>Other notes</div>
-        <div className="flex max-h-52 flex-1 overflow-y-auto rounded font-semibold border border-slate-300 p-4">
+        <div className="text-sm font-medium text-slate-500">Other notes</div>
+        <div className="flex max-h-52 flex-1 overflow-y-auto rounded font-semibold border border-slate-300 p-4 text-sm">
           {notes ? (
             <>
               <p>{notes}</p>

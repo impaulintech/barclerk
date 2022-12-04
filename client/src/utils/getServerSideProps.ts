@@ -45,6 +45,7 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
         const res = await axios.get('auth', config)
         store.dispatch(setAuth(res.data))
 
+        const privateRoutes = req.url?.includes('matter')
         const forgotPasswordPage = req.url?.includes('forgot-password')
         const linkClicked = req.url?.includes('token') && req.url?.includes('email')
 
@@ -59,6 +60,17 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
             }
           }
         }
+
+        if (privateRoutes) {
+          if (!token) {
+            return {
+              redirect: {
+                permanent: false,
+                destination: '/'
+              }
+            }
+          }
+        }
       } catch (error: any) {
         const forgotPasswordPage = req.url?.includes('forgot-password')
 
@@ -68,7 +80,7 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
             notFound: true
           }
         }
-        
+
         if (error.response?.status === 500) {
           throw new Error('Internal Server Error')
         }

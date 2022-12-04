@@ -39,8 +39,7 @@ export const useAuthMethods = () => {
     dispatch(signIn(data)).then(({ payload }) => {
       const { content, status } = payload || {}
 
-      if (status) return toast.error(content?.email)
-      console.log(store.getState().auth?.isError)
+      if (status) return toast.error(content?.email) 
       toast.success('Welcome to dashboard!')
       redirect('/')
     })

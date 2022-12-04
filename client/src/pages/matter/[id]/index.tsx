@@ -16,3 +16,4 @@ const Dashboard: NextPage = (): JSX.Element => {
 }
 
 export default Dashboard
+export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'

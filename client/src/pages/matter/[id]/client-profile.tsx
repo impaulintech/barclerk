@@ -137,3 +137,4 @@ const ClientProfileHeader = (): JSX.Element => {
 }
 
 export default ClientProfile
+export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
