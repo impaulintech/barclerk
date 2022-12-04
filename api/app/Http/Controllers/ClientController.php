@@ -11,7 +11,7 @@ class ClientController extends Controller
 {
   public function index()
   {
-    return ClientListResource::collection(Client::search(request('search_query'))->latest()->paginate(PageEnum::PER_PAGE->value));
+    return ClientListResource::collection(Client::search(request('search_query'))->latest()->paginate(PageEnum::MATTERS_PER_PAGE->value));
   }
 
   public function store(StoreClientRequest $request)
