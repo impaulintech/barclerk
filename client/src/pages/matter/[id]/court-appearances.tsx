@@ -125,3 +125,4 @@ const CourtAppearancesHeader = (): JSX.Element => {
 }
 
 export default CourtAppearances
+export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'

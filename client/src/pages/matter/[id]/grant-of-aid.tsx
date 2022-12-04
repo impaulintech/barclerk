@@ -43,3 +43,4 @@ const GrantOfAidHeader = (): JSX.Element => {
 }
 
 export default GrantOfAid
+export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
