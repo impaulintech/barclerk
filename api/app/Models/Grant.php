@@ -25,6 +25,11 @@ class Grant extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function types()
+    {
+        return $this->hasManyThrough(Type::class, GrantCode::class, 'grant_id', 'clause_id', 'id', 'clause_id');
+    }
+
     public function displayGrant()
     {
         return new GrantResource(Grant::with(['codes.types'])->findOrFail($this->id));

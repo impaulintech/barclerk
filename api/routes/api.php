@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ClauseController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ExtensionController;
 use App\Http\Controllers\GrantController;
+use App\Http\Controllers\TimeEntryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +35,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/v1'], function () {
   Route::apiResource('client', ClientController::class)->only(['index', 'store']);
   Route::apiResource('client.grant', GrantController::class);
   Route::get('clause', ClauseController::class);
+  Route::apiResource('client.time-entry', TimeEntryController::class)->only(['index', 'store', 'update']);
+  Route::get('extension/{client}', ExtensionController::class);
 });
 
 
