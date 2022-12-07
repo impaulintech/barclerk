@@ -25,4 +25,26 @@ class TimeEntry extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function scopePreparation($query)
+    {
+        return $query->whereHas('type', function ($query) {
+            $query->where('type', 'like', '%preparation%');
+        });
+    }
+
+    public function scopeOtherTypes($query)
+    {
+        return $query->whereHas('type', function ($query) {
+            $query->where('type', 'not like', '%preparation%')
+                ->where('type', 'not like', '%attendance%');
+        });
+    }
+
+    public function scopeAttendance($query)
+    {
+        return $query->whereHas('type', function ($query) {
+            $query->where('type', 'like', '%attendance%');
+        });
+    }
 }
