@@ -8,11 +8,15 @@ export interface IMatter {
   contribution: number
   court?: string
   charges?: ICharges[]
-  extension?: string
-  totalPrepUsed?: number
-  totalFundUsed?: number
-  remainingFund?: number
-  nextCourtDate?: string
+  extension?: {
+    extension?: string
+    totalFund?: string
+    totalFundUsed?: string
+    remainingFunds?: string
+  }
+  courtAppearance?: {
+    next_court_date?: string 
+  }
   preTrialRestriction?: IPreTrialRestriction
   status?: IStatus
 }

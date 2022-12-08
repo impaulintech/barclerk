@@ -20,11 +20,8 @@ class ClientListResource extends JsonResource
             'contribution' => $this->contribution,
             'preTrialRestriction' => new PreTrialRestrictionResource($this->whenLoaded('preTrialRestriction')),
             'status' => new MatterStatusResource($this->whenLoaded('matterStatus')),
-            'extension' => '22W005912/2',
-            'totalPrepUsed' => '$27',
-            'totalFundUsed' => '50%',
-            'remainingFund' => '13%',
-            'nextCourtDate' => '26 October 2022',
+            'extension' => new GrantResource($this->whenLoaded('latestGrant')),
+            'courtAppearance' => new CourtAppearanceResource($this->whenLoaded('latestCourtAppearance')),
         ];
     }
 }

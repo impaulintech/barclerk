@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
+import moment from 'moment'
 
 import { IMatter } from '~/shared/interfaces'
 import { MatterStatus } from '~/utils/constants'
@@ -19,10 +20,7 @@ const TableItem: FC<Props> = (props): JSX.Element => {
       contribution,
       preTrialRestriction,
       extension,
-      totalPrepUsed,
-      totalFundUsed,
-      remainingFund,
-      nextCourtDate,
+      courtAppearance,
       status
     }
   } = props
@@ -67,33 +65,33 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         </span>
       </td>
       <td className="py-2 px-6">
-        <Tippy content={extension}>
-          <span className="line-clamp-1" title={extension}>
-            {extension}
+        <Tippy content={extension?.extension || 'None'}>
+          <span className="line-clamp-1" title={extension?.extension || 'None'}>
+            {extension?.extension || 'None'}
           </span>
         </Tippy>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
-          title={extension}
-        >{`${totalPrepUsed}%`}</span>
+          title={extension?.totalFund || '0'}
+        >{`$${extension?.totalFund || 0}`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
-          title={`${totalFundUsed}`}
-        >{`${totalFundUsed}%`}</span>
+          title={`${extension?.totalFundUsed || 0}`}
+        >{`${extension?.totalFundUsed || 0}%`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
-          title={`${remainingFund}`}
-        >{`$${remainingFund}`}</span>
+          title={`${extension?.remainingFunds || 0}`}
+        >{`$${extension?.remainingFunds || 0}`}</span>
       </td>
       <td className="py-2 px-6">
-        <Tippy content={nextCourtDate}>
-          <span className="font-extrabold text-[#4B91AA] line-clamp-1">{nextCourtDate}</span>
+        <Tippy content={courtAppearance?.next_court_date ? moment(courtAppearance?.next_court_date).format('DD MMMM YYYY') : 'None'}>
+          <span className="font-extrabold text-[#4B91AA] line-clamp-1">{courtAppearance?.next_court_date ? moment(courtAppearance?.next_court_date).format('DD MMMM YYYY') : 'None'}</span>
         </Tippy>
       </td>
     </tr>
