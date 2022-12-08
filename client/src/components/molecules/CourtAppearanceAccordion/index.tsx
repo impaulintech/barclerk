@@ -23,7 +23,7 @@ const CourtAppearanceAccordion: FC<Props> = ({ courtAppearance }) => {
           setShow={setShow}
         />
         {show?.show === true && show?.id === courtAppearance?.id && (
-          <AccordionBody orders={courtAppearance?.orders} notes={courtAppearance?.otherNotes} />
+          <AccordionBody orders={courtAppearance?.orders} notes={courtAppearance?.other_notes} />
         )}
       </div>
       <EditCourtAppearanceModal
@@ -67,11 +67,11 @@ const AccordionHeader = ({
         </div>
         <div className="flex flex-col space-y-1">
           <div className="text-slate-500 text-sm font-medium">Judicial Officer</div>
-          <div className=" text-barclerk-10 text-sm">{courtAppearance?.judicialOfficer}</div>
+          <div className=" text-barclerk-10 text-sm">{courtAppearance?.judicial_officer}</div>
         </div>
         <div className="flex flex-col space-y-1">
           <div className="text-sm font-semibold">Next Court Date</div>
-          <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.nextCourtDate).format("D MMMM YYYY")}</div>
+          <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.next_court_date).format("D MMMM YYYY")}</div>
         </div>
       </div>
       <div className="flex items-center pl-4">
