@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\HasRemainingFunds;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TimeEntryRequest extends FormRequest
@@ -29,7 +30,7 @@ class TimeEntryRequest extends FormRequest
             'description' => ['required', 'max:65535'],
             'date' => ['required', 'date'],
             'hours' => ['required', 'numeric'],
-            'amount' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric', new HasRemainingFunds($this->request->get('grant_id'))],
         ];
     }
 

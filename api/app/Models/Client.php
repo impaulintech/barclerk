@@ -73,15 +73,17 @@ class Client extends Model
 
     public function totalFund($grant)
     {
-        return DB::table('types')
-            ->join('grant_codes', 'grant_codes.clause_id', '=', 'types.clause_id')
-            ->where('grant_codes.grant_id', $grant->id)
-            ->sum('types.total_allowance');
+        return $grant->totalFund();
     }
 
     public function totalAmountOfTimeEntries($grant)
     {
-        return $grant->timeEntries->sum('amount');
+        return $grant->totalAmountOfTimeEntries();
+    }
+
+    public function remainingFunds($grant)
+    {
+        return $this->totalFund($grant) - $this->totalAmountOfTimeEntries($grant);
     }
 
     static public function addClient($request)

@@ -70,4 +70,22 @@ class Grant extends Model
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function totalFund()
+    {
+        return DB::table('types')
+            ->join('grant_codes', 'grant_codes.clause_id', '=', 'types.clause_id')
+            ->where('grant_codes.grant_id', $this->id)
+            ->sum('types.total_allowance');
+    }
+
+    public function totalAmountOfTimeEntries()
+    {
+        return $this->timeEntries->sum('amount');
+    }
+
+    public function remainingFunds()
+    {
+        return $this->totalFund() - $this->totalAmountOfTimeEntries();
+    }
 }
