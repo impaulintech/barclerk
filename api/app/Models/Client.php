@@ -79,9 +79,9 @@ class Client extends Model
             ->sum('types.total_allowance');
     }
 
-    public function totalAmountOfTimeEntries()
+    public function totalAmountOfTimeEntries($grant)
     {
-        return $this->timeEntries->sum('amount');
+        return $grant->timeEntries->sum('amount');
     }
 
     static public function addClient($request)
@@ -140,7 +140,7 @@ class Client extends Model
 
     public function displayGrants()
     {
-        return GrantResource::collection($this->grants->latest()->paginate(PageEnum::GRANTS_PER_PAGE->value));
+        return GrantResource::collection($this->grants()->latest()->paginate(PageEnum::GRANTS_PER_PAGE->value));
     }
 
     public function addTimeEntry($request)
@@ -175,5 +175,21 @@ class Client extends Model
     {
         $court_appearance->update($request->validated());
         return $this->displayCourtAppearances();
+    }
+
+    public function dashboardExtension($grant)
+    {
+        $totalFund = $this->totalFund($grant);
+        $remainingFund = $totalFund - $this->totalAmountOfTimeEntries($grant);
+        $totalFundUsed = (($totalFund - ($remainingFund)) / $totalFund);
+
+        return [
+            'preparation' => $grant->timeEntries()->preparation()->firstOr('amount', fn () => 0),
+            'otherTypes' => $grant->timeEntries()->otherTypes()->sum('amount'),
+            'attendance' => $grant->timeEntries()->attendance()->sum('amount'),
+            'total_fund' => $totalFund,
+            'total_fund_used' => round($totalFundUsed, 2),
+            'remaining_fund' => $remainingFund,
+        ];
     }
 }
