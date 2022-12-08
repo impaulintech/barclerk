@@ -60,6 +60,16 @@ class Client extends Model
         return $this->hasMany(CourtAppearance::class);
     }
 
+    public function latestGrant()
+    {
+        return $this->hasOne(Grant::class)->latest('id');
+    }
+
+    public function latestCourtAppearance()
+    {
+        return $this->hasOne(CourtAppearance::class)->latest('id');
+    }
+
     public function scopeSearchByName($query, $name)
     {
         $searchType = config('database.default') === 'pgsql' ? 'ilike' : 'like';
@@ -121,7 +131,7 @@ class Client extends Model
 
     static public function displayClients()
     {
-        return auth()->user()->clients()->with(['preTrialRestriction', 'matterStatus']);
+        return auth()->user()->clients()->with(['latestGrant', 'latestCourtAppearance', 'preTrialRestriction', 'matterStatus']);
     }
 
     public function addGrant($request)
