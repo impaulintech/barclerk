@@ -97,7 +97,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
   
   const defaultExtension = extensionList && extensionList[activeExtension || latestExtension];  
 
-  const [modalValue, setModalValue] = useState<Modal>({
+  const [modalValue, setModalValue] = useState<any>({
     description: description ?? "",
     date: date ?? dateToday,
     extension: "",
@@ -113,7 +113,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
 
   useEffect(()=>{ 
     if(modalValue?.extension?.length > 0) return 
-    setModalValue((prev):any => ({...prev, 
+    setModalValue((prev:any) => ({...prev, 
       extension: extension ?? defaultExtension?.extension,
       type: type ? defaultExtension?.types[type_id || 0] : defaultExtension?.types[activeType],  
       grant_id: grant_id ?? defaultExtension?.id,
@@ -183,7 +183,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     {...register('description')}
                     defaultValue={modalValue?.description}
                     disabled={isLoading}
-                    onChange={(e)=> setModalValue((prev):any => ({...prev, 
+                    onChange={(e)=> setModalValue((prev:any) => ({...prev, 
                       description: e?.target?.value
                     }))}
                     className={`
@@ -228,7 +228,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     disabled={isLoading}
                     defaultValue={modalValue?.date || dateToday} 
                     onChange={(e)=>{ 
-                      setModalValue((prev):any => ({...prev, 
+                      setModalValue((prev:any) => ({...prev, 
                         date: e.target.value, 
                       })) 
                     }}
@@ -292,7 +292,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                           toggleExtension(e)
                           setActiveExtension(index)
                           setActiveType(0)
-                          setModalValue((prev):any => ({...prev, 
+                          setModalValue((prev:any) => ({...prev, 
                             extension: option?.extension,
                             ratePerHour: option?.types?.[0]?.rate,
                             type: defaultExtension?.types[0],
@@ -358,7 +358,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                         onClick={(e)=> {
                           toggleType(e)
                           setActiveType(index)
-                          setModalValue((prev):any => ({...prev, 
+                          setModalValue((prev:any) => ({...prev, 
                             ratePerHour: option?.rate,
                             amount: option?.rate * modalValue?.hoursUnit,
                             type_id: option?.id,
@@ -388,7 +388,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     id="hoursUnit"
                     {...register('hoursUnit')}
                     disabled={isLoading}
-                    onChange={(e)=> setModalValue((prev):any => ({...prev, 
+                    onChange={(e)=> setModalValue((prev:any) => ({...prev, 
                       hoursUnit: Number(e?.target?.value),
                       amount: Number(e?.target?.value) * modalValue?.ratePerHour,
                     }))}
@@ -458,7 +458,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     id="amount"
                     {...register('amount')}
                     disabled={true}
-                    value={modalValue?.amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    value={modalValue?.amount?.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50 
