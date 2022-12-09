@@ -7,20 +7,14 @@ type Props = {}
 const tableHeader = [
   'Date',
   'Extension',
-  'Type',
-  'Code',
+  'Type', 
   'Hours/Unit',
   'Rate per hour',
   'Amount',
   'Action'
 ]
 
-const hasSortIcon = [
-  'Date', 
-  'Hours/Unit', 
-  'Rate per hour', 
-  'Amount'
-] 
+const hasSortIcon: string[] = [] 
 
 const TableHead: FC<Props> = (): JSX.Element => {
   return (

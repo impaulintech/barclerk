@@ -1,14 +1,25 @@
+import { 
+  X, 
+  Info, 
+  Plus, 
+  Clock, 
+  FilePlus, 
+  Calendar, 
+  Clipboard, 
+  DollarSign, 
+  ChevronDown, 
+} from 'react-feather'
 import { useForm } from 'react-hook-form'
 import { Dialog } from '@headlessui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import TextareaAutosize from 'react-textarea-autosize'
-import React, { FC } from 'react'
-import { Plus, X, Clipboard, FilePlus, Calendar, Code, Clock, DollarSign, Info } from 'react-feather'
+import React, { FC, useEffect, useState } from 'react'
 
 import { useNewEntry } from '~/hooks/useNewEntry'
 import { TimeEntryFormValues } from '~/shared/types'
 import { Spinner } from '~/shared/icons/SpinnerIcon' 
 import { EntryFormSchema } from '~/shared/validation'
+import { useAppSelector } from '~/hooks/reduxSelector' 
 import DialogBox from '~/components/templates/DialogBox'  
 
 type Props = {
@@ -18,12 +29,27 @@ type Props = {
     description: string
     date: string
     extension: string 
-    type: string
-    code: string
+    type: string 
+    grant_id: number 
+    type_id: number
     hoursUnit: number
     ratePerHour: number
     amount: number
+    timeEntryID?: number | undefined
   }
+}
+
+type Modal = {
+  description: string
+  date: string
+  extension: string
+  type: {type: string}
+  hoursUnit: number 
+  grant_id: number
+  type_id: number
+  ratePerHour: number
+  amount: number
+  timeEntryID?: number | undefined
 }
 
 const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element => {  
@@ -36,30 +62,98 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
   } = useForm<TimeEntryFormValues>({
     mode: 'onTouched',
     resolver: yupResolver(EntryFormSchema)
-  })
-  const { isLoading, handleAddNewEntry } = useNewEntry(closeModal, setError)
-  const {description, date, extension, type, code, hoursUnit, ratePerHour, amount} = editData || {}
+  })  
+  const { isEditModal } = useAppSelector((state) => state.timeEntry)
+  const { extensionList, isEmpty } = useAppSelector((state) => state.timeEntry) 
+  const closeAllDropdown = () => {
+    setExtensionDropdown(false)
+    setTypeDropdown(false)
+  }
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month =today.getMonth()+1;
+  const day = `${Number(today.getDate()) < 10 ? '0' : ''}${today.getDate()}`;
+  const dateToday = `${year}-${month}-${day}`;
+
+  const {description, date, extension, type, grant_id, type_id, hoursUnit, ratePerHour, amount, timeEntryID} = editData || {}
+  const latestExtension = extensionList?.length - 1 || 0; 
+  
+  const [extensionDropdown, setExtensionDropdown] = useState<boolean>(false)
+  const [activeExtension, setActiveExtension] = useState<number>(latestExtension)
+  const toggleExtension = (e: any) => {
+    e.preventDefault()
+    setExtensionDropdown(!extensionDropdown)  
+    setTypeDropdown(false) 
+  } 
+  
+  const [typeDropdown, setTypeDropdown] = useState<boolean>(false)
+  const [activeType, setActiveType] = useState<number>(0)
+  const toggleType = (e: any) => {
+    e.preventDefault()
+    setTypeDropdown(!typeDropdown)  
+    setExtensionDropdown(false)  
+  } 
+  
+  const defaultExtension = extensionList && extensionList[activeExtension || latestExtension];  
+
+  const [modalValue, setModalValue] = useState<Modal>({
+    description: description ?? "",
+    date: date ?? dateToday,
+    extension: "",
+    type: {type: ""},
+    hoursUnit: hoursUnit ?? 0, 
+    grant_id: 0,
+	  type_id: 0,
+    amount: 0,
+    ratePerHour: 0,
+    timeEntryID,
+  })   
+  const { isLoading, handleAddNewEntry } = useNewEntry(closeAllDropdown, closeModal, modalValue, setError)
+
+  useEffect(()=>{ 
+    if(modalValue?.extension?.length > 0) return 
+    setModalValue((prev):any => ({...prev, 
+      extension: extension ?? defaultExtension?.extension,
+      type: type ? defaultExtension?.types[type_id || 0] : defaultExtension?.types[activeType],  
+      grant_id: grant_id ?? defaultExtension?.id,
+      type_id: type_id ?? defaultExtension?.types[activeType]?.id,
+      amount: amount ?? modalValue?.hoursUnit * defaultExtension?.types[activeType]?.rate,
+      ratePerHour: ratePerHour ?? defaultExtension?.types[activeType]?.rate
+    })) 
+    setActiveType((type_id) || 0)  
+  }, [defaultExtension])  
   
   return (
-    <DialogBox isOpen={isOpen} closeModal={closeModal}>
+    <DialogBox isOpen={isOpen} closeModal={closeModal} closeAllDropdown={closeAllDropdown}>
       <Dialog.Panel className="w-full max-w-[812px] transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
-        <form onSubmit={handleSubmit(handleAddNewEntry)}>
+        <form 
+          onSubmit={handleSubmit(handleAddNewEntry)} 
+          onClick={()=> {
+            if(extensionDropdown || typeDropdown) {
+              closeAllDropdown()
+            }
+          }}
+        >
           {/* MODAL HEADER */}
           <header className="flex items-center justify-between space-x-2 border-b border-slate-300 py-4 px-5">
             <div className="flex items-center space-x-2">
               <Plus className="h-5 w-5" />
-              <span className="text-lg font-semibold">Add New Time Entry</span>
+              <span className="text-lg font-semibold">{ isEditModal ? "Edit Time Entry" : "Add New Time Entry"}</span>
             </div>
             <button
               type="button"
-              onClick={closeModal}
+              onClick={()=>{
+                closeModal()
+                closeAllDropdown()
+              }}
               className="rounded-md p-0.5 outline-none transition duration-75 ease-in-out hover:bg-slate-100 active:scale-95"
             >
               <X className="h-5 w-5" />
             </button>
           </header>
           {/* MODAL FORM CONTENT */}
-          <main className="grid grid-cols-2 gap-x-3 gap-y-2 px-8 py-6 pb-10 md:gap-x-5 md:gap-y-4">
+          <main className="grid grid-cols-2 gap-x-3 gap-y-2 px-8 py-6 pb-10 md:gap-x-5 md:gap-y-4" >
             {/* DESCRIPTION */}
             <section className="col-span-2">
               <label htmlFor="description" className="flex flex-col space-y-1">
@@ -87,8 +181,11 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                   <TextareaAutosize
                     id="description"
                     {...register('description')}
-                    defaultValue={description}
+                    defaultValue={modalValue?.description}
                     disabled={isLoading}
+                    onChange={(e)=> setModalValue((prev):any => ({...prev, 
+                      description: e?.target?.value
+                    }))}
                     className={`
                       min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                       focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
@@ -129,7 +226,12 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     placeholder='make this dropdown'
                     {...register('date')}
                     disabled={isLoading}
-                    defaultValue={date}
+                    defaultValue={modalValue?.date || dateToday} 
+                    onChange={(e)=>{ 
+                      setModalValue((prev):any => ({...prev, 
+                        date: e.target.value, 
+                      })) 
+                    }}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -146,133 +248,131 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
               )}
             </section>
             {/* EXTENSION */}
-            <section className="col-span-2 md:col-span-1">
-              <label htmlFor="extension" className="flex flex-col space-y-1">
+            <section className="col-span-2 md:col-span-1 relative select-none" >
+              <label htmlFor="extension" className="flex flex-col space-y-1 cursor-pointer" >
                 <h2 className="text-sm text-slate-700">
                   Extension <span className="text-rose-500">*</span>
                 </h2>
-                <div className="group relative">
-                  <span
-                    className={`
-                      absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
-                    group-focus-within:border-barclerk-30
-                      ${errors?.extension && 'border-rose-400 group-focus-within:border-rose-400'}
-                    `}
-                  >
-                    <FilePlus
-                      className={`
-                      h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                      ${errors?.extension && 'text-rose-400 group-focus-within:text-rose-400'}
-                    `}
-                    />
-                  </span>
+                <div className="group relative" onClick={toggleExtension} > 
+                  <span className="absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 group-focus-within:border-barclerk-30" >
+                    <FilePlus className="h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30" />
+                  </span>  
                   <input
-                    type="text"
-                    id="extension"
-                    {...register('extension')}
-                    disabled={isLoading}
-                    defaultValue={extension}
+                    type="text" 
+                    disabled={isLoading} 
+                    value={modalValue?.extension}   
+                    readOnly={true} 
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
-                      disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.extension && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                      }
+                      disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none	text-start 
                     `}
                   />
+                  <span className="absolute inset-y-0 flex items-center border-none px-2.5 group-focus-within:border-barclerk-30 right-0" >
+                    <ChevronDown className="h-5 w-5" />
+                  </span>
                 </div>
               </label>
-              {errors?.extension && <span className="error">{`${errors.extension.message}`}</span>}
+              {extensionDropdown &&  
+                <div className="
+                  overflow-y-scroll border-2 border-slate-300 rounded-md 
+                  flex flex-col items-start z-50 mt-[1px] absolute w-full 
+                  bg-white shadow-md max-h-[150px]
+                "> 
+                  {extensionList.map((option:{extension: string, id:number, types: [{rate:number}]}, index:number)=>{
+                    return (
+                      <span 
+                        key={index}
+                        className={`
+                          cursor-pointer w-full text-sm font-medium text-slate-900 
+                          py-2 px-3 text-left border-none 
+                        hover:bg-barclerk-30 hover:opacity-100
+                          ${index === (activeExtension || latestExtension) && "opacity-50 bg-barclerk-30"}
+                        `}
+                        onClick={(e)=> {
+                          toggleExtension(e)
+                          setActiveExtension(index)
+                          setActiveType(0)
+                          setModalValue((prev):any => ({...prev, 
+                            extension: option?.extension,
+                            ratePerHour: option?.types?.[0]?.rate,
+                            type: defaultExtension?.types[0],
+                            grant_id: option?.id,
+                            amount: option?.types[0]?.rate * modalValue?.hoursUnit,
+                            type_id: 1
+                          })) 
+                        }}
+                      >
+                        {option?.extension}
+                      </span> 
+                    )
+                  })} 
+                </div> 
+              } 
             </section>
             {/* TYPE */}
-            <section className="col-span-2 md:col-span-1">
-              <label htmlFor="phone" className="flex flex-col space-y-1">
+            <section className="col-span-2 md:col-span-1 relative">
+              <label htmlFor="phone" className="flex flex-col space-y-1 cursor-pointer relative">
                 <h2 className="text-sm text-slate-700">
                   Type <span className="text-rose-500">*</span>
                 </h2>
-                <div className="group relative">
+                <div className="group relative" onClick={toggleType}>
                   <span
                     className={`
                       absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
-                    group-focus-within:border-barclerk-30
-                      ${
-                        errors?.type && 'border-rose-400 group-focus-within:border-rose-400'
-                      }
+                    group-focus-within:border-barclerk-30 
                     `}
                   >
-                    <Clipboard
-                      className={`
-                      h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                      ${errors?.type && 'text-rose-400 group-focus-within:text-rose-400'}
-                    `}
-                    />
+                    <Clipboard className="h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30" />
                   </span>
                   <input
-                    type="text"
-                    id="phone"
-                    {...register('type')}
+                    type="text" 
                     disabled={isLoading}
-                    defaultValue={type}
+                    value={modalValue?.type?.type} 
+                    readOnly={true}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
-                      disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.type &&
-                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                      }
+                      disabled:cursor-not-allowed disabled:opacity-50 pointer-events-none
                     `}
                   />
-                </div>
-              </label>
-              {errors?.type && (
-                <span className="error">{`${errors.type.message}`}</span>
-              )}
-            </section>
-            {/* CODE */}
-            <section className="col-span-2 md:col-span-1">
-              <label htmlFor="code" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Code <span className="text-rose-500">*</span>
-                </h2>
-                <div className="group relative">
-                  <span
-                    className={`
-                      absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
-                    group-focus-within:border-barclerk-30
-                      ${
-                        errors?.code &&
-                        'border-rose-400 group-focus-within:border-rose-400'
-                      }
-                    `}
-                  >
-                    <Code
-                      className={`
-                      h-5 w-5 text-slate-400  group-focus-within:text-barclerk-30
-                      ${errors?.code && 'text-rose-400 group-focus-within:text-rose-400'}
-                    `}
-                    />
+                  <span className="bg-white border-y-2 border-r-2 border-slate-300 rounded-r-md absolute inset-y-0 flex items-center px-2.5 right-0" >
+                    <ChevronDown className="h-5 w-5" />
                   </span>
-                  <input
-                    type="text"
-                    id="code"
-                    {...register('code')}
-                    disabled={isLoading}
-                    defaultValue={code}
-                    className={`
-                      w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
-                      disabled:cursor-not-allowed disabled:opacity-50
-                      ${
-                        errors?.code &&
-                        'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                      }
-                    `}
-                  />
                 </div>
-              </label>
-              {errors?.code && (
-                <span className="error">{`${errors.code.message}`}</span>
-              )}
-            </section>
+              </label> 
+              {typeDropdown && 
+                <div className="
+                  overflow-y-scroll border-2 border-slate-300 rounded-md 
+                  flex flex-col items-start z-50 mt-[1px] absolute w-full
+                  bg-white shadow-md max-h-[150px]
+                "> 
+                  {defaultExtension?.types.map((option:{type:string, rate:number, id:number}, index:number)=>{
+                    return (
+                      <span 
+                        key={index}
+                        className={`
+                          cursor-pointer w-full text-sm font-medium text-slate-900 
+                          py-2 px-3 text-left border-none 
+                        hover:bg-barclerk-30 hover:opacity-100
+                          ${index === activeType && "opacity-50 bg-barclerk-30"}
+                        `}
+                        onClick={(e)=> {
+                          toggleType(e)
+                          setActiveType(index)
+                          setModalValue((prev):any => ({...prev, 
+                            ratePerHour: option?.rate,
+                            amount: option?.rate * modalValue?.hoursUnit,
+                            type_id: option?.id,
+                            type: defaultExtension?.types[option?.id - 1],
+                          })) 
+                        }}
+                      >
+                        {option?.type}
+                      </span> 
+                    )
+                  })} 
+                </div>
+              } 
+            </section> 
             {/* HOURS/UNIT */}
             <section className="col-span-2 md:col-span-1">
               <label htmlFor="hoursUnit" className="flex flex-col space-y-1">
@@ -288,7 +388,11 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     id="hoursUnit"
                     {...register('hoursUnit')}
                     disabled={isLoading}
-                    defaultValue={hoursUnit}
+                    onChange={(e)=> setModalValue((prev):any => ({...prev, 
+                      hoursUnit: Number(e?.target?.value),
+                      amount: Number(e?.target?.value) * modalValue?.ratePerHour,
+                    }))}
+                    defaultValue={modalValue?.hoursUnit} 
                     className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
@@ -320,8 +424,8 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     type="text"
                     id="ratePerHour"
                     {...register('ratePerHour')}
-                    disabled={isLoading}
-                    defaultValue={ratePerHour}
+                    disabled={true}
+                    value={modalValue?.ratePerHour}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50 
@@ -331,7 +435,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
               </label> 
             </section>
             {/* AMOUNT */}
-            <section className="col-span-2">
+            <section className="col-span-1">
               <label htmlFor="amount" className="flex flex-col space-y-1">
                 <h2 className="text-sm text-slate-700">
                   Amount  
@@ -353,8 +457,8 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     type="text"
                     id="amount"
                     {...register('amount')}
-                    disabled={isLoading}
-                    defaultValue={amount}
+                    disabled={true}
+                    value={modalValue?.amount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50 
@@ -368,7 +472,10 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
           <footer className="flex justify-end space-x-3 border-t border-slate-300 bg-slate-50 py-4 px-4">
             <button
               type="button"
-              onClick={closeModal}
+              onClick={()=>{
+                closeModal()
+                closeAllDropdown()
+              }}
               disabled={isLoading}
               className={`
                 w-36 rounded border border-slate-300 bg-white 

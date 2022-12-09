@@ -10,14 +10,14 @@ import TimeEntryTableHeader from '~/components/molecules/TimeEntryTableHeader'
 const TimeEntries:NextPage = (): JSX.Element => { 
   return ( 
     <MatterLayout metaTitle="Time Entries"> 
-    <section className="mx-auto w-full max-w-[90rem] px-4 py-4 md:px-12">
+    <section className="mx-auto h-screen min-h-screen w-full max-w-[90rem] px-4 py-4 md:px-12">
       <Breedcrumb route="Time Entries" />
       <main className="mt-4 flex h-full w-full max-w-[100rem] flex-col justify-between overflow-hidden pb-24 pt-5">
         <TimeEntryTableHeader />
         <article
           className={`
-          h-full min-h-[270px] rounded-b-md border-x border-b border-slate-300 bg-white
-          shadow overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-400 scrollbar-thumb-rounded-md 
+          h-full rounded-b-md border-x border-b border-slate-300 bg-white
+          shadow overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-400 scrollbar-thumb-rounded-md z-10
         `}
         >
           <TimeEntriesTable />

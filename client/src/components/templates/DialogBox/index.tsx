@@ -4,13 +4,17 @@ import { Dialog, Transition } from '@headlessui/react'
 type Props = {
   isOpen: boolean
   closeModal: () => void
+  closeAllDropdown?: any
   children: ReactNode
 }
 
-const DialogBox: FC<Props> = ({ isOpen, closeModal, children }): JSX.Element => {
+const DialogBox: FC<Props> = ({ isOpen, closeModal, closeAllDropdown, children }): JSX.Element => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={closeModal}>
+      <Dialog as="div" className="relative z-50" onClose={()=> {
+        closeModal()
+        closeAllDropdown()
+      }}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

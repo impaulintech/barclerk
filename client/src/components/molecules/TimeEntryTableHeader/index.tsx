@@ -2,11 +2,18 @@ import {  Plus  } from 'react-feather'
 import { FC,  useState } from 'react'
  
 import AddNewEntry from './AddNewEntry' 
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector';
+import { setEditModal } from '~/redux/time-entry/timeEntrySlice';
 
 const TimeEntryTableHeader: FC = (): JSX.Element => { 
+  const dispatch = useAppDispatch()
   const [isOpenNewMatter, setIsOpenNewMatter] = useState<boolean>(false)
+  const { isEmpty } = useAppSelector((state) => state.timeEntry) 
 
-  const toggle = () => setIsOpenNewMatter(!isOpenNewMatter)  
+  const toggle = () => {
+    dispatch(setEditModal(false))
+    setIsOpenNewMatter(!isOpenNewMatter)
+  }  
 
   return (
     <header
@@ -19,10 +26,11 @@ const TimeEntryTableHeader: FC = (): JSX.Element => {
       <div className="flex flex-wrap items-center space-x-2"> 
         <button
           type="button"
+          disabled={isEmpty}
           className={`
             flex cursor-pointer items-center space-x-1 rounded border border-barclerk-10 bg-barclerk-10 px-2 py-[0.26rem] text-sm
           text-white shadow outline-none transition duration-150 ease-in-out focus:bg-barclerk-10 hover:bg-barclerk-10 hover:bg-barclerk-10/90
-            active:scale-95 active:bg-barclerk-10
+            active:scale-95 active:bg-barclerk-10 ${isEmpty && "cursor-not-allowed opacity-60"}
           `}
           title="Add New Matter"
           onClick={toggle}
@@ -30,7 +38,13 @@ const TimeEntryTableHeader: FC = (): JSX.Element => {
           <Plus className="h-4 w-4" />
           <span className="hidden md:block">Add New Entry</span>
         </button>
-        <AddNewEntry isOpen={isOpenNewMatter} closeModal={toggle} />
+        <AddNewEntry 
+          isOpen={isOpenNewMatter} 
+          closeModal={() => {
+            dispatch(setEditModal(true))
+            setIsOpenNewMatter(!isOpenNewMatter)
+          }} 
+        />
       </div>
     </header>
   )
