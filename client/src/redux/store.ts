@@ -3,13 +3,15 @@ import { createWrapper } from 'next-redux-wrapper'
 
 import authReducer from '~/redux/auth/authSlice'
 import matterReducer from '~/redux/matter/matterSlice' 
+import clientProfileSlice from './client-profile/clientProfileSlice';
 import timeEntrySlice from './time-entry/timeEntrySlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     matter: matterReducer,
-    timeEntry: timeEntrySlice
+    timeEntry: timeEntrySlice,
+    clientProfile: clientProfileSlice,
   }
 })
 

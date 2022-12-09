@@ -40,12 +40,12 @@ const EditCourtAppearanceModal: FC<Props> = ({
     if (isOpen) {
       reset({
         date: courtAppearance?.date,
-        next_court_date: courtAppearance?.nextCourtDate,
+        next_court_date: courtAppearance?.next_court_date,
         time: courtAppearance?.time,
         court: courtAppearance?.court,
-        judicial_officer: courtAppearance?.judicialOfficer,
+        judicial_officer: courtAppearance?.judicial_officer,
         orders: courtAppearance?.orders,
-        other_notes: courtAppearance?.otherNotes
+        other_notes: courtAppearance?.other_notes
       })
     }
   }, [isOpen])

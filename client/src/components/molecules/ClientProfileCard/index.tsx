@@ -1,21 +1,23 @@
 import { useRouter } from 'next/router'
-import React, { FC, useState } from 'react'
-import SeeMore from '~/components/atoms/SeeMore';
-import { IClientProfile } from '~/shared/interfaces/index';
+import React, { FC } from 'react'
 
-type Props = {
-  clientProfile: IClientProfile;
-}
+import SeeMore from '~/components/atoms/SeeMore'
+import LineSkeleton from '~/components/atoms/Skeletons/LineSkeleton'
+import { useAppSelector } from '~/hooks/reduxSelector'
 
-const ClientProfileCard: FC<Props> = ({ clientProfile }): JSX.Element => {
-  const router = useRouter();
+const ClientProfileCard: FC = (): JSX.Element => {
+  const router = useRouter()
+
+  const { clientProfile, singleClientExtension, isFundsLoading } = useAppSelector(
+    (state) => state.clientProfile
+  )
 
   return (
     <div className="space-y-6 pb-1 sm:flex sm:space-y-0 sm:pb-6">
       {/* first half of the page */}
       <div className="mr-12 flex w-full flex-col space-y-6 text-barclerk-10 md:w-1/2">
         <div className="group flex w-full flex-col space-y-5 rounded-md bg-white px-6 pt-4 pb-6 text-sm shadow transition duration-150 ease-in-out hover:shadow-lg">
-          <div className="text-xl font-semibold">{clientProfile?.clientName}</div>
+          <div className="text-xl font-semibold">{clientProfile?.client_name}</div>
           <div className="space-between flex w-full">
             <div className="flex flex-1 flex-col space-y-1">
               <div className="text-slate-500">Contribution</div>
@@ -23,47 +25,161 @@ const ClientProfileCard: FC<Props> = ({ clientProfile }): JSX.Element => {
             </div>
             <div className="flex flex-1 flex-col space-y-1">
               <div className="text-slate-500">Bail</div>
-              <div>{clientProfile?.onBail ? 'Yes' : 'No'}</div>
+              <div>{clientProfile?.pre_trial_restriction ? 'Yes' : 'No'}</div>
             </div>
             <div className="flex flex-1 flex-col space-y-1">
               <div className="text-slate-500">Court</div>
-              <div>{clientProfile?.court}</div>
+              <div>{clientProfile?.court || 'N/A'}</div>
             </div>
           </div>
           <div className="flex flex-col space-y-1">
             <div className="text-slate-500">Location</div>
-            <div className="uppercase">{clientProfile?.location}</div>
+            <div className="text-sm uppercase">
+              {clientProfile &&
+              clientProfile?.pre_trial_restriction_location_or_address.value == 'None'
+                ? 'n/a'
+                : clientProfile?.pre_trial_restriction_location_or_address.value == ''
+                ? 'n/a'
+                : clientProfile?.pre_trial_restriction_location_or_address.value}
+            </div>
           </div>
           <div className="space-y-1">
             <div className="text-slate-500">Charges</div>
-            <ul className="list-disc px-6 text-black">
-              {clientProfile?.charges?.map((charge) => {
+            <ul className="list-disc px-6 text-xs capitalize text-black">
+              {clientProfile?.charges?.map((charge: { id: number; name: string }) => {
                 return <li key={charge.id}>{charge.name}</li>
               })}
             </ul>
           </div>
         </div>
-        <div className="group flex w-full flex-col space-y-2 rounded-md bg-white px-6 py-4 text-sm shadow transition duration-150 ease-in-out hover:shadow-lg">
-          <div className="flex w-full justify-between">
-            <div>Total Fund &#40;up to&#41;</div>
-            <div className="text-lg font-semibold">${clientProfile?.totalFundUpTo?.toFixed(2)}</div>
-          </div>
-          <div className="flex w-full justify-between">
-            <div>Total Fund Used</div>
-            <div className="text-lg font-semibold text-success">
-              {clientProfile?.totalFundUpTo &&
-                clientProfile?.remainingFund &&
-                Math.round(
-                  ((clientProfile?.totalFundUpTo - clientProfile?.remainingFund) /
-                    clientProfile?.totalFundUpTo) *
-                    100
-                )}
-              .00%
+        {/* Funds */}
+        <div className="flex flex-col space-y-2 rounded bg-white py-5 px-4 text-xs shadow-sm hover:shadow-lg lg:grid lg:grid-cols-3 lg:space-y-0 lg:p-0">
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:rounded-tl lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Total Fund &#40;up to&#41;
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  $
+                  {singleClientExtension?.total_fund
+                    ? singleClientExtension?.total_fund?.toFixed(2)
+                    : Number(0).toFixed(2)}
+                </div>
+              )}
             </div>
           </div>
-          <div className="flex w-full justify-between">
-            <div>Remaining Fund</div>
-            <div className="text-lg font-semibold">${clientProfile?.remainingFund?.toFixed(2)}</div>
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Total Fund Used
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold text-success lg:justify-center lg:p-5 lg:text-xl">
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  {' '}
+                  {singleClientExtension
+                    ? Math.round(
+                        100 -
+                          ((singleClientExtension?.total_fund -
+                            singleClientExtension?.total_fund_used) /
+                            singleClientExtension?.total_fund) *
+                            100
+                      ).toFixed(2)
+                    : Number(0).toFixed(2)}
+                  %
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:rounded-tr lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Remaining Fund
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  $
+                  {singleClientExtension?.remaining_fund
+                    ? singleClientExtension?.remaining_fund?.toFixed(2)
+                    : Number(0).toFixed(2)}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Expenses */}
+        <div className="flex flex-col space-y-2 rounded bg-white py-5 px-4 text-xs shadow-sm hover:shadow-lg lg:grid lg:grid-cols-3 lg:space-y-0 lg:p-0">
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:rounded-tl lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Preparation
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  $
+                  {singleClientExtension?.preparation
+                    ? singleClientExtension?.preparation?.toFixed(2)
+                    : Number(0).toFixed(2)}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Others
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
+              {' '}
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  $
+                  {singleClientExtension?.other_types
+                    ? singleClientExtension?.other_types?.toFixed(2)
+                    : Number(0).toFixed(2)}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center overflow-hidden lg:flex-col">
+            <div className="flex w-full justify-start overflow-hidden whitespace-nowrap  font-semibold text-barclerk-20 lg:justify-center lg:rounded-tr lg:bg-barclerk-20 lg:p-3 lg:text-white">
+              Court Attendance
+            </div>
+            <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
+              {' '}
+              {isFundsLoading ? (
+                <>
+                  <LineSkeleton className="h-5 w-3/4" />
+                </>
+              ) : (
+                <div className="flex justify-end lg:justify-center">
+                  $
+                  {singleClientExtension?.attendance
+                    ? singleClientExtension?.attendance?.toFixed(2)
+                    : Number(0).toFixed(2)}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -72,42 +188,50 @@ const ClientProfileCard: FC<Props> = ({ clientProfile }): JSX.Element => {
       <div className="flex w-full flex-col space-y-6 md:w-1/2">
         <div className="group flex w-full items-center justify-between rounded-md bg-barclerk-20 px-6 py-4 text-sm text-white shadow transition duration-150 ease-in-out hover:shadow-lg">
           <div>Next Court Date:</div>
-          <div className="font-semibold">26 October 2022</div>
+          <div className="text-base font-semibold">26 October 2022</div>
         </div>
         <div className="group flex w-full flex-col rounded-md bg-white py-3 text-sm shadow transition duration-150 ease-in-out hover:shadow-lg">
-          <div className="w-full border-b border-slate-500 px-6 pb-3">Last Court Dates</div>
+          <div className="w-full border-b border-slate-500 px-6 pb-3 font-medium">
+            Last Court Dates
+          </div>
           <ul className="py-2 px-6 text-slate-600">
-            {clientProfile?.lastCourtDates?.map((lastcourtdate) => {
-              return (
-                <li
-                  key={lastcourtdate?.id}
-                  className="space-y-1 border-b border-slate-500 px-2 py-6"
-                >
-                  <div className="flex">
-                    <div className="mr-3 w-12">Date:</div>{' '}
-                    <p className="flex flex-1 text-barclerk-10">{lastcourtdate?.date}</p>
-                  </div>
-                  <div className="flex">
-                    <div className="mr-3 w-12">Orders:</div>
-                    <div className="flex flex-col items-start">
-                      <p className="font-semibold text-barclerk-10">
-                        <SeeMore text={lastcourtdate?.orders} maxLength={200} />
+            {clientProfile?.court_appearances && clientProfile?.court_appearances?.length > 0 ? (
+              clientProfile?.court_appearances?.map((lastcourtdate) => {
+                return (
+                  <li key={lastcourtdate?.id} className="border-b border-slate-500 px-2 py-6">
+                    <div className="flex">
+                      <div className="mr-3 w-12">Date:</div>{' '}
+                      <p className="flex flex-1 font-medium text-barclerk-10">
+                        {lastcourtdate?.date}
                       </p>
                     </div>
-                  </div>
-                </li>
-              )
-            })}
+                    <div className="flex">
+                      <div className="mr-3 w-12">Orders:</div>
+                      <div className="flex flex-col items-start">
+                        <p className="font-medium text-barclerk-10">
+                          <SeeMore text={lastcourtdate?.orders || ''} maxLength={200} />
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                )
+              })
+            ) : (
+              <div className="flex justify-center pt-5">No data available.</div>
+            )}
           </ul>
-          <div className="mt-5 mb-2 flex w-full justify-center">
-            <button
-              onClick={() => router.push(`/matter/${clientProfile?.id}/court-appearances`)}
-              className="cursor-pointer"
-            >
-              {' '}
-              View more
-            </button>
-          </div>
+
+          {clientProfile?.court_appearances && clientProfile?.court_appearances?.length > 0 && (
+            <div className="mt-5 mb-2 flex w-full justify-center text-xs font-medium">
+              <button
+                onClick={() => router.push(`/matter/${clientProfile?.id}/court-appearances`)}
+                className="cursor-pointer"
+              >
+                {' '}
+                View more
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div></div>
