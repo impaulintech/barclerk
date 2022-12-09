@@ -67,8 +67,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <div className="flex justify-end lg:justify-center">
                   $
                   {singleClientExtension?.total_fund
-                    ? singleClientExtension?.total_fund?.toFixed(2)
-                    : Number(0).toFixed(2)}
+                    ? Number(singleClientExtension?.total_fund)?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                 </div>
               )}
             </div>
@@ -92,8 +92,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                             singleClientExtension?.total_fund_used) /
                             singleClientExtension?.total_fund) *
                             100
-                      ).toFixed(2)
-                    : Number(0).toFixed(2)}
+                      )?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                   %
                 </div>
               )}
@@ -112,8 +112,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <div className="flex justify-end lg:justify-center">
                   $
                   {singleClientExtension?.remaining_fund
-                    ? singleClientExtension?.remaining_fund?.toFixed(2)
-                    : Number(0).toFixed(2)}
+                    ? Number(singleClientExtension?.remaining_fund)?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                 </div>
               )}
             </div>
@@ -135,8 +135,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <div className="flex justify-end lg:justify-center">
                   $
                   {singleClientExtension?.preparation
-                    ? singleClientExtension?.preparation?.toFixed(2)
-                    : Number(0).toFixed(2)}
+                    ? Number(singleClientExtension?.preparation)?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                 </div>
               )}
             </div>
@@ -155,8 +155,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <div className="flex justify-end lg:justify-center">
                   $
                   {singleClientExtension?.other_types
-                    ? singleClientExtension?.other_types?.toFixed(2)
-                    : Number(0).toFixed(2)}
+                    ? Number(singleClientExtension?.other_types)?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                 </div>
               )}
             </div>
@@ -175,8 +175,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <div className="flex justify-end lg:justify-center">
                   $
                   {singleClientExtension?.attendance
-                    ? singleClientExtension?.attendance?.toFixed(2)
-                    : Number(0).toFixed(2)}
+                    ? Number(singleClientExtension?.attendance)?.toFixed(2)
+                    : Number(0)?.toFixed(2)}
                 </div>
               )}
             </div>

@@ -458,7 +458,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                     id="amount"
                     {...register('amount')}
                     disabled={true}
-                    value={modalValue?.amount?.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    value={Number(modalValue?.amount)?.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50 
