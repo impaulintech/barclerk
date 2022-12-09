@@ -30,7 +30,7 @@ const ClientProfile: NextPage = (): JSX.Element => {
   const [selectedGrantId, setSelectedGrantId] = useState<number | null>(null)
   const dispatch = useAppDispatch()
 
-  const { allClientExtensions, isLoading } = useAppSelector((state) => state.clientProfile) || {}
+  const { allClientExtensions, isLoading } = useAppSelector((state) => state.clientProfile)
 
   const getClientProfileData = async (payload: IClientProfilePayload) => {
     await dispatch(fetchClientProfile(payload))

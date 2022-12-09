@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import React, { FC } from 'react'
 import { X } from 'react-feather'
+import { HiUser } from 'react-icons/hi'
 import { useRouter } from 'next/router'
 
 import { BarClerkWhiteIcon } from '~/shared/icons/LogoIcon'
@@ -19,6 +20,18 @@ const MatterDrawer: FC<Props> = ({ isOpenDrawer, handleToggleDrawer }): JSX.Elem
   const { id } = router.query
 
   const navs = [
+    {
+      name: 'Main Dashboard',
+      href: `/`,
+      Icon: DashboardIcon,
+      slug: 'main-dashboard'
+    },
+    {
+      name: 'Client Profile',
+      href: `/matter/${id}/client-profile`,
+      Icon: HiUser,
+      slug: 'client-profile'
+    },
     {
       name: 'Grant of Aid',
       href: `/matter/${id}/grant-of-aid`,
@@ -60,33 +73,16 @@ const MatterDrawer: FC<Props> = ({ isOpenDrawer, handleToggleDrawer }): JSX.Elem
             </button>
           </header>
           <ul>
-            <li
-              className={`
-              ${
-                router.asPath === `/matter/${id}`
-                  ? 'bg-[#31A6C9] hover:bg-[#31A6C9]/90 active:bg-[#31A6C9]'
-                  : 'hover:bg-[#31A6C9]/10 active:bg-[#31A6C9]/20'
-              }
-            `}
-            >
-              <Link
-                href={`/matter/${id}`}
-                className="flex items-center space-x-4 px-7 py-3 active:scale-95"
-              >
-                <DashboardIcon className="h-5 w-5 shrink-0 fill-current text-white" />
-                <span className="text-base font-medium line-clamp-1">Dashboard</span>
-              </Link>
-            </li>
             {navs.map(({ name, href, Icon, slug }, i) => (
               <li
                 key={i}
                 className={`
-                ${
-                  router.asPath.includes(`/matter/${id}/${slug}`)
-                    ? 'bg-[#31A6C9] hover:bg-[#31A6C9]/90 active:bg-[#31A6C9]'
-                    : 'hover:bg-[#31A6C9]/10 active:bg-[#31A6C9]/20'
-                }
-              `}
+                  ${
+                    router.asPath.includes(`/matter/${id}/${slug}`)
+                      ? 'bg-[#31A6C9] hover:bg-[#31A6C9]/90 active:bg-[#31A6C9]'
+                      : 'hover:bg-[#31A6C9]/10 active:bg-[#31A6C9]/20'
+                  }
+                `}
               >
                 <Link href={href} className="flex items-center space-x-4 px-7 py-3 active:scale-95">
                   <Icon className="h-5 w-5 shrink-0 fill-current text-white" />

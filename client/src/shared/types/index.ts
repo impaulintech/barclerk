@@ -47,7 +47,7 @@ export type MatterFormValues = {
   on_bail_postal_address: string
   in_custody_location: string
   value?: string
-} 
+}
 
 export type CourtAppearanceFormValues = {
   date: string
@@ -56,7 +56,7 @@ export type CourtAppearanceFormValues = {
   court: string
   judicial_officer: string
   orders: string
-  other_notes?: string 
+  other_notes?: string
 }
 
 export type TimeEntryFormValues = {
@@ -67,7 +67,7 @@ export type TimeEntryFormValues = {
   code: string
   hoursUnit: number
   ratePerHour: number
-  amount: number 
+  amount: number
 }
 
 export type Profile = {
@@ -85,9 +85,8 @@ export type Security = {
 export type GrantOfAidFormValues = {
   extension: string
   date_effective: string
-  codes: [
-    {
-      code: string
-    }
-  ]
+  codes: {
+    id: string
+    code: string
+  }[]
 }

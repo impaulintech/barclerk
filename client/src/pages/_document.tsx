@@ -12,7 +12,7 @@ class Document extends NextDocument {
             rel="stylesheet"
           />
         </Head>
-        <body className="font-inter antialiased">
+        <body className="overflow-hidden font-inter antialiased">
           <Main />
           <NextScript />
         </body>

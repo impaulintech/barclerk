@@ -5,11 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Plus, X, FilePlus, Calendar, Minus } from 'react-feather'
 import { useFieldArray, useForm, Controller } from 'react-hook-form'
 
-import { codesData } from '~/shared/data/codesData'
 import { Spinner } from '~/shared/icons/SpinnerIcon'
 import { GrantOfAidFormValues } from '~/shared/types'
+import { useGrantOfAid } from '~/hooks/useGrantOfAid'
 import { GrantOfAidSchema } from '~/shared/validation'
-import DialogBox from '~/components/templates/DialogBox'
+import { useAppSelector } from '~/hooks/reduxSelector'
+import DialogBox2 from '~/components/templates/DialogBox/DialogBox2'
 
 type Props = {
   isOpen: boolean
@@ -17,6 +18,8 @@ type Props = {
 }
 
 const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
+  const { clauses } = useAppSelector((state) => state.grantOfAid)
+
   const {
     reset,
     control,
@@ -27,6 +30,8 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
     mode: 'onTouched',
     resolver: yupResolver(GrantOfAidSchema)
   })
+
+  const { isLoading, handleAddGrantOfAid } = useGrantOfAid(closeModal)
 
   const { fields, remove, append } = useFieldArray({
     control,
@@ -48,24 +53,13 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
   }, [isOpen])
 
   // Add New Code
-  const handleAddNewCode = () => append({ code: '' })
+  const handleAddNewCode = () => append({ code: '', id: '' })
 
   // Remove Code
   const handleRemoveCode = (index: number) => remove(index)
 
-  // Handle Submit Add Grant of Aid
-  const handleAddGrantOfAid = async (data: GrantOfAidFormValues): Promise<void> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve()
-        console.log(data)
-        // closeModal()
-      }, 1000)
-    })
-  }
-
   return (
-    <DialogBox isOpen={isOpen} closeModal={closeModal}>
+    <DialogBox2 isOpen={isOpen} closeModal={closeModal}>
       <Dialog.Panel className="w-full max-w-[500px] transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
         <form onSubmit={handleSubmit(handleAddGrantOfAid)}>
           {/* MODAL HEADER */}
@@ -109,7 +103,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                     type="text"
                     id="extension"
                     {...register('extension')}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
@@ -151,7 +145,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                     type="date"
                     id="date_effective"
                     {...register('date_effective')}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50 
@@ -167,7 +161,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                 <span className="error">{`${errors.date_effective.message}`}</span>
               )}
             </section>
-            {fields.map(({ id, code }, i) => (
+            {fields.map(({ id }, i) => (
               <section key={id}>
                 <label className="mb-1 flex flex-col space-y-1">
                   <h2 className="text-sm text-slate-700">
@@ -178,14 +172,15 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                       <Controller
                         name={`codes.${i}.code` as any}
                         control={control}
-                        render={({ field: { value, onChange, name } }) => {
+                        render={({ field: { onChange } }) => {
                           return (
                             <Select
-                              options={codesData}
+                              options={clauses}
                               placeholder={'Select code'}
-                              isDisabled={isSubmitting}
+                              isDisabled={isSubmitting || isLoading}
                               isClearable
-                              onChange={(e) => onChange(e?.label)}
+                              getOptionLabel={(option) => option?.code}
+                              onChange={(option) => onChange(option?.id)}
                               className="rounded-md border-none ring-1 ring-slate-300 focus:ring-barclerk-30"
                             />
                           )
@@ -203,7 +198,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                         ${fields.length === 1 ? 'active:scale-100' : ''}
                       `}
                       onClick={() => handleRemoveCode(i)}
-                      disabled={fields?.length === 1 || isSubmitting}
+                      disabled={fields?.length === 1 || isSubmitting || isLoading}
                     >
                       <Minus className="h-6 w-6 text-slate-400" />
                     </button>
@@ -214,7 +209,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                         disabled:opacity-50 hover:bg-slate-50 active:scale-95
                       `}
                       onClick={handleAddNewCode}
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || isLoading}
                     >
                       <Plus className="h-6 w-6 text-slate-400" />
                     </button>
@@ -228,7 +223,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
             <button
               type="button"
               onClick={closeModal}
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
               className={`
                 w-36 rounded border border-slate-300 bg-white 
                 text-slate-600 outline-none transition duration-75 ease-in-out
@@ -240,19 +235,19 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
             </button>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isLoading}
               className={`
                 flex w-36 items-center justify-center rounded bg-barclerk-10 py-2 text-white 
                 outline-none transition duration-75 ease-in-out focus:bg-barclerk-10/90 disabled:cursor-not-allowed disabled:opacity-50
                 hover:bg-barclerk-10/90 disabled:hover:bg-barclerk-10 active:scale-95 disabled:active:scale-100
               `}
             >
-              {isSubmitting ? <Spinner className="h-6 w-6" /> : 'Save'}
+              {isLoading ? <Spinner className="h-6 w-6" /> : 'Save'}
             </button>
           </footer>
         </form>
       </Dialog.Panel>
-    </DialogBox>
+    </DialogBox2>
   )
 }
 

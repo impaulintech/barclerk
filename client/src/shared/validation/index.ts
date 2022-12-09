@@ -60,13 +60,13 @@ export const MatterFormSchema = Yup.object().shape({
 })
 
 export const CourtAppearanceSchema = Yup.object().shape({
-    date: Yup.string().max(255).required('Must be a valid date'),
-    next_court_date: Yup.string().max(255).required('Must be a valid date'),
-    time: Yup.string().max(255).required('Must be a valid time'),
-    court: Yup.string().max(255).required('This field is required'),
-    judicial_officer: Yup.string().max(255).required('This field is required'),
-    orders: Yup.string().required('This field is required'),
-    other_notes: Yup.string(),
+  date: Yup.string().max(255).required('Must be a valid date'),
+  next_court_date: Yup.string().max(255).required('Must be a valid date'),
+  time: Yup.string().max(255).required('Must be a valid time'),
+  court: Yup.string().max(255).required('This field is required'),
+  judicial_officer: Yup.string().max(255).required('This field is required'),
+  orders: Yup.string().required('This field is required'),
+  other_notes: Yup.string()
 })
 
 export const EntryFormSchema = Yup.object().shape({
@@ -76,7 +76,7 @@ export const EntryFormSchema = Yup.object().shape({
   type: Yup.string().max(255), 
   hoursUnit: Yup.number().typeError('Hours/Unit must be a valid number'),
   ratePerHour: Yup.number(),
-  amount: Yup.number(),
+  amount: Yup.number()
 })
 
 export const ProfileFormSchema = Yup.object().shape({
@@ -99,7 +99,7 @@ export const SecurityFormSchema = Yup.object().shape({
 
 export const GrantOfAidSchema = Yup.object().shape({
   extension: Yup.string().required('Extension is required'),
-  date_effective: Yup.string().required('Extension is required'),
+  date_effective: Yup.string().required('Date Effective is required'),
   codes: Yup.array(
     Yup.object({
       code: Yup.string().required('Code is required')

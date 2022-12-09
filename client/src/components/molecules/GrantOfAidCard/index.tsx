@@ -1,27 +1,49 @@
-import React, { FC, useRef, useState } from 'react'
+import moment from 'moment'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/router'
 import { Edit3, Eye, Trash } from 'react-feather'
+import React, { FC, useRef, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert'
 
-import { IGrantOfAid } from '~/shared/interfaces'
-import ViewCodesModal from '~/components/molecules/GrantOfAidList/ViewCodeModal'
+import { useAppDispatch } from '~/hooks/reduxSelector'
+import { deleteGrantOfAid } from '~/redux/grant-of-aid/grantOfAidSlice'
 import EditGrantOfAidModal from '../GrantOfAidList/EditGrantOfAidModal'
+import { IGOLRequest, IGrantOfAid } from '~/redux/grant-of-aid/interface'
+import ViewCodesModal from '~/components/molecules/GrantOfAidList/ViewCodeModal'
 
 type Props = {
   grant: IGrantOfAid
 }
 
 const GrantofAidCard: FC<Props> = ({ grant }): JSX.Element => {
+  const router = useRouter()
+  const { id } = router.query
   const [isOpenCode, setIsOpenCode] = useState<boolean>(false)
   const [isOpenEditGrantOfAid, setIsOpenEditGrantOfAid] = useState<boolean>(false)
 
   const deleteButtonRef = useRef<HTMLButtonElement | null>(null)
+  const dispatch = useAppDispatch()
 
   const handleToggleCode = (): void => setIsOpenCode(!isOpenCode)
   const handleToggleEditGrantOfAid = (): void => setIsOpenEditGrantOfAid(!isOpenEditGrantOfAid)
 
-  const handleDelete = (id: number, onClose: () => void) => {
-    alert(`Deleted ${id}!`)
-    onClose()
+  const handleDeleteGrantOfAid = (grant_id: number, onClose: () => void) => {
+    const payload = {
+      client_id: id,
+      grant_id
+    } as IGOLRequest
+
+    if (deleteButtonRef.current) {
+      deleteButtonRef.current.innerHTML = 'Deleting...'
+      dispatch(deleteGrantOfAid(payload))
+        .unwrap()
+        .then(() => toast.success('Deleted Successfully'))
+        .catch((e: any) => toast.error(e.message))
+        .finally(() => {
+          if (deleteButtonRef.current) deleteButtonRef.current.innerHTML = 'Yes'
+          onClose()
+        })
+    }
   }
 
   const openDeleteModal = () => {
@@ -40,7 +62,7 @@ const GrantofAidCard: FC<Props> = ({ grant }): JSX.Element => {
               </button>
               <button
                 ref={deleteButtonRef}
-                onClick={() => handleDelete(grant.id, onClose)}
+                onClick={() => handleDeleteGrantOfAid(grant.id, onClose)}
                 className="rounded-lg bg-blue-500 py-1 px-6 transition duration-100 ease-in-out hover:bg-blue-600"
               >
                 Yes
@@ -58,20 +80,18 @@ const GrantofAidCard: FC<Props> = ({ grant }): JSX.Element => {
         <h2 className="text-slate-700">Extension:</h2>
         <span
           className={`
-          rounded-full border px-1 font-medium
-          ${
-            grant.status
-              ? 'border-green-300 bg-green-50 text-green-600'
-              : 'border-rose-300 bg-rose-50 text-rose-600'
-          }
-        `}
+            rounded-full border border-green-300 bg-green-50
+            px-1 font-medium text-green-600
+          `}
         >
           {grant.extension}
         </span>
       </div>
       <div className="flex items-center space-x-2">
         <h2 className="text-slate-700">Date Effective:</h2>
-        <span className="text-base font-medium text-barclerk-10">{grant.date_effective}</span>
+        <span className="text-base font-medium text-barclerk-10 line-clamp-1">
+          {moment(grant.date_effective).format('DD MMMM YYYY')}
+        </span>
       </div>
       <div className="ml-auto flex flex-wrap space-x-2 pt-4 text-xs md:text-sm">
         <div>
@@ -87,13 +107,15 @@ const GrantofAidCard: FC<Props> = ({ grant }): JSX.Element => {
             View Codes
           </button>
           {/* This will show the View Code Modal */}
-          <ViewCodesModal
-            {...{
-              isOpen: isOpenCode,
-              closeModal: handleToggleCode,
-              codes: grant.codes
-            }}
-          />
+          {isOpenCode && (
+            <ViewCodesModal
+              {...{
+                isOpen: isOpenCode,
+                closeModal: handleToggleCode,
+                grant_id: grant.id
+              }}
+            />
+          )}
         </div>
         <div>
           <button
@@ -108,13 +130,15 @@ const GrantofAidCard: FC<Props> = ({ grant }): JSX.Element => {
             Edit
           </button>
           {/* This will show the Edit Grant Of Aid Modal */}
-          <EditGrantOfAidModal
-            {...{
-              isOpen: isOpenEditGrantOfAid,
-              closeModal: handleToggleEditGrantOfAid,
-              grant: grant
-            }}
-          />
+          {isOpenEditGrantOfAid && (
+            <EditGrantOfAidModal
+              {...{
+                isOpen: isOpenEditGrantOfAid,
+                closeModal: handleToggleEditGrantOfAid,
+                grant_id: grant.id
+              }}
+            />
+          )}
         </div>
         <button
           type="button"

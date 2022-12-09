@@ -10,9 +10,9 @@ import { MatterFormValues } from '~/shared/types'
 import { Spinner } from '~/shared/icons/SpinnerIcon'
 import CourtHouse from '~/shared/icons/CourtHouseIcon'
 import { MatterFormSchema } from '~/shared/validation'
-import DialogBox from '~/components/templates/DialogBox'
 import { PreTrialRestrictions } from '~/utils/constants'
 import CourtChargesIcon from '~/shared/icons/CourtChargeIcon'
+import DialogBox2 from '~/components/templates/DialogBox/DialogBox2'
 
 type Props = {
   isOpen: boolean
@@ -72,7 +72,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
   }, [isOpen])
 
   return (
-    <DialogBox isOpen={isOpen} closeModal={closeModal}>
+    <DialogBox2 isOpen={isOpen} closeModal={closeModal}>
       <Dialog.Panel className="w-full max-w-[812px] transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
         <form onSubmit={handleSubmit(handleAddMatter)}>
           {/* MODAL HEADER */}
@@ -498,7 +498,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
           </footer>
         </form>
       </Dialog.Panel>
-    </DialogBox>
+    </DialogBox2>
   )
 }
 
