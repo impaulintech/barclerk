@@ -70,11 +70,10 @@ export const CourtAppearanceSchema = Yup.object().shape({
 })
 
 export const EntryFormSchema = Yup.object().shape({
-  description: Yup.string().required('Must be a valid Description').max(255),
+  description: Yup.string().max(255),
   date: Yup.date().required('Must be a valid date'),
-  extension: Yup.string().max(255).required('Must be a valid Extension'),
-  type: Yup.string().max(255).required('Must be a valid Type'),
-  code: Yup.string().max(255).required('Must be a valid Code'),
+  extension: Yup.string().max(255),
+  type: Yup.string().max(255), 
   hoursUnit: Yup.number().typeError('Hours/Unit must be a valid number'),
   ratePerHour: Yup.number(),
   amount: Yup.number(),

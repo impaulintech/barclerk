@@ -1,23 +1,25 @@
 import { FC } from 'react'
 import ReactPaginate from 'react-paginate'
 
-import { PER_PAGE } from '~/utils/constants'
-// import { getTimeEntries, reset } from '~/redux/time-entries/timeEntriesSlice'
+import { PER_PAGE } from '~/utils/constants' 
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
+import { getTimeEntries, reset } from '~/redux/time-entry/timeEntrySlice';
+import { useRouter } from 'next/router';
 
 type SelectedPageItem = { selected: number }
 
 const Pagination: FC = (): JSX.Element => {
-  // const { timeEntries } = useAppSelector((state) => state.timeEntry)
-  // const { total } = timeEntries?.meta || {}
-  // const pageCount = Math.ceil((total as number) / PER_PAGE)
-  // const dispatch = useAppDispatch()
+  const { query } = useRouter()
+  const clientID = Number(query?.id)
 
-  const pageCount = 5;
-
+  const { timeEntries } = useAppSelector((state) => state.timeEntry)
+  const { total } = timeEntries?.meta || {}
+  const pageCount = Math.ceil(((total as number) / 9) || 0)
+  const dispatch = useAppDispatch() 
+  
   const handlePageChange = async ({ selected }: SelectedPageItem) => {
-    // await dispatch(getTimeEntries({ page: selected + 1 }))
-    // reset()
+    const pageCount = selected + 1
+    dispatch(getTimeEntries({ clientID, pageCount })) 
   }
 
   return (

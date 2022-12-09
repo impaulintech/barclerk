@@ -1,23 +1,23 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import TableHead from './TableHead'
 import TableItem from './TableItem'
 import TableSkeleton from './TableSkeleton'
-import { PER_PAGE } from '~/utils/constants'
-// import { getTimeEntries, reset } from '~/redux/time-entry/timeEntrySlice'
+import { PER_PAGE } from '~/utils/constants' 
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
+import { getExtensions, getTimeEntries } from '~/redux/time-entry/timeEntrySlice';
+import { useRouter } from 'next/router';
 
 const TimeEntriesTable:FC = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-
-  const handleFetchTimeEntries = async () => {
-    // await dispatch(getTimeEntries({}))
-    // reset()
-  }
-
-  useEffect(() => {
-    handleFetchTimeEntries()
-  }, [])
+  const { query } = useRouter();
+  const clientID = Number(query?.id); 
+  const pageCount = 1;  
+  const dispatch = useAppDispatch()  
+   
+  useEffect(()=>{  
+    dispatch(getExtensions(clientID)) 
+    dispatch(getTimeEntries({clientID, pageCount})) 
+  }, [])     
 
   return (
     <table className="w-full divide-y divide-slate-300 text-left text-sm leading-normal">
@@ -30,9 +30,8 @@ const TimeEntriesTable:FC = (): JSX.Element => {
 }
 
 const TableContent = () => {
-  // const { timeEntries, isLoading, isError } = useAppSelector((state) => state.timeEntry)
-  // const { data } = timeEntries || {}
-  let timeEntries, isLoading, isError, data = [1]; //dummy remove this in integration
+  const { timeEntries, isLoading, isError, extensionList } = useAppSelector((state) => state.timeEntry)
+  const { data } = timeEntries || {} 
 
   if (isLoading) {
     return <TableSkeleton length={PER_PAGE} />
@@ -42,17 +41,18 @@ const TableContent = () => {
     return <TableErrorMessage message="Ooops.. Something went wrong" />
   }
 
-  if (!data?.length) {
+  if (data?.length === 0) {
     return <TableErrorMessage message="No Available Data" />
   }
 
   return (
     <>
-      {[1,2,3,4,5]?.map((timeEntry) => ( 
+      {data?.map((timeEntry: any) => ( 
           <TableItem 
-          key={Math.random()} 
-          timeEntries={null}   
-        /> 
+            key={Math.random()} 
+            timeEntries={timeEntry}   
+            extensionList={extensionList}
+          /> 
       ))}
     </>
   )

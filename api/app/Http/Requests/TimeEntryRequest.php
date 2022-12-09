@@ -27,7 +27,7 @@ class TimeEntryRequest extends FormRequest
         return [
             'grant_id' => ['required'],
             'type_id' => ['required'],
-            'description' => ['required', 'max:65535'],
+            'description' => ['max:65535'],
             'date' => ['required', 'date'],
             'hours' => ['required', 'numeric'],
             'amount' => ['required', 'numeric', new HasRemainingFunds($this->request->get('grant_id'))],
@@ -42,7 +42,7 @@ class TimeEntryRequest extends FormRequest
             'description' => 'Description',
             'date' => 'Date',
             'hours' => 'Hours',
-            'amount' => 'Amount', 
+            'amount' => 'Amount',
         ];
     }
 }

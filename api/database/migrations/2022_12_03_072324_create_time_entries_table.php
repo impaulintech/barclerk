@@ -25,7 +25,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->date('date');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->float('hours');
             $table->float('amount');
             $table->timestamps();
