@@ -2,9 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
 import authReducer from '~/redux/auth/authSlice'
-import matterReducer from '~/redux/matter/matterSlice' 
-import clientProfileSlice from './client-profile/clientProfileSlice';
-import timeEntrySlice from './time-entry/timeEntrySlice';
+import matterReducer from '~/redux/matter/matterSlice'
+import timeEntrySlice from './time-entry/timeEntrySlice'
+import grantOfAidSlice from './grant-of-aid/grantOfAidSlice'
+import clientProfileSlice from './client-profile/clientProfileSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     matter: matterReducer,
     timeEntry: timeEntrySlice,
     clientProfile: clientProfileSlice,
+    grantOfAid: grantOfAidSlice
   }
 })
 

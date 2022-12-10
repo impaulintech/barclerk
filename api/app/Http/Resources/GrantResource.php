@@ -16,14 +16,14 @@ class GrantResource extends JsonResource
     {
         $totalFund = $this->totalFund();
         $remainingFunds = $this->remainingFunds();
-        
+
         return [
             'id' => $this->id,
             'extension' => $this->extension,
             'date_effective' => $this->date_effective,
             'totalFund' => $totalFund,
             'remainingFunds' => $remainingFunds,
-            'totalFundUsed' => (($totalFund - ($remainingFunds)) / $totalFund),
+            'totalFundUsed' => round((($totalFund - ($remainingFunds)) / $totalFund), 2),
             'codes' => ClauseResource::collection($this->whenLoaded('codes'))
         ];
     }

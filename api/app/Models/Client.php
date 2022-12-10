@@ -197,8 +197,8 @@ class Client extends Model
 
         return [
             'preparation' => $grant->timeEntries()->preparation()->firstOr('amount', fn () => 0),
-            'other_types' => $grant->timeEntries()->otherTypes()->sum('amount'),
-            'attendance' => $grant->timeEntries()->attendance()->sum('amount'),
+            'other_types' => round($grant->timeEntries()->otherTypes()->sum('amount'), 2),
+            'attendance' => round($grant->timeEntries()->attendance()->sum('amount'), 2),
             'total_fund' => $totalFund,
             'total_fund_used' => round($totalFundUsed, 2),
             'remaining_fund' => $remainingFund,

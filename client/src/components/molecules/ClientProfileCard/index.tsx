@@ -46,9 +46,9 @@ const ClientProfileCard: FC = (): JSX.Element => {
           <div className="space-y-1">
             <div className="text-slate-500">Charges</div>
             <ul className="list-disc px-6 text-xs capitalize text-black">
-              {clientProfile?.charges?.map((charge: { id: number; name: string }) => {
-                return <li key={charge.id}>{charge.name}</li>
-              })}
+              {clientProfile?.charges?.map((charge: { id: number; name: string }) => (
+                <li key={charge.id}>{charge.name}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -60,15 +60,10 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  $
-                  {singleClientExtension?.total_fund
-                    ? Number(singleClientExtension?.total_fund)?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
+                  ${singleClientExtension?.total_fund || 0}
                 </div>
               )}
             </div>
@@ -79,22 +74,10 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-success lg:justify-center lg:p-5 lg:text-xl">
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  {' '}
-                  {singleClientExtension
-                    ? Math.round(
-                        100 -
-                          ((singleClientExtension?.total_fund -
-                            singleClientExtension?.total_fund_used) /
-                            singleClientExtension?.total_fund) *
-                            100
-                      )?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
-                  %
+                  {singleClientExtension?.total_fund_used || 0}%
                 </div>
               )}
             </div>
@@ -105,15 +88,10 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  $
-                  {singleClientExtension?.remaining_fund
-                    ? Number(singleClientExtension?.remaining_fund)?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
+                  ${singleClientExtension?.remaining_fund || 0}
                 </div>
               )}
             </div>
@@ -128,15 +106,10 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  $
-                  {singleClientExtension?.preparation
-                    ? Number(singleClientExtension?.preparation)?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
+                  ${singleClientExtension?.preparation?.amount || 0}
                 </div>
               )}
             </div>
@@ -146,17 +119,11 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Others
             </div>
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
-              {' '}
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  $
-                  {singleClientExtension?.other_types
-                    ? Number(singleClientExtension?.other_types)?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
+                  ${singleClientExtension?.other_types || 0}
                 </div>
               )}
             </div>
@@ -168,15 +135,10 @@ const ClientProfileCard: FC = (): JSX.Element => {
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
               {' '}
               {isFundsLoading ? (
-                <>
-                  <LineSkeleton className="h-5 w-3/4" />
-                </>
+                <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  $
-                  {singleClientExtension?.attendance
-                    ? Number(singleClientExtension?.attendance)?.toFixed(2)
-                    : Number(0)?.toFixed(2)}
+                  ${singleClientExtension?.attendance || 0}
                 </div>
               )}
             </div>

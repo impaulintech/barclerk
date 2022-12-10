@@ -15,7 +15,7 @@ export interface IMatter {
     remainingFunds?: string
   }
   courtAppearance?: {
-    next_court_date?: string 
+    next_court_date?: string
   }
   preTrialRestriction?: IPreTrialRestriction
   status?: IStatus
@@ -41,11 +41,11 @@ export interface IClientProfile {
 }
 
 export interface IPreTrialRestrictionLocation {
-    client_id?: number
-    created_at?: string
-    pre_trial_restriction_id?: number
-    updated_at?: string
-    value?: string
+  client_id?: number
+  created_at?: string
+  pre_trial_restriction_id?: number
+  updated_at?: string
+  value?: string
 }
 
 export interface IExtension {
@@ -86,14 +86,15 @@ export interface IClientExtension {
 }
 
 export interface ISingleClientExtension {
-  preparation: number
+  preparation: {
+    amount: number
+  }
   other_types: number
   attendance: number
   total_fund: number
   total_fund_used: number
   remaining_fund: number
 }
-
 
 export interface IUser {
   id: number

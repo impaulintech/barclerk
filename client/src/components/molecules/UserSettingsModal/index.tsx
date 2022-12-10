@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 
 import DialogHeader from './DialogHeader'
 import { activeComponent } from './ActiveTabComponent'
-import DialogBox from '~/components/templates/DialogBox'
+import DialogBox2 from '~/components/templates/DialogBox/DialogBox2'
 
 type Props = {
   isOpen: boolean
@@ -20,7 +20,7 @@ const UserSettingsModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
   }
 
   return (
-    <DialogBox isOpen={isOpen} closeModal={closeModal}>
+    <DialogBox2 isOpen={isOpen} closeModal={closeModal}>
       <Dialog.Panel className="w-full max-w-[500px] transform overflow-hidden rounded-md bg-white text-left align-middle shadow-xl transition-all">
         <DialogHeader
           active={active}
@@ -30,7 +30,7 @@ const UserSettingsModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
         />
         {activeComponent(active)}
       </Dialog.Panel>
-    </DialogBox>
+    </DialogBox2>
   )
 }
 

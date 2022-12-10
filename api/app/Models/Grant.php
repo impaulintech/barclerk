@@ -73,19 +73,19 @@ class Grant extends Model
 
     public function totalFund()
     {
-        return DB::table('types')
+        return round(DB::table('types')
             ->join('grant_codes', 'grant_codes.clause_id', '=', 'types.clause_id')
             ->where('grant_codes.grant_id', $this->id)
-            ->sum('types.total_allowance');
+            ->sum('types.total_allowance'), 2);
     }
 
     public function totalAmountOfTimeEntries()
     {
-        return $this->timeEntries->sum('amount');
+        return round($this->timeEntries->sum('amount'), 2);
     }
 
     public function remainingFunds()
     {
-        return $this->totalFund() - $this->totalAmountOfTimeEntries();
+        return round($this->totalFund() - $this->totalAmountOfTimeEntries(), 2);
     }
 }
