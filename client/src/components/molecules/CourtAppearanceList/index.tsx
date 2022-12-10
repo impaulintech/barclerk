@@ -5,6 +5,7 @@ import CourtAppearanceAccordion from '../CourtAppearanceAccordion'
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import { fetchClientCourtAppearances } from '~/redux/court-appearance/courtAppearanceSlice'
 import { useRouter } from 'next/router'
+import { ICourtAppearance } from '~/shared/interfaces'
 
 export interface ICourtAppearancesPayload {
   clientId: number
@@ -15,7 +16,7 @@ const CourtAppearancesList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const { query } = useRouter()
 
-  const { courtAppearances } = useAppSelector((state) => state.courtAppearance) || {}
+  const { courtAppearances, error } = useAppSelector((state) => state.courtAppearance) || {}
 
   const getCourtAppearances = async (payload: ICourtAppearancesPayload) => {
     await dispatch(fetchClientCourtAppearances(payload))
@@ -33,13 +34,22 @@ const CourtAppearancesList = (): JSX.Element => {
 
   return (
     <>
-      {courtAppearancesList?.map((courtAppearance: any) => {
-        return (
-          <div key={courtAppearance?.id}>
-            <CourtAppearanceAccordion courtAppearance={courtAppearance} />
-          </div>
-        )
-      })}
+      {error.content ? (
+        <div className="flex justify-center text-failed">
+          <p>Ooops! Something went wrong!</p>
+        </div>
+      ) : courtAppearancesList && courtAppearancesList?.length > 0 ? (
+        courtAppearancesList?.map((courtAppearance: ICourtAppearance) => {
+          return (
+            <div key={courtAppearance?.id}>
+              <CourtAppearanceAccordion courtAppearance={courtAppearance} />
+            </div>
+          )
+        })
+      ) : (
+        <div className="flex justify-center text-slate-500 capitalize">No data available</div>
+      )}
+
       {pageCount && pageCount > 1 && (
         <section className="paginate-section text-gray-500">
           <ReactPaginate
