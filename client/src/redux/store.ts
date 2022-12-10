@@ -5,6 +5,7 @@ import authReducer from '~/redux/auth/authSlice'
 import matterReducer from '~/redux/matter/matterSlice'
 import timeEntrySlice from './time-entry/timeEntrySlice'
 import grantOfAidSlice from './grant-of-aid/grantOfAidSlice'
+import courtAppearanceSlice from './court-appearance/courtAppearanceSlice';
 import clientProfileSlice from './client-profile/clientProfileSlice'
 
 export const store = configureStore({
@@ -13,7 +14,8 @@ export const store = configureStore({
     matter: matterReducer,
     timeEntry: timeEntrySlice,
     clientProfile: clientProfileSlice,
-    grantOfAid: grantOfAidSlice
+    grantOfAid: grantOfAidSlice,
+    courtAppearance: courtAppearanceSlice
   }
 })
 

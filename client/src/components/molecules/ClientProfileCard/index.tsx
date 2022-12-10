@@ -8,7 +8,7 @@ import { useAppSelector } from '~/hooks/reduxSelector'
 const ClientProfileCard: FC = (): JSX.Element => {
   const router = useRouter()
 
-  const { clientProfile, singleClientExtension, isFundsLoading } = useAppSelector(
+  const { clientProfile, singleClientExtension, isLoadingFunds } = useAppSelector(
     (state) => state.clientProfile
   )
 
@@ -59,7 +59,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Total Fund &#40;up to&#41;
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
@@ -73,7 +73,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Total Fund Used
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-success lg:justify-center lg:p-5 lg:text-xl">
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
@@ -87,7 +87,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Remaining Fund
             </div>
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
@@ -105,7 +105,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Preparation
             </div>
             <div className="flex w-full justify-end text-base font-semibold text-barclerk-10 lg:justify-center lg:p-5 lg:text-xl">
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
@@ -119,7 +119,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               Others
             </div>
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
@@ -134,7 +134,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
             <div className="flex w-full justify-end text-base font-semibold lg:justify-center lg:p-5 lg:text-xl">
               {' '}
-              {isFundsLoading ? (
+              {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">

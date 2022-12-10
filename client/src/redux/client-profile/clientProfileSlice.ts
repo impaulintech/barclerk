@@ -13,7 +13,8 @@ type InitialState = {
   isError: boolean
   isSuccess: boolean
   isLoading: boolean
-  isFundsLoading: boolean
+  isLoadingClientProfile: boolean
+  isLoadingFunds: boolean
   error: AxiosResponseError
 }
 
@@ -24,7 +25,8 @@ const initialState: InitialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  isFundsLoading: false,
+  isLoadingClientProfile: false,
+  isLoadingFunds: false,
   error: {
     status: 0,
     content: null
@@ -35,14 +37,6 @@ export const fetchClientProfile = createAsyncThunk(
   'dashboard/fetchByClientId',
   async (payload: {clientId: number}) => {
     const response = await axios.get(`/dashboard/${payload.clientId}`,)
-    return response.data
-  }
-)
-
-export const fetchAllClientExtensions = createAsyncThunk(
-  'dashboard/fetcAllClientExtensionsByClientId',
-  async (payload: { clientId: number }) => {
-    const response = await axios.get(`/extension/${payload.clientId}`)
     return response.data
   }
 )
@@ -74,11 +68,12 @@ export const clientProfile = createSlice({
     builder
       //  clientProfile
       .addCase(fetchClientProfile.pending, (state, action) => {
-        state.isLoading = true
+        state.isLoadingClientProfile = true
       })
       .addCase(fetchClientProfile.fulfilled, (state, action) => {
         state.clientProfile = action.payload
-        state.isLoading = false
+        state.allClientExtensions = action.payload.extensions
+        state.isLoadingClientProfile = false
       })
       .addCase(fetchClientProfile.rejected, (state, action: PayloadAction<any>) => {
         state.clientProfile = null
@@ -87,29 +82,13 @@ export const clientProfile = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
-      // AllExtensions
-      .addCase(fetchAllClientExtensions.pending, (state, action) => {
-        state.isLoading = true
-      })
-      .addCase(fetchAllClientExtensions.fulfilled, (state, action) => {
-        state.allClientExtensions = action.payload
-        state.isLoading = false
-      })
-      .addCase(fetchAllClientExtensions.rejected, (state, action: PayloadAction<any>) => {
-        state.allClientExtensions = null
-        state.isError = true
-        state.isSuccess = false
-        state.isLoading = false
-        state.error = action.payload
-      })
-      // SingleExtension
       .addCase(fetchSingleClientExtension.pending, (state, action) => {
-        state.isFundsLoading = true
+        state.isLoadingFunds = true
         state.singleClientExtension = null
       })
       .addCase(fetchSingleClientExtension.fulfilled, (state, action) => {
         state.singleClientExtension = action.payload
-        state.isFundsLoading = false
+        state.isLoadingFunds = false
       })
   }
 })

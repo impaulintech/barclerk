@@ -1,35 +1,46 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 
 import CourtAppearanceAccordion from '../CourtAppearanceAccordion'
-import { ICourtAppearance } from '~/shared/interfaces'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
+import { fetchClientCourtAppearances } from '~/redux/court-appearance/courtAppearanceSlice'
+import { useRouter } from 'next/router'
 
-const CourtAppearancesList = ({
-  courtAppearances
-}: {
-  courtAppearances: ICourtAppearance[]
-}): JSX.Element => {
-  const [pageNumber, setPageNumber] = useState<number>(0)
+export interface ICourtAppearancesPayload {
+  clientId: number
+  page?: number
+}
 
-  const listPerPage = 5
-  const pagesVisited = pageNumber * listPerPage
+const CourtAppearancesList = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const { query } = useRouter()
 
-  const displayCourtAppearances = courtAppearances?.slice(pagesVisited, pagesVisited + listPerPage)
+  const { courtAppearances } = useAppSelector((state) => state.courtAppearance) || {}
 
-  const pageCount = Math.ceil(courtAppearances?.length / listPerPage)
+  const getCourtAppearances = async (payload: ICourtAppearancesPayload) => {
+    await dispatch(fetchClientCourtAppearances(payload))
+  }
+  useEffect(() => {
+    getCourtAppearances({ clientId: Number(query?.id) })
+  }, [query])
 
-  const handlePageChange = ({ selected }: { selected: number }): void => setPageNumber(selected)
+  const courtAppearancesList = courtAppearances?.data
+  const pageCount = courtAppearances?.meta?.last_page
+
+  const handlePageChange = async ({ selected }: { selected: number }) => {
+    await dispatch(fetchClientCourtAppearances({ clientId: Number(query?.id), page: selected + 1 }))
+  }
 
   return (
     <>
-      {displayCourtAppearances?.map((courtAppearance) => {
+      {courtAppearancesList?.map((courtAppearance: any) => {
         return (
           <div key={courtAppearance?.id}>
             <CourtAppearanceAccordion courtAppearance={courtAppearance} />
           </div>
         )
       })}
-      {pageCount > 1 && (
+      {pageCount && pageCount > 1 && (
         <section className="paginate-section text-gray-500">
           <ReactPaginate
             previousLabel="Prev"

@@ -31,6 +31,14 @@ export type SignInUpFormFields =
   | 'password'
   | 'password_confirmation'
 
+export type CourtAppearanceFormFields =
+  | 'date'
+  | 'time'
+  | 'court'
+  | 'judicial_officer'
+  | 'next_court_date'
+  | 'orders'
+
 // Consumes a lot of time for me, for now I added type any. Need help on this.
 export type Cookie = string | boolean | any
 
@@ -50,6 +58,7 @@ export type MatterFormValues = {
 }
 
 export type CourtAppearanceFormValues = {
+  id?: number
   date: string
   next_court_date: string
   time: string

@@ -52,24 +52,24 @@ const AccordionHeader = ({
         !show?.show && 'rounded-sm'
       } rounded-t-sm bg-white py-3 pl-6 pr-5 text-sm shadow transition duration-150 ease-in-out`}
     >
-      <div className="flex space-x-16 overflow-hidden whitespace-nowrap px-2 text-xs">
-        <div className="flex flex-col space-y-1">
+      <div className="w-full grid grid-cols-5 space-x-5 overflow-hidden whitespace-nowrap px-2 text-xs">
+        <div className="col-span-1 space-y-1 overflow-hidden">
           <div className='text-sm font-semibold'>Date</div>
           <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.date).format("D MMMM YYYY")}</div>
         </div>
-        <div className="flex flex-col space-y-1">
+        <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-slate-500 text-sm font-medium">Time</div>
           <div className=" text-barclerk-10 text-sm">{moment(`${courtAppearance?.date} ${courtAppearance?.time}`).format('hh:mm A')}</div>
         </div>
-        <div className="flex flex-col space-y-1">
+        <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-slate-500 text-sm font-medium">Court</div>
           <div className=" text-barclerk-10 text-sm">{courtAppearance?.court}</div>
         </div>
-        <div className="flex flex-col space-y-1">
+        <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-slate-500 text-sm font-medium">Judicial Officer</div>
           <div className=" text-barclerk-10 text-sm">{courtAppearance?.judicial_officer}</div>
         </div>
-        <div className="flex flex-col space-y-1">
+        <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-sm font-semibold">Next Court Date</div>
           <div className="font-extrabold text-barclerk-30 text-sm">{moment(courtAppearance?.next_court_date).format("D MMMM YYYY")}</div>
         </div>
