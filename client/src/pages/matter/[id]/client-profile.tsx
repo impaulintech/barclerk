@@ -1,18 +1,17 @@
 import React, { ReactNode, useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { ChevronDown, FilePlus } from 'react-feather'
 
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import MatterLayout from '~/components/templates/MatterLayout'
 import ClientProfileCard from '~/components/molecules/ClientProfileCard'
 import Breedcrumb from '~/components/atoms/Breedcrumb'
-import { ChevronDown, FilePlus } from 'react-feather'
 import {
   reset,
   fetchClientProfile,
   fetchSingleClientExtension,
-  fetchAllClientExtensions
 } from '~/redux/client-profile/clientProfileSlice'
-import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import { IClientExtension } from '~/shared/interfaces'
 import { CardSkeleton } from '~/components/molecules/ClientProfileCard/CardSkeleton'
 
@@ -30,11 +29,10 @@ const ClientProfile: NextPage = (): JSX.Element => {
   const [selectedGrantId, setSelectedGrantId] = useState<number | null>(null)
   const dispatch = useAppDispatch()
 
-  const { allClientExtensions, isLoading } = useAppSelector((state) => state.clientProfile)
+  const { allClientExtensions, isLoadingClientProfile } = useAppSelector((state) => state.clientProfile)
 
   const getClientProfileData = async (payload: IClientProfilePayload) => {
     await dispatch(fetchClientProfile(payload))
-    await dispatch(fetchAllClientExtensions(payload))
   }
 
   const getSingleClientExtension = async (payload: IExtensionPayload) => {
@@ -61,7 +59,7 @@ const ClientProfile: NextPage = (): JSX.Element => {
   return (
     <MatterLayout metaTitle="Grant Of Aid">
       <ClientProfileLayout>
-        {isLoading ? (
+        {isLoadingClientProfile ? (
           <CardSkeleton />
         ) : (
           <>

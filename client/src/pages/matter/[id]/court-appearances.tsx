@@ -8,87 +8,12 @@ import CourtAppearancesList from '~/components/molecules/CourtAppearanceList'
 import AddNewCourtAppearanceModal from '~/components/molecules/CourtAppearanceList/AddNewCourtAppearance'
 
 const CourtAppearances: NextPage = (): JSX.Element => {
-  // sampleCourtAppearances JSON file
-  const sampleCourtAppearances = [
-    {
-      id: 1,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: `Home D granted, at Mum's address $10k Surety only to be signed by Mum and $5k personal undertaking. Not allowed to go within 500 ms of points of international or domestic departure.`,
-      otherNotes:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime pariatur unde dolorum alias est fuga enim delectus ipsum beatae in asperiores sed magnam laudantium deleniti repellendus, eveniet rem itaque maiores at accusamus odit nesciunt voluptatibus, amet ducimus? Beatae maiores inventore eos blanditiis accusamus minima repellat animi rerum, dolore aliquid ipsam nam? Facilis odit dicta laborum quaerat beatae commodi. Adipisci temporibus tempore corporis delectus ab et voluptatibus ut distinctio excepturi! Iste sed rerum vero libero ipsa! Sunt quis ipsam soluta dolor omnis saepe fugiat officia voluptas suscipit est quam impedit eum, aspernatur labore incidunt. Perspiciatis repellendus consectetur incidunt, fugit in quasi voluptas aliquid laudantium cum quis necessitatibus expedita architecto atque excepturi temporibus id odio. Sequi, quas quia! Aperiam saepe provident vitae?'
-    },
-    {
-      id: 2,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    },
-    {
-      id: 3,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    },
-    {
-      id: 4,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    },
-    {
-      id: 5,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    },
-    {
-      id: 6,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    },
-    {
-      id: 7,
-      date: '2022-06-06',
-      time: '11:11',
-      court: 'District Court',
-      judicialOfficer: 'Ayling',
-      nextCourtDate: '2022-06-12',
-      orders: 'Home D Report.',
-      otherNotes: ''
-    }
-  ]
-
   return (
     <MatterLayout metaTitle="Court Appearances">
       <CourtAppearancesLayout>
         <BreedCrumb route="Court Appearances" />
         <CourtAppearancesHeader />
-        <CourtAppearancesList courtAppearances={sampleCourtAppearances} />
+        <CourtAppearancesList />
       </CourtAppearancesLayout>
     </MatterLayout>
   )

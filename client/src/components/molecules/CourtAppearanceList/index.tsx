@@ -1,35 +1,56 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 
 import CourtAppearanceAccordion from '../CourtAppearanceAccordion'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
+import { fetchClientCourtAppearances } from '~/redux/court-appearance/courtAppearanceSlice'
+import { useRouter } from 'next/router'
 import { ICourtAppearance } from '~/shared/interfaces'
 
-const CourtAppearancesList = ({
-  courtAppearances
-}: {
-  courtAppearances: ICourtAppearance[]
-}): JSX.Element => {
-  const [pageNumber, setPageNumber] = useState<number>(0)
+export interface ICourtAppearancesPayload {
+  clientId: number
+  page?: number
+}
 
-  const listPerPage = 5
-  const pagesVisited = pageNumber * listPerPage
+const CourtAppearancesList = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const { query } = useRouter()
 
-  const displayCourtAppearances = courtAppearances?.slice(pagesVisited, pagesVisited + listPerPage)
+  const { courtAppearances, error } = useAppSelector((state) => state.courtAppearance) || {}
 
-  const pageCount = Math.ceil(courtAppearances?.length / listPerPage)
+  const getCourtAppearances = async (payload: ICourtAppearancesPayload) => {
+    await dispatch(fetchClientCourtAppearances(payload))
+  }
+  useEffect(() => {
+    getCourtAppearances({ clientId: Number(query?.id) })
+  }, [query])
 
-  const handlePageChange = ({ selected }: { selected: number }): void => setPageNumber(selected)
+  const courtAppearancesList = courtAppearances?.data
+  const pageCount = courtAppearances?.meta?.last_page
+
+  const handlePageChange = async ({ selected }: { selected: number }) => {
+    await dispatch(fetchClientCourtAppearances({ clientId: Number(query?.id), page: selected + 1 }))
+  }
 
   return (
     <>
-      {displayCourtAppearances?.map((courtAppearance) => {
-        return (
-          <div key={courtAppearance?.id}>
-            <CourtAppearanceAccordion courtAppearance={courtAppearance} />
-          </div>
-        )
-      })}
-      {pageCount > 1 && (
+      {error.content ? (
+        <div className="flex justify-center text-failed">
+          <p>Ooops! Something went wrong!</p>
+        </div>
+      ) : courtAppearancesList && courtAppearancesList?.length > 0 ? (
+        courtAppearancesList?.map((courtAppearance: ICourtAppearance) => {
+          return (
+            <div key={courtAppearance?.id}>
+              <CourtAppearanceAccordion courtAppearance={courtAppearance} />
+            </div>
+          )
+        })
+      ) : (
+        <div className="flex justify-center text-slate-500 capitalize">No data available</div>
+      )}
+
+      {pageCount && pageCount > 1 && (
         <section className="paginate-section text-gray-500">
           <ReactPaginate
             previousLabel="Prev"

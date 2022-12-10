@@ -56,13 +56,13 @@ export interface IExtension {
 
 export interface ICourtAppearance {
   id: number
-  court?: string
   date?: string
+  time?: string
+  court?: string
   judicial_officer?: string
   next_court_date?: string
   orders?: string
   other_notes?: string
-  time?: string
 }
 
 export interface ILastCourtDates {

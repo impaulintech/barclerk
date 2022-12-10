@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { Dialog } from '@headlessui/react'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import { HiOutlineOfficeBuilding } from 'react-icons/hi'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -39,6 +39,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
   useEffect(() => {
     if (isOpen) {
       reset({
+        id: courtAppearance?.id,
         date: courtAppearance?.date,
         next_court_date: courtAppearance?.next_court_date,
         time: courtAppearance?.time,
@@ -190,22 +191,18 @@ const EditCourtAppearanceModal: FC<Props> = ({
             {/* COURT FIELD */}
             <section className="col-span-1">
               <label htmlFor="court_appearance_court" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Court <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Court</h2>
                 <div className="group relative">
                   <span
                     className={`
                     absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                   group-focus-within:border-barclerk-30
-                  ${errors?.court && 'border-rose-400 group-focus-within:border-rose-400'}
                     
                   `}
                   >
                     <HiOutlineOfficeBuilding
                       className={`
                     h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30
-                    ${errors?.court && 'text-rose-400 group-focus-within:text-rose-400'}
                   
                   `}
                     />
@@ -218,34 +215,27 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     className={`
                     w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                     disabled:cursor-not-allowed disabled:opacity-50
-                    ${errors?.court && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'}
                   `}
                   />
                 </div>
               </label>
-              {errors?.court && <span className="error">{`${errors.court.message}`}</span>}
             </section>
             {/* JUDICIAL OFFICER FIELD */}
             <section className="col-span-2">
               <label htmlFor="court_appearance_officer" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Judicial Officer <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Judicial Officer</h2>
                 <div className="group relative">
                   <span
                     className={`
                     absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                   group-focus-within:border-barclerk-30
-                  ${
-                    errors?.judicial_officer && 'border-rose-400 group-focus-within:border-rose-400'
-                  }
+                 
                     
                   `}
                   >
                     <User
                       className={`
                     h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30
-                    ${errors?.judicial_officer && 'text-rose-400 group-focus-within:text-rose-400'}
                   
                   `}
                     />
@@ -258,37 +248,27 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     className={`
                     w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                     disabled:cursor-not-allowed disabled:opacity-50
-                    ${
-                      errors?.judicial_officer &&
-                      'border-rose-400 focus:border-rose-400 focus:ring-rose-400'
-                    }
+                    
                   `}
                   />
                 </div>
               </label>
-              {errors?.judicial_officer && (
-                <span className="error">{`${errors.judicial_officer.message}`}</span>
-              )}
             </section>
             {/* ORDERS FIELD */}
             <section className="col-span-2">
               <label htmlFor="court_appearance_orders" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Orders <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Orders</h2>
                 <div className="group relative flex">
                   <span
                     className={`
                     absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
                   group-focus-within:border-barclerk-30 
-                  ${errors?.orders && 'border-rose-400 group-focus-within:border-rose-400'}
 
                   `}
                   >
                     <CourtChargesIcon
                       className={`
                     h-5 w-5 fill-current text-slate-300 group-focus-within:text-barclerk-30
-                    ${errors?.orders && 'text-rose-400 group-focus-within:text-rose-400'}
                   
                   `}
                     />
@@ -300,20 +280,16 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     className={`
                     min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                     focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
-                    ${errors?.orders && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'}
 
                   `}
                   />
                 </div>
               </label>
-              {errors?.orders && <span className="error">{`${errors.orders.message}`}</span>}
             </section>
             {/* OTHER NOTES FIELD */}
             <section className="col-span-2">
               <label htmlFor="court_appearance_notes" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">
-                  Other Notes <span className="text-rose-500">*</span>
-                </h2>
+                <h2 className="text-sm text-slate-700">Other Notes</h2>
                 <div className="group relative flex">
                   <span
                     className={`
@@ -340,6 +316,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
                 </div>
               </label>
             </section>
+            <input type="hidden" {...register('id')} />
           </main>
           {/* MODAL FOOTER SUBMIT AND CANCEL BUTTON */}
           <footer className="flex justify-end space-x-3 border-t border-slate-300 bg-slate-50 py-4 px-4">

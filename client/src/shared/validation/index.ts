@@ -60,13 +60,13 @@ export const MatterFormSchema = Yup.object().shape({
 })
 
 export const CourtAppearanceSchema = Yup.object().shape({
-  date: Yup.string().max(255).required('Must be a valid date'),
-  next_court_date: Yup.string().max(255).required('Must be a valid date'),
-  time: Yup.string().max(255).required('Must be a valid time'),
-  court: Yup.string().max(255).required('This field is required'),
-  judicial_officer: Yup.string().max(255).required('This field is required'),
-  orders: Yup.string().required('This field is required'),
-  other_notes: Yup.string()
+    date: Yup.string().required('This field is required'),
+    next_court_date: Yup.string().required('This field is required'),
+    time: Yup.string().required('This field is required'),
+    court: Yup.string().max(255).nullable(),
+    judicial_officer: Yup.string().max(255).nullable(),
+    orders: Yup.string().nullable(),
+    other_notes: Yup.string().nullable(),
 })
 
 export const EntryFormSchema = Yup.object().shape({
