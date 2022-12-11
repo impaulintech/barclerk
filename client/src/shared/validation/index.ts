@@ -73,7 +73,7 @@ export const EntryFormSchema = Yup.object().shape({
   description: Yup.string().max(255),
   date: Yup.date().required('Must be a valid date'),
   extension: Yup.string().max(255),
-  type: Yup.string().max(255), 
+  type: Yup.string().max(255),
   hoursUnit: Yup.number().typeError('Hours/Unit must be a valid number'),
   ratePerHour: Yup.number(),
   amount: Yup.number()
@@ -103,6 +103,16 @@ export const GrantOfAidSchema = Yup.object().shape({
   codes: Yup.array(
     Yup.object({
       code: Yup.string().required('Code is required')
+    })
+  )
+})
+
+export const EditGrantOfAidSchema = Yup.object().shape({
+  extension: Yup.string().required('Extension is required'),
+  date_effective: Yup.string().required('Date Effective is required'),
+  codes: Yup.array(
+    Yup.object({
+      id: Yup.string().required('Code is required')
     })
   )
 })

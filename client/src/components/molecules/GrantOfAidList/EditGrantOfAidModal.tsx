@@ -1,14 +1,15 @@
 import Select from 'react-select'
 import toast from 'react-hot-toast'
 import { Dialog } from '@headlessui/react'
-import React, { FC, useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
+import React, { FC, useEffect, useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { X, FilePlus, Calendar, Edit3, Plus, Minus } from 'react-feather'
 
 import { useRouter } from 'next/router'
 import { Spinner } from '~/shared/icons/SpinnerIcon'
-import { GrantOfAidSchema } from '~/shared/validation'
+import { EditGrantOfAidSchema } from '~/shared/validation'
+import { customStyles } from '~/utils/customReactSelectStyles'
 import { GrantOfAidFields } from '~/redux/grant-of-aid/interface'
 import DialogBox2 from '~/components/templates/DialogBox/DialogBox2'
 import InputSkeleton from '~/components/atoms/Skeletons/InputSkeleton'
@@ -67,7 +68,7 @@ const EditGrantOfAidModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.E
     formState: { errors, isSubmitting }
   } = useForm<GrantOfAidFormValues>({
     mode: 'onTouched',
-    resolver: yupResolver(GrantOfAidSchema)
+    resolver: yupResolver(EditGrantOfAidSchema)
   })
 
   const { fields, remove, append } = useFieldArray({
@@ -257,20 +258,20 @@ const EditGrantOfAidModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.E
                                     isDisabled={isSubmitting || isLoadingSubmit}
                                     placeholder={'Select code'}
                                     getOptionLabel={(option) => option?.code}
-                                    getOptionValue={(option) => option?.id}
-                                    onChange={(option) => onChange(option?.id)}
-                                    defaultValue={{
-                                      id,
-                                      code
-                                    }}
+                                    getOptionValue={(option) => option?.id.toString()}
+                                    onChange={(option) => onChange(option?.id.toString())}
+                                    defaultValue={{ id, code }}
+                                    styles={customStyles}
+                                    backspaceRemovesValue={true}
+                                    menuPortalTarget={document.body}
                                     className="rounded-md border-none ring-1 ring-slate-300 focus:ring-barclerk-30"
                                     isClearable
                                   />
                                 )
                               }}
                             />
-                            {errors.codes?.[i]?.code && (
-                              <span className="error absolute -bottom-4 text-[10px]">{`${errors.codes?.[i]?.code?.message}`}</span>
+                            {errors.codes?.[i]?.id && (
+                              <span className="error absolute -bottom-4 text-[10px]">{`${errors.codes?.[i]?.id?.message}`}</span>
                             )}
                           </div>
                           <button
