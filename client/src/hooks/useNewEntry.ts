@@ -1,45 +1,73 @@
+import moment from 'moment';
 import { useState } from 'react'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/router';
-import { UseFormSetError } from 'react-hook-form'
+import toast from 'react-hot-toast'  
 
-import { TimeEntryFormValues } from '~/shared/types'
 import { useAppDispatch, useAppSelector } from './reduxSelector' 
-import { createNewEntry, updateTimeEntries } from '~/redux/time-entry/timeEntrySlice';
+import { TimeEntryFormValues } from '~/shared/types'
+import { createNewEntry, getTimeEntries, reset, updateTimeEntries } from '~/redux/time-entry/timeEntrySlice';
+import { useRouter } from 'next/router';
+import { RequiredValue } from '~/redux/time-entry/types';
 
 export const useNewEntry = (
   closeAllDropdown: () => void, 
   closeModal: () => void, 
-  modalValue:any, setError?: UseFormSetError<TimeEntryFormValues>
+  extensionID: number, 
+  typeID: number, 
+  amount: number, 
+  timeEntryID?: number | undefined
 ) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const { isEditModal } = useAppSelector((state) => state.timeEntry)
-  const dispatch = useAppDispatch() 
   const { query } = useRouter()
   const clientID = Number(query?.id)
+  const dispatch = useAppDispatch() 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { isEditModal, currentPage } = useAppSelector((state) => state.timeEntry)
 
   const handleAddNewEntry = (data: TimeEntryFormValues) => { 
-    const {grant_id, type_id, description, date, hoursUnit:hours, amount, timeEntryID} = modalValue || {};
-    const requiredValue = {grant_id, type_id, description, date, hours, amount};
+    closeAllDropdown()
+    setIsLoading(() => true)  
 
-    setIsLoading(() => true) 
-
+    const { description, hoursUnit, date } = data || {}
+    const dateFormattedd = moment(date).format('YYYY-MM-DD')
+    
+    const requiredValue: RequiredValue = { 
+      grant_id: extensionID, 
+      type_id: typeID, 
+      description, 
+      date: dateFormattedd, 
+      hours: hoursUnit, 
+      amount 
+    }
+    
     if (isEditModal) {
       dispatch(updateTimeEntries({clientID, timeEntryID, requiredValue}))
-        .then(()=>{ 
-          toast.success('Timie Entry updated successfully!')
+        .then((res)=>{ 
           closeModal()
           setIsLoading(() => false)
+          const { content, status } = res?.payload || {}
+          
+          if (status === 422) {
+            dispatch(reset())
+            return toast.error(content?.amount[0])
+          } 
+          toast.success('Timie Entry updated successfully!')
+          dispatch(getTimeEntries({ clientID, currentPage }))
         })
     } else {
       dispatch(createNewEntry({clientID, requiredValue}))
-        .then(()=>{ 
-          toast.success('New Entry created successfully!')
+        .then((res)=>{ 
           closeModal()
           setIsLoading(() => false)
+          const { content, status } = res?.payload || {}
+
+          if (status === 422) {
+            dispatch(reset())
+            return toast.error(content?.amount[0])
+          }  
+          toast.success('New Entry created successfully!')
+          dispatch(getTimeEntries({ clientID, currentPage }))
         })
-    }  
-    closeAllDropdown()
+    }
+     
   }
 
   return {

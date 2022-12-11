@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode
 }
 
-const DialogBox: FC<Props> = ({ isOpen, closeModal, closeAllDropdown, children }): JSX.Element => {
+const DialogBox: FC<Props> = ({ isOpen, closeModal, closeAllDropdown = ()=>{}, children }): JSX.Element => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={()=> {

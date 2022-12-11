@@ -10,13 +10,13 @@ const createNewEntry = async (clientID: number, requiredValue: any) => {
   return response.data
 }
 
-const getTimeEntries = async (clientID: number, pageCount: number) => {
-  const response = await axios.get(`/client/${clientID}/time-entry?page=${pageCount}`)
+const getTimeEntries = async (clientID: number, currentPage: number) => {
+  const response = await axios.get(`/client/${clientID}/time-entry?page=${currentPage}`)
   return response.data
 }
 
-const updateTimeEntries = async (clientID: number, timeEntryID: number, requiredValue:any) => {
-  const response = await axios.put(`/client/${clientID}/time-entry/${timeEntryID}`, { ...requiredValue })
+const updateTimeEntries = async (clientID: number, timeEntryID: number | undefined, requiredValue:any) => { 
+  const response = await axios.put(`/client/${clientID}/time-entry/${timeEntryID}`, requiredValue)
   return response.data
 }
 

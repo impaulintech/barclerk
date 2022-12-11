@@ -1,22 +1,22 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { PER_PAGE } from '~/utils/constants' 
 
 import TableHead from './TableHead'
 import TableItem from './TableItem'
 import TableSkeleton from './TableSkeleton'
-import { PER_PAGE } from '~/utils/constants' 
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
-import { getExtensions, getTimeEntries } from '~/redux/time-entry/timeEntrySlice';
-import { useRouter } from 'next/router';
+import { getExtensions, getTimeEntries } from '~/redux/time-entry/timeEntrySlice'
 
 const TimeEntriesTable:FC = (): JSX.Element => {
   const { query } = useRouter();
   const clientID = Number(query?.id); 
-  const pageCount = 1;  
+  const currentPage = 1;  
   const dispatch = useAppDispatch()  
    
   useEffect(()=>{  
     dispatch(getExtensions(clientID)) 
-    dispatch(getTimeEntries({clientID, pageCount})) 
+    dispatch(getTimeEntries({clientID, currentPage})) 
   }, [])     
 
   return (
@@ -31,7 +31,7 @@ const TimeEntriesTable:FC = (): JSX.Element => {
 
 const TableContent = () => {
   const { timeEntries, isLoading, isError, extensionList } = useAppSelector((state) => state.timeEntry)
-  const { data } = timeEntries || {} 
+  const { data } = timeEntries || {}   
 
   if (isLoading) {
     return <TableSkeleton length={PER_PAGE} />
