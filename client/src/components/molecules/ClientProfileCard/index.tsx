@@ -158,7 +158,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
           </div>
           <ul className="py-2 px-6 text-slate-600">
             {clientProfile?.court_appearances && clientProfile?.court_appearances?.length > 0 ? (
-              clientProfile?.court_appearances?.map((lastcourtdate) => {
+              clientProfile?.court_appearances?.slice(0, 3).map((lastcourtdate) => {
                 return (
                   <li key={lastcourtdate?.id} className="border-b border-slate-500 px-2 py-6">
                     <div className="flex">
