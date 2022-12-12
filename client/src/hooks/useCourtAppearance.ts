@@ -29,7 +29,7 @@ export const useCourtAppearance = (
 
     const dateValue = moment(date).format('YYYY-MM-DD')
     const nextCourtDateValue = moment(next_court_date).format('YYYY-MM-DD')
-
+    
     const dataValues = {
       date: dateValue,
       next_court_date: nextCourtDateValue,
