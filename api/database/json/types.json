@@ -933,14 +933,14 @@
     {
         "code": "C31",
         "type": "Disbursements (mileage)",
-        "rate": 88,
+        "rate": 133,
         "time": 3,
         "total_allowance": 264
     },
     {
         "code": "C31",
         "type": "Travel Time",
-        "rate": 133,
+        "rate": 88,
         "time": 1,
         "total_allowance": 133
     },

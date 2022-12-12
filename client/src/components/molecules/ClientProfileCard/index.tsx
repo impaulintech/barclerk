@@ -110,7 +110,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
                 <div className="flex justify-end lg:justify-center">
-                  ${singleClientExtension?.preparation?.amount || 0}
+                  ${singleClientExtension?.preparation || 0}
                 </div>
               )}
             </div>
