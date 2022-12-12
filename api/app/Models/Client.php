@@ -6,13 +6,13 @@ use Exception;
 use App\Enums\PageEnum;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Pagination\Paginator;
 use App\Http\Resources\GrantResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\TimeEntryResource;
 use App\Http\Resources\ClientListResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\CourtAppearanceResource;
+use App\Http\Resources\DashboardResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
@@ -133,6 +133,41 @@ class Client extends Model
     static public function displayClients()
     {
         return auth()->user()->clients()->with(['latestGrant', 'latestCourtAppearance', 'preTrialRestriction', 'matterStatus']);
+    }
+
+    public function showClient()
+    {
+        return new DashboardResource(Client::with([
+            'preTrialRestriction',
+            'matterStatus',
+            'courtAppearances' => function ($query) {
+                $query->latest();
+            },
+            'clientPreTrialRestriction',
+            'charges',
+            'grants'
+        ])->findOrFail($this->id));
+    }
+
+    public function updateClient($request)
+    {
+        DB::beginTransaction();
+        try {
+            $this->update($request->allowed());
+            $this->charges()->delete();
+            $this->charges()->createMany(ChargeUtils::splitCharges($request->charges));
+            $this->clientPreTrialRestriction()->update([
+                'pre_trial_restriction_id' => $request->pre_trial_restriction,
+                'value' => $request->value,
+            ]);
+            DB::commit();
+            return $this->showClient();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => $e->getMessage(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function addGrant($request)

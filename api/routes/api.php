@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => '/v1'], function () {
     ]);
   });
 
-  Route::apiResource('client', ClientController::class)->only(['index', 'store']);
+  Route::apiResource('client', ClientController::class)->except(['destroy']);
   Route::apiResource('client.grant', GrantController::class);
   Route::get('clause', ClauseController::class);
   Route::apiResource('client.time-entry', TimeEntryController::class)->only(['index', 'store', 'update']);
