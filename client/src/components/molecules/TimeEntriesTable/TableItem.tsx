@@ -1,20 +1,17 @@
-import { FC, Fragment, useState } from 'react'
+import moment from 'moment'; 
 import Tippy from '@tippyjs/react'
-import { Edit, ChevronDown, ChevronUp, Triangle } from 'react-feather' 
-import AddNewEntry from '../TimeEntryTableHeader/AddNewEntry';
-import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector' 
-import moment from 'moment';
-import { setEditModal } from '~/redux/time-entry/timeEntrySlice';
+import { FC, useState } from 'react'
+import { Edit, ChevronDown, ChevronUp } from 'react-feather' 
+
+import AddNewEntry from '../TimeEntryTableHeader/AddNewEntry' 
 
 type Props = {
   timeEntries: any  
   extensionList: any
 }
 
-const TableItem: FC<Props> = (props): JSX.Element => { 
-  const dispatch = useAppDispatch() 
-  
-  const { timeEntries, extensionList } = props || {}
+const TableItem: FC<Props> = (props): JSX.Element => {  
+  const { timeEntries } = props || {}
   const { amount, date, description, extension, hours: hoursUnit, type, id: timeEntryID } = timeEntries || {}
   const { 
     id: extensionID,

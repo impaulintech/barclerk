@@ -1,10 +1,9 @@
 import { FC } from 'react'
+import { useRouter } from 'next/router'
 import ReactPaginate from 'react-paginate'
-
-import { PER_PAGE } from '~/utils/constants' 
+ 
 import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
-import { getTimeEntries, reset } from '~/redux/time-entry/timeEntrySlice';
-import { useRouter } from 'next/router';
+import { getTimeEntries, setCurrentPage } from '~/redux/time-entry/timeEntrySlice'
 
 type SelectedPageItem = { selected: number }
 
@@ -18,9 +17,10 @@ const Pagination: FC = (): JSX.Element => {
   const dispatch = useAppDispatch() 
   
   const handlePageChange = async ({ selected }: SelectedPageItem) => {
-    const pageCount = selected + 1
-    dispatch(getTimeEntries({ clientID, pageCount })) 
-  }
+    const currentPage = selected + 1
+    dispatch(getTimeEntries({ clientID, currentPage })) 
+    dispatch(setCurrentPage(currentPage)) 
+  } 
 
   return (
     <section className="paginate-section text-gray-500">

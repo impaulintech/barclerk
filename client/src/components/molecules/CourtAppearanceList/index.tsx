@@ -34,7 +34,7 @@ const CourtAppearancesList = (): JSX.Element => {
 
   return (
     <>
-      {error.content ? (
+      {error?.content ? (
         <div className="flex justify-center text-failed">
           <p>Ooops! Something went wrong!</p>
         </div>

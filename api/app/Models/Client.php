@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Enums\PageEnum;
-use App\Http\Resources\ClientListResource;
-use App\Http\Resources\CourtAppearanceResource;
-use App\Http\Resources\GrantResource;
-use App\Http\Resources\TimeEntryResource;
 use Exception;
+use App\Enums\PageEnum;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use App\Http\Resources\GrantResource;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Resources\TimeEntryResource;
+use App\Http\Resources\ClientListResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\CourtAppearanceResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
