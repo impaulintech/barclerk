@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests;
 
 use App\Enums\PreTrialRestrictionEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class StoreClientRequest extends FormRequest
         return [
             "client_name" => ['required', 'max:255'],
             "matter_name" => ['required', 'max:255'],
-            "email" => ['nullable', 'max:255', 'email', 'unique:clients'],
+            "email" => ['nullable', 'max:255', 'email', "unique:clients,email," . $this->request->get('id') . ""],
             "phone_number" => ['nullable', 'max:255'],
             "postal_address" => ['nullable', 'max:65535'],
             "contribution" => ['nullable'],
