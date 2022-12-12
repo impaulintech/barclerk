@@ -96,7 +96,7 @@ const ClientProfileHeader = ({
     setSelectedGrantId(extension_id)
     setShowDropdown(false)
   }
-
+  
   return (
     <div className="flex items-center justify-between py-4 md:py-6">
       <h1 className="text-xl font-semibold text-barclerk-10 lg:text-2xl">Client Information</h1>
@@ -119,14 +119,9 @@ const ClientProfileHeader = ({
         >
           <span className="text-barclerk-10">
             {allClientExtensions && allClientExtensions?.length > 0
-              ? [
-                  allClientExtensions[0]?.extension,
-                  selectedGrantId
-                    ? allClientExtensions?.find((x: { id: number }) => x.id === selectedGrantId)?.id
-                    : allClientExtensions[0]?.id
-                ].join('/')
+              ? selectedGrantId && allClientExtensions?.find((x: { id: number }) => x.id === selectedGrantId)?.extension 
               : 'No data available.'}
-          </span>{' '}
+          </span>
           <ChevronDown className="text-slate-600" />
         </div>
 
@@ -137,7 +132,7 @@ const ClientProfileHeader = ({
                 return (
                   <div key={extension?.id} onClick={() => handleClick(extension?.id)}>
                     <li className="p-2 hover:bg-barclerk-30">
-                      {extension?.extension}/{extension?.id}
+                      {extension?.extension}
                     </li>
                   </div>
                 )
