@@ -7,12 +7,14 @@ import {
 
 import { GetMattersPayload } from './types'
 import matterService from './matterService'
-import { AxiosResponseError, MatterFormValues } from '~/shared/types'
+import { ISingleMatter } from '~/shared/interfaces'
 import { catchError } from '~/utils/handleAxiosError'
 import { TMatterResponse } from '~/shared/types/pageTypes'
+import { AxiosResponseError, MatterFormValues } from '~/shared/types'
 
 type InitialState = {
   matters: TMatterResponse | null
+  singleMatter: ISingleMatter | null
   isError: boolean
   isSuccess: boolean
   isLoading: boolean
@@ -21,6 +23,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   matters: null,
+  singleMatter: null,
   isError: false,
   isSuccess: false,
   isLoading: true,
@@ -52,6 +55,17 @@ export const addNewMatter = createAsyncThunk(
   }
 )
 
+export const getSingleMatter = createAsyncThunk(
+  'matter/getSingleMatter',
+  async (client_id: string | string[] | undefined, thunkAPI) => {
+    try {
+      return await matterService.getSingleMatter(client_id)
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(catchError(error))
+    }
+  }
+)
+
 export const matterSlice = createSlice({
   name: 'matter',
   initialState,
@@ -68,6 +82,7 @@ export const matterSlice = createSlice({
   },
   extraReducers: (builder: ActionReducerMapBuilder<InitialState>) => {
     builder
+      // Fetch All Matters With Pagination
       .addCase(getMatters.pending, (state) => {
         state.isLoading = true
       })
@@ -87,8 +102,23 @@ export const matterSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Create New Matter
       .addCase(addNewMatter.fulfilled, (state, action: PayloadAction<TMatterResponse>) => {
         state.matters = action.payload
+      })
+
+      // Get Single Matter By Client ID
+      .addCase(getSingleMatter.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getSingleMatter.fulfilled, (state, action: PayloadAction<ISingleMatter>) => {
+        state.singleMatter = action.payload
+        state.isLoading = false
+      })
+      .addCase(getSingleMatter.rejected, (state, action: PayloadAction<any>) => {
+        state.error = action.payload
+        state.isLoading = false
       })
   }
 })

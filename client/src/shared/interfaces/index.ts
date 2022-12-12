@@ -130,3 +130,26 @@ export interface ICode {
   value: string
   label: string
 }
+
+export interface ISingleMatter {
+  id: number
+  matter_name: string
+  client_name: string
+  email: string
+  phone_number: string
+  postal_address: string
+  contribution: number
+  court: string
+  charges: ICharges[]
+  pre_trial_restriction: {
+    id: number
+    name: string
+  }
+  pre_trial_restriction_location_or_address: {
+    client_id: number
+    pre_trial_restriction_id: number
+    value: string
+    created_at: string
+    updated_at: string
+  }
+}

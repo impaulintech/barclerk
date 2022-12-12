@@ -19,9 +19,15 @@ const addNewMatter = async (data: MatterFormValues): Promise<TMatterResponse> =>
   return response.data
 }
 
+const getSingleMatter = async (client_id: string | string[] | undefined) => {
+  const response = await axios.get(`/client/${client_id}`)
+  return response.data
+}
+
 const matterService = {
   getMatters,
-  addNewMatter
+  addNewMatter,
+  getSingleMatter
 }
 
 export default matterService

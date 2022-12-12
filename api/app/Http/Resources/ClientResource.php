@@ -23,6 +23,8 @@ class ClientResource extends JsonResource
             'contribution' => $this->contribution,
             'email' => $this->email,
             'court' => $this->court,
+            'pre_trial_restriction_location_or_address' => $this->whenLoaded('clientPreTrialRestriction'),
+            'pre_trial_restriction' => new PreTrialRestrictionResource($this->whenLoaded('preTrialRestriction')),
             'charges' => ChargeResource::collection($this->whenLoaded('charges')),
         ];
     }
