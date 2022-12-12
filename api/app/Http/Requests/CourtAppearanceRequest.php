@@ -25,7 +25,7 @@ class CourtAppearanceRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'time' => ['required'],
+            'time' => '',
             'court' => ['max:255'],
             'judicial_officer' => ['max:255'],
             'next_court_date' => ['required', 'date'],

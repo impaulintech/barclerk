@@ -42,7 +42,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
         id: courtAppearance?.id,
         date: courtAppearance?.date,
         next_court_date: courtAppearance?.next_court_date,
-        time: courtAppearance?.time,
+        time: courtAppearance?.time ? courtAppearance?.time : '',
         court: courtAppearance?.court,
         judicial_officer: courtAppearance?.judicial_officer,
         orders: courtAppearance?.orders,
@@ -96,8 +96,8 @@ const EditCourtAppearanceModal: FC<Props> = ({
                   </span>
                   <input
                     type="date"
-                    {...register('date')}
                     id="court_appearance_date"
+                    {...register('date')}
                     disabled={isLoading}
                     className={`
                     w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
@@ -154,22 +154,18 @@ const EditCourtAppearanceModal: FC<Props> = ({
             <section className="col-span-1">
               <label htmlFor="court_appearance_time" className="flex flex-col space-y-1">
                 <h2 className="text-sm text-slate-700">
-                  TIME <span className="text-rose-500">*</span>
+                  TIME
                 </h2>
                 <div className="group relative">
                   <span
                     className={`
                     absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
-                  group-focus-within:border-barclerk-30
-                  ${errors?.time && 'border-rose-400 group-focus-within:border-rose-400'}
-                    
+                    group-focus-within:border-barclerk-30 
                   `}
                   >
                     <Clock
                       className={`
-                    h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30
-                    ${errors?.time && 'text-rose-400 group-focus-within:text-rose-400'}
-                  
+                    h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30 
                   `}
                     />
                   </span>
@@ -180,13 +176,11 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     disabled={isLoading}
                     className={`
                     w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
-                    disabled:cursor-not-allowed disabled:opacity-50
-                    
+                    disabled:cursor-not-allowed disabled:opacity-50 
                   `}
                   />
                 </div>
-              </label>
-              {errors?.time && <span className="error">{`${errors.time.message}`}</span>}
+              </label> 
             </section>
             {/* COURT FIELD */}
             <section className="col-span-1">
@@ -276,8 +270,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
                   <TextareaAutosize
                     {...register('orders')}
                     id="court_appearance_orders"
-                    disabled={isLoading}
-                    maxLength={255}
+                    disabled={isLoading} 
                     className={`
                     min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                     focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
@@ -308,8 +301,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
                   <TextareaAutosize
                     {...register('other_notes')}
                     id="court_appearance_notes"
-                    disabled={isLoading}
-                    maxLength={255}
+                    disabled={isLoading} 
                     className={`
                     min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                     focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50

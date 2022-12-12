@@ -35,9 +35,7 @@ const AddNewCourtAppearanceModal: FC<Props> = ({ isOpen, closeModal }): JSX.Elem
   const year = today.getFullYear()
   const month = today.getMonth() + 1
   const day = `${Number(today.getDate()) < 10 ? '0' : ''}${today.getDate()}`
-  const dateToday = `${year}-${month}-${day}` 
-
-  const time = moment(today).format('HH:mm');
+  const dateToday = `${year}-${month}-${day}`  
 
   const { isLoading, handleAddCourtAppearance } = useCourtAppearance(closeModal, setError)
 
@@ -46,7 +44,7 @@ const AddNewCourtAppearanceModal: FC<Props> = ({ isOpen, closeModal }): JSX.Elem
       reset({
         date: dateToday,
         next_court_date: dateToday,
-        time: time,
+        time: '',
         court: '',
         judicial_officer: '',
         orders: '',
@@ -161,21 +159,18 @@ const AddNewCourtAppearanceModal: FC<Props> = ({ isOpen, closeModal }): JSX.Elem
             <section className="col-span-1">
               <label htmlFor="court_appearance_time" className="flex flex-col space-y-1">
                 <h2 className="text-sm text-slate-700">
-                  TIME <span className="text-rose-500">*</span>
+                  TIME 
                 </h2>
                 <div className="group relative">
                   <span
                     className={`
                       absolute inset-y-0 flex items-center border-r-2 border-slate-300 px-2.5 
-                    group-focus-within:border-barclerk-30
-                    ${errors?.time && 'border-rose-400 group-focus-within:border-rose-400'}
+                    group-focus-within:border-barclerk-30 
                     `}
                   >
                     <Clock
                       className={`
-                      h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30
-                      ${errors?.time && 'text-rose-400 group-focus-within:text-rose-400'}
-                    
+                      h-5 w-5 text-slate-300  group-focus-within:text-barclerk-30  
                     `}
                     />
                   </span>
@@ -187,12 +182,10 @@ const AddNewCourtAppearanceModal: FC<Props> = ({ isOpen, closeModal }): JSX.Elem
                     className={`
                       w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30
                       disabled:cursor-not-allowed disabled:opacity-50
-                      ${errors?.time && 'border-rose-400 focus:border-rose-400 focus:ring-rose-400'}
                     `}
                   />
                 </div>
-              </label>
-              {errors?.time && <span className="error">{`${errors.time.message}`}</span>}
+              </label> 
             </section>
             {/* COURT FIELD */}
             <section className="col-span-1">

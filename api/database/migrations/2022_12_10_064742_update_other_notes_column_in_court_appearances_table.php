@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('court_appearances', function (Blueprint $table) {
+            $table->time('time')->nullable()->change();
             $table->string('court')->nullable()->change();
             $table->string('judicial_officer')->nullable()->change();
-            $table->string('orders')->nullable()->change();
-            $table->string('other_notes')->nullable()->change();
+            $table->text('orders')->nullable()->change();
+            $table->text('other_notes')->nullable()->change();
         });
     }
 
@@ -29,10 +30,11 @@ return new class extends Migration
     public function down()
     {
         Schema::table('court_appearances', function (Blueprint $table) {
+            $table->time('time');
             $table->string('court')->change();
-            $table->string('other_notes')->change();
+            $table->text('other_notes')->change();
             $table->string('judicial_officer')->change();
-            $table->string('orders')->change();
+            $table->text('orders')->change();
         });
     }
 };
