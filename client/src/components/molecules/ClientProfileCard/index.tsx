@@ -12,7 +12,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
   const { clientProfile, singleClientExtension, isLoadingFunds } = useAppSelector(
     (state) => state.clientProfile
   )
-
+  
   return (
     <div className="space-y-6 pb-1 sm:flex sm:space-y-0 sm:pb-6">
       {/* first half of the page */}
@@ -153,7 +153,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
           <div>Next Court Date:</div>
           <div className="text-base font-semibold">
             {clientProfile?.court_appearances && clientProfile?.court_appearances?.length > 0 ? (
-              <>{moment(clientProfile?.court_appearances[0].date).format('D MMMM YYYY')}</>
+              <>{moment(clientProfile?.court_appearances[0].next_court_date).format('D MMMM YYYY')}</>
             ) : (
               <>No data available.</>
             )}
