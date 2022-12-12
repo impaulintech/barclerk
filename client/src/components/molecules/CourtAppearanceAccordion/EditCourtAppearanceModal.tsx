@@ -277,6 +277,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     {...register('orders')}
                     id="court_appearance_orders"
                     disabled={isLoading}
+                    maxLength={255}
                     className={`
                     min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                     focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50
@@ -308,6 +309,7 @@ const EditCourtAppearanceModal: FC<Props> = ({
                     {...register('other_notes')}
                     id="court_appearance_notes"
                     disabled={isLoading}
+                    maxLength={255}
                     className={`
                     min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
                     focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50

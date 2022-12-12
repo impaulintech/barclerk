@@ -21,20 +21,20 @@ const ClientProfileCard: FC = (): JSX.Element => {
           <div className="text-xl font-semibold">{clientProfile?.client_name}</div>
           <div className="space-between flex w-full">
             <div className="flex flex-1 flex-col space-y-1">
-              <div className="text-slate-500">Contribution</div>
+              <div className="text-barclerk-10 font-semibold">Contribution</div>
               <div>{clientProfile?.contribution ? 'Yes' : 'No'}</div>
             </div>
             <div className="flex flex-1 flex-col space-y-1">
-              <div className="text-slate-500">Bail</div>
+              <div className="text-barclerk-10 font-semibold">Bail</div>
               <div>{clientProfile?.pre_trial_restriction ? 'Yes' : 'No'}</div>
             </div>
             <div className="flex flex-1 flex-col space-y-1">
-              <div className="text-slate-500">Court</div>
+              <div className="text-barclerk-10 font-semibold">Court</div>
               <div>{clientProfile?.court || 'N/A'}</div>
             </div>
           </div>
           <div className="flex flex-col space-y-1">
-            <div className="text-slate-500">Location</div>
+            <div className="text-barclerk-10 font-semibold">Location</div>
             <div className="text-sm uppercase">
               {clientProfile &&
               clientProfile?.pre_trial_restriction_location_or_address.value == 'None'
@@ -45,8 +45,8 @@ const ClientProfileCard: FC = (): JSX.Element => {
             </div>
           </div>
           <div className="space-y-1">
-            <div className="text-slate-500">Charges</div>
-            <ul className="list-disc px-6 text-xs capitalize text-black">
+            <div className="text-barclerk-10 font-semibold">Charges</div>
+            <ul className="list-disc px-6 text-sm capitalize text-black">
               {clientProfile?.charges?.map((charge: { id: number; name: string }) => (
                 <li key={charge.id}>{charge.name}</li>
               ))}

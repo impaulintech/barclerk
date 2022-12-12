@@ -107,6 +107,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
       : setActiveType(0)
 
     editData && setHoursUnit(editData?.hoursUnit)
+    reset()
   },[latestExtension, isOpen, editData])  
   
   const timeEntryID = editData?.timeEntryID;
@@ -163,7 +164,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                   <TextareaAutosize
                     id="description"
                     {...register('description')}
-                    defaultValue={editData ? editData?.description : ""}
+                    defaultValue={editData ? editData?.description : ""} 
                     disabled={isLoading}
                     className={`
                       min-h-[70px] w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30
@@ -373,7 +374,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
             {/* RATE PER HOUR */}
             <section onClick={closeAllDropdown} className="col-span-2 md:col-span-1">
               <label htmlFor="ratePerHour" className="flex flex-col space-y-1">
-                <h2 className="text-sm text-slate-700">Rate per hour</h2>
+                <h2 className="text-sm text-slate-700">Rate per hour/unit</h2>
                 <div className="group relative">
                   <span
                     className={`

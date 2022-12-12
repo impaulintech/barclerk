@@ -105,9 +105,7 @@ const ClientProfileHeader = ({
         className={`
           relative flex cursor-pointer items-center rounded border-2 border-slate-300  text-sm
          shadow outline-none transition duration-150 ease-in-out
-         `}
-        //  focus and hover styles for approval
-        //  focus:bg-barclerk-10 hover:bg-barclerk-10 hover:bg-barclerk-10/90 active:scale-95 active:bg-barclerk-10
+         `} 
         title="Add New Matter"
       >
         <div className="flex h-9 w-9 items-center justify-center rounded-l-sm bg-barclerk-20 text-white">

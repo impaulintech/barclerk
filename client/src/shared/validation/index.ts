@@ -65,8 +65,8 @@ export const CourtAppearanceSchema = Yup.object().shape({
     time: Yup.string().required('This field is required'),
     court: Yup.string().max(255).nullable(),
     judicial_officer: Yup.string().max(255).nullable(),
-    orders: Yup.string().nullable(),
-    other_notes: Yup.string().nullable(),
+    orders: Yup.string().max(255).nullable(),
+    other_notes: Yup.string().max(255).nullable(),
 })
 
 export const EntryFormSchema = Yup.object().shape({
