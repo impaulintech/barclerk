@@ -91,7 +91,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
 
   useEffect(()=>{
     editData 
-      ? extensionList.map((extension:any, index:number)=>{
+      ? extensionList?.map((extension:any, index:number)=>{
           if (extension?.id === editData?.grant_id) {
             setActiveExtension(index)
           }
@@ -252,7 +252,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                   border-slate-300 bg-white shadow-md
                 "
                 >
-                  {extensionList.map(( 
+                  {extensionList?.map(( 
                     option: { 
                       extension: string; 
                       id: number; 
@@ -318,7 +318,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
                   flex flex-col items-start z-50 mt-[1px] absolute w-full
                   bg-white shadow-md max-h-[150px]
                 "> 
-                  {typeList.map((
+                  {typeList?.map((
                     option:{
                       type: string, 
                       rate: number, 

@@ -75,19 +75,19 @@ const TableItem: FC<Props> = (props): JSX.Element => {
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={extension?.totalFund || '0'}
-        >{`$${extension?.totalFund || 0}`}</span>
+        >{`$${extension?.totalFund ? Number(extension?.totalFund).toFixed(2) : 0}`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={`${extension?.totalFundUsed || 0}`}
-        >{`${extension?.totalFundUsed || 0}%`}</span>
+        >{`${extension?.totalFundUsed ? Number(extension?.totalFundUsed).toFixed(2) : 0}%`}</span>
       </td>
       <td className="py-2 px-6">
         <span
           className="font-extrabold text-barclerk-10 line-clamp-1"
           title={`${extension?.remainingFunds || 0}`}
-        >{`$${extension?.remainingFunds || 0}`}</span>
+        >{`$${extension?.remainingFunds ? Number(extension?.remainingFunds).toFixed(2) : 0}`}</span>
       </td>
       <td className="py-2 px-6">
         <Tippy content={courtAppearance?.next_court_date ? moment(courtAppearance?.next_court_date).format('DD MMMM YYYY') : 'None'}>
