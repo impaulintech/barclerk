@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { AxiosResponseError } from '~/shared/types'
-import { axios } from '~/shared/lib/axios';
+import { axios } from '~/shared/lib/axios'
 import '~/shared/interfaces'
-import { IClientExtension, IClientProfile, ISingleClientExtension } from '~/shared/interfaces';
+import { IClientExtension, IClientProfile, ISingleClientExtension } from '~/shared/interfaces'
 
 type InitialState = {
   clientProfile: IClientProfile | null
@@ -35,8 +35,8 @@ const initialState: InitialState = {
 
 export const fetchClientProfile = createAsyncThunk(
   'dashboard/fetchByClientId',
-  async (payload: {clientId: number}) => {
-    const response = await axios.get(`/dashboard/${payload.clientId}`,)
+  async (payload: { clientId: number }) => {
+    const response = await axios.get(`/dashboard/${payload.clientId}`)
     return response.data
   }
 )
@@ -89,6 +89,13 @@ export const clientProfile = createSlice({
       .addCase(fetchSingleClientExtension.fulfilled, (state, action) => {
         state.singleClientExtension = action.payload
         state.isLoadingFunds = false
+      })
+      .addCase(fetchSingleClientExtension.rejected, (state, action: PayloadAction<any>) => {
+        state.singleClientExtension = null
+        state.isError = true
+        state.isSuccess = false
+        state.isLoadingFunds = false
+        state.error = action.payload
       })
   }
 })

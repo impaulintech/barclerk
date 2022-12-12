@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
@@ -150,7 +151,13 @@ const ClientProfileCard: FC = (): JSX.Element => {
       <div className="flex w-full flex-col space-y-6 md:w-1/2">
         <div className="group flex w-full items-center justify-between rounded-md bg-barclerk-20 px-6 py-4 text-sm text-white shadow transition duration-150 ease-in-out hover:shadow-lg">
           <div>Next Court Date:</div>
-          <div className="text-base font-semibold">26 October 2022</div>
+          <div className="text-base font-semibold">
+            {clientProfile?.court_appearances && clientProfile?.court_appearances?.length > 0 ? (
+              <>{moment(clientProfile?.court_appearances[0].date).format('D MMMM YYYY')}</>
+            ) : (
+              <>No data available.</>
+            )}
+          </div>
         </div>
         <div className="group flex w-full flex-col rounded-md bg-white py-3 text-sm shadow transition duration-150 ease-in-out hover:shadow-lg">
           <div className="w-full border-b border-slate-500 px-6 pb-3 font-medium">
