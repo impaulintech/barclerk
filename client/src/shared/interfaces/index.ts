@@ -86,9 +86,7 @@ export interface IClientExtension {
 }
 
 export interface ISingleClientExtension {
-  preparation: {
-    amount: number
-  }
+  preparation: number
   other_types: number
   attendance: number
   total_fund: number

@@ -194,10 +194,10 @@ class Client extends Model
     {
         $totalFund = $this->totalFund($grant);
         $remainingFund = $totalFund - $this->totalAmountOfTimeEntries($grant);
-        $totalFundUsed = (($totalFund - ($remainingFund)) / $totalFund);
+        $totalFundUsed = (($totalFund - ($remainingFund)) / $totalFund) * 100;
 
         return [
-            'preparation' => $grant->timeEntries()->preparation()->firstOr('amount', fn () => 0),
+            'preparation' => round($grant->timeEntries()->preparation()->sum('amount'), 2),
             'other_types' => round($grant->timeEntries()->otherTypes()->sum('amount'), 2),
             'attendance' => round($grant->timeEntries()->attendance()->sum('amount'), 2),
             'total_fund' => $totalFund,
