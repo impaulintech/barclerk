@@ -10,6 +10,7 @@ import { GrantOfAidFormValues } from '~/shared/types'
 import { useGrantOfAid } from '~/hooks/useGrantOfAid'
 import { GrantOfAidSchema } from '~/shared/validation'
 import { useAppSelector } from '~/hooks/reduxSelector'
+import { customStyles } from '~/utils/customReactSelectStyles'
 import DialogBox2 from '~/components/templates/DialogBox/DialogBox2'
 
 type Props = {
@@ -181,6 +182,8 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                               isClearable
                               getOptionLabel={(option) => option?.code}
                               onChange={(option) => onChange(option?.id)}
+                              styles={customStyles}
+                              menuPortalTarget={document.body}
                               className="rounded-md border-none ring-1 ring-slate-300 focus:ring-barclerk-30"
                             />
                           )
