@@ -49,11 +49,7 @@ export const MatterFormSchema = Yup.object().shape({
   contribution: Yup.number().label('Contribution').typeError('Contribution must be a valid number'),
   court: Yup.string().max(255),
   charges: Yup.string()
-    .required('Charges is required')
-    .matches(
-      /^(([a-zA-Z0-9 ](,)?)*)+$/,
-      'The List must be separated by a comma and a space. Sample: Word1, Word2'
-    ),
+    .required('Charges is required'),
   pre_trial_restrictions: Yup.string().max(255),
   on_bail_postal_address: Yup.string().max(255),
   in_custody_location: Yup.string().max(255)

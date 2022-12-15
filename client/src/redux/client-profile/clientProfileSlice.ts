@@ -5,6 +5,9 @@ import { AxiosResponseError } from '~/shared/types'
 import { axios } from '~/shared/lib/axios'
 import '~/shared/interfaces'
 import { IClientExtension, IClientProfile, ISingleClientExtension } from '~/shared/interfaces'
+import { IUpdatePayload } from '../matter/types'
+import matterService from './clientService'
+import { catchError } from '~/utils/handleAxiosError'
 
 type InitialState = {
   clientProfile: IClientProfile | null
@@ -49,12 +52,23 @@ export const fetchSingleClientExtension = createAsyncThunk(
   }
 )
 
+export const updateMatter = createAsyncThunk(
+  'matter/updateMatter',
+  async (payload: IUpdatePayload, thunkAPI) => {
+    try {
+      return await matterService.updateMatter(payload)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(catchError(error))
+    }
+  }
+)
+
 export const clientProfile = createSlice({
   name: 'client-profile',
   initialState,
   reducers: {
     reset: (state) => {
-        (state.singleClientExtension = null),
+      ;(state.singleClientExtension = null),
         (state.isLoading = false),
         (state.isSuccess = false),
         (state.isError = false),
@@ -82,20 +96,32 @@ export const clientProfile = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
-      .addCase(fetchSingleClientExtension.pending, (state, action) => {
+
+      // Fetch Single Client Extension
+      .addCase(fetchSingleClientExtension.pending, (state) => {
         state.isLoadingFunds = true
         state.singleClientExtension = null
       })
-      .addCase(fetchSingleClientExtension.fulfilled, (state, action) => {
-        state.singleClientExtension = action.payload
-        state.isLoadingFunds = false
-      })
+      .addCase(
+        fetchSingleClientExtension.fulfilled,
+        (state, action: PayloadAction<ISingleClientExtension>) => {
+          state.singleClientExtension = action.payload
+          state.isLoadingFunds = false
+        }
+      )
       .addCase(fetchSingleClientExtension.rejected, (state, action: PayloadAction<any>) => {
         state.singleClientExtension = null
         state.isError = true
         state.isSuccess = false
         state.isLoadingFunds = false
         state.error = action.payload
+      })
+
+      // Update Matter
+      .addCase(updateMatter.fulfilled, (state, action: PayloadAction<any>) => {
+        state.clientProfile = action.payload
+        state.singleClientExtension = action.payload
+        state.allClientExtensions = action.payload.extensions
       })
   }
 })

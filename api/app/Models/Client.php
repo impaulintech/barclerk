@@ -7,12 +7,12 @@ use App\Enums\PageEnum;
 use App\Utils\ChargeUtils;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\GrantResource;
+use App\Http\Resources\ClientResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\TimeEntryResource;
 use App\Http\Resources\ClientListResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\CourtAppearanceResource;
-use App\Http\Resources\DashboardResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
@@ -137,15 +137,10 @@ class Client extends Model
 
     public function showClient()
     {
-        return new DashboardResource(Client::with([
+        return new ClientResource(Client::with([
             'preTrialRestriction',
-            'matterStatus',
-            'courtAppearances' => function ($query) {
-                $query->latest();
-            },
             'clientPreTrialRestriction',
             'charges',
-            'grants'
         ])->findOrFail($this->id));
     }
 

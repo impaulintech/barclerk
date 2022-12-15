@@ -17,3 +17,17 @@ export type MatterFields =
   | 'on_bail_postal_address'
   | 'in_custody_location'
   | 'value'
+
+export type IUpdatePayload = {
+  id: string | string[] | undefined
+  client_name: string
+  matter_name: string
+  email: string
+  phone_number: string
+  contribution: string | undefined | null | number
+  postal_address: string
+  charges: string
+  court: string
+  pre_trial_restriction: string
+  value?: string
+}
