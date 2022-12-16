@@ -11,7 +11,7 @@ import { catchError } from '~/utils/handleAxiosError'
 
 type InitialState = {
   clientProfile: IClientProfile | null
-  singleClientExtension: ISingleClientExtension | null
+  singleClientExtension: ISingleClientExtension | null | any
   allClientExtensions: IClientExtension[] | null
   isError: boolean
   isSuccess: boolean

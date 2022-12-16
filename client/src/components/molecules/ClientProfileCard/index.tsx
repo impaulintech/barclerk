@@ -91,7 +91,7 @@ const ClientProfileCard: FC = (): JSX.Element => {
               {isLoadingFunds ? (
                 <LineSkeleton className="h-5 w-3/4" />
               ) : (
-                <div className="flex justify-end lg:justify-center">
+                <div className={`flex justify-end ${(100 * singleClientExtension?.remaining_fund) / singleClientExtension?.total_fund <= 10 && "text-rose-600"}  lg:justify-center`}>
                   ${singleClientExtension?.remaining_fund || 0}
                 </div>
               )}
