@@ -72,7 +72,7 @@ const EditMatterModal: FC<Props> = ({ isOpen, closeModal, matter_id }): JSX.Elem
       fetchSingleMatter()
     }
   }, [isOpen])
-
+  
   useEffect(() => {
     if (!isLoadingSingleMatter) {
       setPreTrial(() => `${singleMatter?.pre_trial_restriction?.id.toString()}`)

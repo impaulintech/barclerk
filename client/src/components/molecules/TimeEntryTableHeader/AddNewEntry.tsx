@@ -106,6 +106,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
       })
       : setActiveType(0)
 
+    setHoursUnit(0)
     editData && setHoursUnit(editData?.hoursUnit)
     reset()
   },[latestExtension, isOpen, editData])  
@@ -144,7 +145,7 @@ const AddNewEntry: FC<Props> = ({ isOpen, closeModal, editData }): JSX.Element =
             <section onClick={closeAllDropdown} className="col-span-2">
               <label htmlFor="description" className="flex flex-col space-y-1">
                 <h2 className="text-sm text-slate-700">
-                  Description <span className="text-rose-500">*</span>
+                  Description
                 </h2>
                 <div className="group relative flex">
                   <span

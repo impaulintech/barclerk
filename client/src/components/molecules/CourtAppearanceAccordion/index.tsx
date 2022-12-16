@@ -59,7 +59,7 @@ const AccordionHeader = ({
         </div>
         <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-barclerk-10 text-sm font-semibold">Time</div>
-          <div className=" text-barclerk-10 text-sm">{moment(`${courtAppearance?.date} ${courtAppearance?.time}`).format('hh:mm A')}</div>
+          <div className=" text-barclerk-10 text-sm"> {courtAppearance?.time ? moment(`${courtAppearance?.date} ${courtAppearance?.time}`).format('hh:mm A') : "--:--"}</div>
         </div>
         <div className="col-span-1 space-y-1 overflow-hidden">
           <div className="text-barclerk-10 text-sm font-semibold">Court</div>

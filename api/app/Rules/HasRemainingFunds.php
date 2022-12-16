@@ -29,7 +29,7 @@ class HasRemainingFunds implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value < Grant::find($this->grant)->remainingFunds();
+        return $value <= Grant::find($this->grant)->remainingFunds();
     }
 
     /**
