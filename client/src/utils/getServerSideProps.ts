@@ -37,7 +37,7 @@ export const SignInUpAuthChecker: GetServerSideProps = wrapper.getServerSideProp
 
 export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req, params }) => {
+    async ({ req }) => {
       const token = req.cookies['token']
       const config = { headers: { Authorization: `Bearer ${token}` } }
 
@@ -60,7 +60,6 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
             }
           }
         }
-
         if (privateRoutes) {
           if (!token) {
             return {
@@ -73,22 +72,28 @@ export const authCheck: GetServerSideProps = wrapper.getServerSideProps(
         }
       } catch (error: any) {
         const forgotPasswordPage = req.url?.includes('forgot-password')
-
         if (forgotPasswordPage) return { props: {} }
+        if (req.url === '/') {
+          if (!token) {
+            return {
+              redirect: {
+                permanent: false,
+                destination: '/sign-up'
+              },
+              props: {}
+            }
+          }
+        }
         if (error.response?.status === 404) {
           return {
             notFound: true
           }
         }
-
         if (error.response?.status === 500) {
           throw new Error('Internal Server Error')
         }
+
         return {
-          redirect: {
-            permanent: false,
-            destination: '/sign-in'
-          },
           props: {}
         }
       }

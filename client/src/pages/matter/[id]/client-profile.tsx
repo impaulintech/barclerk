@@ -81,7 +81,7 @@ const ClientProfile: NextPage = (): JSX.Element => {
 }
 
 const ClientProfileLayout = ({ children }: { children: ReactNode }): JSX.Element => (
-  <section className="mx-auto h-full w-full p-4 md:px-12">{children}</section>
+  <section className="mx-auto h-full w-full p-4 md:px-12 max-w-[90rem]">{children}</section>
 )
 
 type ClientProfileProps = {
@@ -170,5 +170,5 @@ const ClientProfileHeader: FC<ClientProfileProps> = (props): JSX.Element => {
   )
 }
 
-export default ClientProfile
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default ClientProfile
