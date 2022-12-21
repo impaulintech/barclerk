@@ -1,19 +1,30 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import Pagination from '~/components/atoms/Pagination'
-import { useAppSelector } from '~/hooks/reduxSelector'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import { BarClerkWhiteIcon } from '~/shared/icons/LogoIcon'
 import MainTableHeader from '~/components/molecules/MainTableHeader'
 import UserMenuDropDown from '~/components/molecules/UserMenuDropdown'
 import MainDashboardList from '~/components/molecules/MainDashboardList'
 import UserSettingsModal from '~/components/molecules/UserSettingsModal'
+import { getAuthUser, reset } from '~/redux/auth/authSlice';
 
 const Index: NextPage = (): JSX.Element => {
   const { matters } = useAppSelector((state) => state.matter)
   const [isOpenSettings, setIsOpenSettings] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+
+  const handleFetchUser = async () => {
+    await dispatch(getAuthUser())
+    reset()
+  }
+
+  useEffect(() => {
+    handleFetchUser()
+  }, [])
 
   const closeModalToggle = (): void => setIsOpenSettings(!isOpenSettings)
 

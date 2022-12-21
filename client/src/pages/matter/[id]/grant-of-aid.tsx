@@ -1,14 +1,21 @@
 import { NextPage } from 'next'
 import { Plus } from 'react-feather'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 
 import Breedcrumb from '~/components/atoms/Breedcrumb'
-import { useAppSelector } from '~/hooks/reduxSelector'
+import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import MatterLayout from '~/components/templates/MatterLayout'
 import GrantOfAidList from '~/components/molecules/GrantOfAidList'
 import AddNewGrantOfAidModal from '~/components/molecules/GrantOfAidList/AddNewGrantOfAidModal'
+import { getAuthUser } from '~/redux/auth/authSlice';
 
 const GrantOfAid: NextPage = (): JSX.Element => {
+  const dispatch = useAppDispatch() 
+
+  useEffect(() => {
+    dispatch(getAuthUser())
+  }, [])
+  
   return (
     <MatterLayout metaTitle="Grant Of Aid">
       <GrantOfAidLayout>
@@ -63,5 +70,5 @@ const GrantOfAidHeader = (): JSX.Element => {
   )
 }
 
-export default GrantOfAid
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default GrantOfAid
