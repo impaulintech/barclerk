@@ -28,10 +28,8 @@ const signIn = async (user: SignInUpFormValues): Promise<any> => {
 }
 
 const signOut = async (): Promise<any> => {
-  const response = await axios.post('/sign-out')
-  if (response.status === 204) {
-    deleteCookie('token')
-  }
+  const response = await axios.post('/sign-out') 
+  deleteCookie('token')
   return response.data
 }
 

@@ -6,6 +6,9 @@ import { Toaster } from 'react-hot-toast'
 import '~/shared/css/globals.css'
 import { wrapper } from '~/redux/store'
 import NextProgress from '~/shared/lib/next-progress'
+import { useEffect } from 'react';
+import { useAppDispatch } from '~/hooks/reduxSelector';
+import { getAuthUser, reset } from '~/redux/auth/authSlice';
 
 const MyApp = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest)

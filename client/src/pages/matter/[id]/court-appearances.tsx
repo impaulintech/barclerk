@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import { Plus } from 'react-feather'
 
@@ -6,21 +6,29 @@ import MatterLayout from '~/components/templates/MatterLayout'
 import BreedCrumb from '~/components/atoms/Breedcrumb'
 import CourtAppearancesList from '~/components/molecules/CourtAppearanceList'
 import AddNewCourtAppearanceModal from '~/components/molecules/CourtAppearanceList/AddNewCourtAppearance'
+import { useAppDispatch } from '~/hooks/reduxSelector';
+import { getAuthUser, reset } from '~/redux/auth/authSlice';
 
 const CourtAppearances: NextPage = (): JSX.Element => {
+  const dispatch = useAppDispatch() 
+
+  useEffect(() => {
+    dispatch(getAuthUser())
+  }, [])
+  
   return (
-    <MatterLayout metaTitle="Court Appearances">
+    <MatterLayout metaTitle="Court Appearances"> 
       <CourtAppearancesLayout>
         <BreedCrumb route="Court Appearances" />
         <CourtAppearancesHeader />
         <CourtAppearancesList />
-      </CourtAppearancesLayout>
+      </CourtAppearancesLayout> 
     </MatterLayout>
   )
 }
 
 const CourtAppearancesLayout = ({ children }: { children: ReactNode }): JSX.Element => (
-  <section className="mx-auto h-full w-full space-y-2 p-4 md:px-12">{children}</section>
+  <section className="mx-auto h-full w-full space-y-2 p-4 md:px-12 max-w-[90rem]">{children}</section>
 )
 
 const CourtAppearancesHeader = (): JSX.Element => {
@@ -49,5 +57,5 @@ const CourtAppearancesHeader = (): JSX.Element => {
   )
 }
 
-export default CourtAppearances
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default CourtAppearances

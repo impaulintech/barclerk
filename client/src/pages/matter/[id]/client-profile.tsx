@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '~/hooks/reduxSelector'
 import ClientProfileCard from '~/components/molecules/ClientProfileCard'
 import { CardSkeleton } from '~/components/molecules/ClientProfileCard/CardSkeleton'
 import EditMatterModal from '~/components/molecules/MainTableHeader/EditMatterModal'
+import { getAuthUser } from '~/redux/auth/authSlice';
 
 interface IExtensionPayload {
   clientId: number
@@ -28,7 +29,7 @@ interface IClientProfilePayload {
 const ClientProfile: NextPage = (): JSX.Element => {
   const { query } = useRouter()
   const [selectedGrantId, setSelectedGrantId] = useState<number | null>(null)
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()  
 
   const { allClientExtensions, isLoadingClientProfile } = useAppSelector(
     (state) => state.clientProfile
@@ -44,6 +45,7 @@ const ClientProfile: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     getClientProfileData({ clientId: Number(query.id) })
+    dispatch(getAuthUser())
   }, [query.id])
 
   useEffect(() => {
@@ -81,7 +83,7 @@ const ClientProfile: NextPage = (): JSX.Element => {
 }
 
 const ClientProfileLayout = ({ children }: { children: ReactNode }): JSX.Element => (
-  <section className="mx-auto h-full w-full p-4 md:px-12">{children}</section>
+  <section className="mx-auto h-full w-full p-4 md:px-12 max-w-[90rem]">{children}</section>
 )
 
 type ClientProfileProps = {
@@ -170,5 +172,5 @@ const ClientProfileHeader: FC<ClientProfileProps> = (props): JSX.Element => {
   )
 }
 
-export default ClientProfile
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default ClientProfile
