@@ -7,7 +7,8 @@ export const axios = Axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   headers: {
     Accept: 'application/json',
-    Authorization: `Bearer ${token}`
+    Authorization: `Bearer ${token}`,
+    "Access-Control-Allow-Origin": "*"
   }
 })
 
