@@ -10,7 +10,7 @@ import TimeEntryTableHeader from '~/components/molecules/TimeEntryTableHeader'
 const TimeEntries:NextPage = (): JSX.Element => { 
   return ( 
     <MatterLayout metaTitle="Time Entries"> 
-    <section className="mx-auto h-screen min-h-screen w-full max-w-[90rem] px-4 py-4 md:px-12">
+    <section className="mx-auto max-h-screen h-[750px] w-full max-w-[90rem] px-4 py-4 md:px-12">
       <Breedcrumb route="Time Entries" />
       <main className="mt-4 flex h-full w-full max-w-[100rem] flex-col justify-between overflow-hidden pb-24 pt-5">
         <TimeEntryTableHeader />
@@ -32,5 +32,5 @@ const TimeEntries:NextPage = (): JSX.Element => {
 }
  
 
-export default TimeEntries
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default TimeEntries

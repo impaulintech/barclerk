@@ -9,18 +9,18 @@ import AddNewCourtAppearanceModal from '~/components/molecules/CourtAppearanceLi
 
 const CourtAppearances: NextPage = (): JSX.Element => {
   return (
-    <MatterLayout metaTitle="Court Appearances">
+    <MatterLayout metaTitle="Court Appearances"> 
       <CourtAppearancesLayout>
         <BreedCrumb route="Court Appearances" />
         <CourtAppearancesHeader />
         <CourtAppearancesList />
-      </CourtAppearancesLayout>
+      </CourtAppearancesLayout> 
     </MatterLayout>
   )
 }
 
 const CourtAppearancesLayout = ({ children }: { children: ReactNode }): JSX.Element => (
-  <section className="mx-auto h-full w-full space-y-2 p-4 md:px-12">{children}</section>
+  <section className="mx-auto h-full w-full space-y-2 p-4 md:px-12 w-full max-w-[90rem]">{children}</section>
 )
 
 const CourtAppearancesHeader = (): JSX.Element => {
@@ -49,5 +49,5 @@ const CourtAppearancesHeader = (): JSX.Element => {
   )
 }
 
-export default CourtAppearances
 export { authCheck as getServerSideProps } from '~/utils/getServerSideProps'
+export default CourtAppearances
