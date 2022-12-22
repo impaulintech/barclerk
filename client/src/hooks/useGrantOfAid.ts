@@ -27,7 +27,7 @@ export const useGrantOfAid = (
         client_id: id,
         extension,
         date_effective,
-        codes: codes.map((c) => parseInt(c.code))
+        codes: codes?.map((c) => parseInt(c.code))
       }
     }
 

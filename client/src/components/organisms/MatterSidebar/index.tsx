@@ -64,7 +64,7 @@ const MatterSidebar: FC<Props> = ({ isOpenSidebar }): JSX.Element => {
           <h1 className="text-lg font-bold uppercase text-white md:text-xl">Barclerk</h1>
         </header>
         <ul>
-          {navs.map(({ name, href, Icon, slug }, i) => (
+          {navs?.map(({ name, href, Icon, slug }, i) => (
             <li
               key={i}
               className={`

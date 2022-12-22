@@ -28,7 +28,7 @@ const DialogHeader: FC<Props> = (props): JSX.Element => {
       </div>
       <nav className="border-b border-slate-300 pt-3">
         <ul className="flex items-center space-x-6 px-5">
-          {menuList.map((list, i) => (
+          {menuList?.map((list, i) => (
             <li key={i}>
               <button
                 onClick={handleChangeTab}

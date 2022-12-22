@@ -162,7 +162,7 @@ const AddNewGrantOfAidModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element =
                 <span className="error">{`${errors.date_effective.message}`}</span>
               )}
             </section>
-            {fields.map(({ id }, i) => (
+            {fields?.map(({ id }, i) => (
               <section key={id}>
                 <label className="mb-1 flex flex-col space-y-1">
                   <h2 className="text-sm text-slate-700">
