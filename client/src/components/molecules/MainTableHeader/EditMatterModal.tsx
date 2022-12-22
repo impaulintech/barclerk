@@ -448,7 +448,7 @@ const EditMatterModal: FC<Props> = ({ isOpen, closeModal, matter_id }): JSX.Elem
                         onChange={onChangePreTrialRestrictions}
                         className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                       >
-                        {restrictions.map(({ id, value }) => (
+                        {restrictions?.map(({ id, value }) => (
                           <option key={id} value={id}>
                             {value}
                           </option>
@@ -549,7 +549,7 @@ const SkeletonInputLoader = () => {
   return (
     <>
       {/* We have a problem with [...Array(4)] because it gives a `key={i}` error */}
-      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i: number) => (
+      {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]?.map((i: number) => (
         <InputSkeleton key={i} />
       ))}
     </>

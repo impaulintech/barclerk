@@ -51,7 +51,7 @@ const GrantOfAidContent = (): JSX.Element => {
     return (
       <>
         {/* We have a problem with [...Array(12)] because it gives a `key={i}` error */}
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i: number) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]?.map((i: number) => (
           <CardSkeleton key={i} />
         ))}
       </>

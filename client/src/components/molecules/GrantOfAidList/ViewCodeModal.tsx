@@ -58,7 +58,7 @@ const ViewCodeModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.Element
             {isLoadingCode ? (
               <>
                 {/* We have a problem with [...Array(4)] because it gives a `key={i}` error */}
-                {[0, 1, 2, 3].map((i: number) => (
+                {[0, 1, 2, 3]?.map((i: number) => (
                   <InputSkeleton key={i} />
                 ))}
               </>
@@ -67,7 +67,7 @@ const ViewCodeModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.Element
                 <article className="w-full">
                   <div className="mx-auto w-full max-w-md space-y-3 rounded-2xl bg-white p-2">
                     <>
-                      {singleGrantOfAid?.codes.map((code, i) => (
+                      {singleGrantOfAid?.codes?.map((code, i) => (
                         <Disclosure key={code.id}>
                           {({ open }) => (
                             <>

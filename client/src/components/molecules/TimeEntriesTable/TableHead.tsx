@@ -20,7 +20,7 @@ const TableHead: FC<Props> = (): JSX.Element => {
   return (
     <thead className="text-slate-700">
       <tr className="flex-shrink-0 space-x-1">
-        {tableHeader.map((title: string, index: number) => {
+        {tableHeader?.map((title: string, index: number) => {
           return (
             <th className="px-6 py-2 font-semibold" key={index}>
               <button type="button" className={`${hasSortIcon.includes(title) && 'active:scale-95'} flex items-center outline-none min-w-[90px]`}>

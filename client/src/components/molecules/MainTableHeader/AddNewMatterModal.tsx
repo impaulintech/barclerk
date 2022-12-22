@@ -409,7 +409,7 @@ const AddNewMatterModal: FC<Props> = ({ isOpen, closeModal }): JSX.Element => {
                     onChange={onChangePreTrialRestrictions}
                     className="w-full rounded-md border-2 border-slate-300 pl-12 focus:border-barclerk-30 focus:ring-barclerk-30 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {restrictions.map(({ id, value }) => (
+                    {restrictions?.map(({ id, value }) => (
                       <option key={id} value={id}>
                         {value}
                       </option>

@@ -73,7 +73,7 @@ const MatterDrawer: FC<Props> = ({ isOpenDrawer, handleToggleDrawer }): JSX.Elem
             </button>
           </header>
           <ul>
-            {navs.map(({ name, href, Icon, slug }, i) => (
+            {navs?.map(({ name, href, Icon, slug }, i) => (
               <li
                 key={i}
                 className={`

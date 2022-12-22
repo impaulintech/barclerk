@@ -97,7 +97,7 @@ const MainTableHeader: FC = (): JSX.Element => {
                   bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none
                   `}
                 >
-                  {filters.map(({ id, name, color }) => (
+                  {filters?.map(({ id, name, color }) => (
                     <div key={id}>
                       <Menu.Item>
                         <button

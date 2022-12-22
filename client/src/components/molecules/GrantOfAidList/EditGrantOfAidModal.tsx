@@ -90,7 +90,7 @@ const EditGrantOfAidModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.E
       grant_id,
       extension,
       date_effective,
-      codes: codes.map((c) => parseInt(c.id))
+      codes: codes?.map((c) => parseInt(c.id))
     }
 
     setIsLoadingSubmit(() => true)
@@ -137,7 +137,7 @@ const EditGrantOfAidModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.E
               {isLoadingEditGOL ? (
                 <>
                   {/* We have a problem with [...Array(4)] because it gives a `key={i}` error */}
-                  {[0, 1, 2, 3].map((i: number) => (
+                  {[0, 1, 2, 3]?.map((i: number) => (
                     <InputSkeleton key={i} />
                   ))}
                 </>
@@ -240,7 +240,7 @@ const EditGrantOfAidModal: FC<Props> = ({ isOpen, closeModal, grant_id }): JSX.E
                       <span className="error">{`${errors.date_effective.message}`}</span>
                     )}
                   </section>
-                  {fields.map(({ id, code }, i) => (
+                  {fields?.map(({ id, code }, i) => (
                     <section key={id}>
                       <label className="mb-1 flex flex-col space-y-1">
                         <h2 className="text-sm text-slate-700">
