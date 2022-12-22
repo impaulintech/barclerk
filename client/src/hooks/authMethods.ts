@@ -94,7 +94,7 @@ export const useAuthMethods = () => {
         icon: 'success',
         title: 'Success!',
         text: 'You can now log in using your new password that you created!',
-        confirmButtonText: 'Go to Dashboard',
+        confirmButtonText: 'Go to Login page',
         footer: `<span style="color:#F6F6F6">This page will be automatically redirected to login in <b>3</b>s.</span>`,
         timer: 3000,
         didOpen: () => {
@@ -105,8 +105,8 @@ export const useAuthMethods = () => {
         },
         ...swalDark
       }).then((result: { isConfirmed: boolean }) => {
-        if (result.isConfirmed) redirect('/')
-        redirect('/')
+        if (result.isConfirmed) redirect('/sign-in')
+        redirect('/sign-in')
       })
     })
   }
